@@ -509,7 +509,7 @@ app.get('/', (req, res) => {
 <body>
     <div class="container">
         <div class="header" style="text-align:center; padding:20px 0; margin-bottom:20px;">
-            <img src="/c2/header_dashboard.png" style="width: 100%; max-width: 1092px; height: auto; margin: 0 auto; display: block; object-fit: contain;" alt="LAB-RATS Header">
+            <img src="/c2/header_dashboard.png" style="width: 75%; max-width: 820px; height: auto; margin: 0 auto; display: block; object-fit: contain;" alt="LAB-RATS Header">
             <div style="font-size: 0.6rem; color: var(--neon-cyan); letter-spacing: 3px; text-transform: uppercase; margin-top: 15px; text-align: center;">SYSTEM STATUS: <span style="color:#39ff14;">ONLINE</span> &nbsp;//&nbsp; ACTIVE TARGETS: <span style="color:#00f2ff; font-weight:bold;">${onlineCount} / ${deviceList.length}</span> &nbsp;//&nbsp; TIMEZONE: <span style="color:#ffff00;">Ottawa (America/Toronto)</span></div>
         </div>
 
