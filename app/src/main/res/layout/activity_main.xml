@@ -38,7 +38,7 @@
             <ImageView
                 android:id="@+id/ivHeaderBanner"
                 android:layout_width="362dp"
-                android:layout_height="266dp"
+                android:layout_height="271dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="25dp"
                 android:adjustViewBounds="true"
@@ -84,17 +84,17 @@
                             android:layout_gravity="center"
                             android:layout_marginBottom="13dp"
                             android:fontFamily="@font/orbitron"
-                            android:letterSpacing="0.15"
+                            android:letterSpacing="0.1"
                             android:text="🔴 SERVER_OFFLINE"
                             android:textColor="@color/neon_red"
-                            android:textSize="18sp"
+                            android:textSize="19sp"
                             android:textStyle="bold" />
 
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="2dp"
                             android:layout_marginBottom="15dp"
-                            android:background="#FC050505" />
+                            android:background="#FC070707" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -112,21 +112,21 @@
                             android:id="@+id/tvIpAddress"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:alpha="0.9"
                             android:background="#050505"
                             android:fontFamily="@font/aldrich"
                             android:gravity="center_vertical"
-                            android:letterSpacing="0.05"
+                            android:letterSpacing="0.1"
                             android:minHeight="34dp"
                             android:paddingStart="8dp"
                             android:text="[LOADING_DATA...]"
                             android:textColor="@color/neon_cyan"
-                            android:textSize="14sp" />
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="12dp"
+                            android:layout_marginTop="14dp"
                             android:alpha="0.7"
                             android:fontFamily="@font/aldrich"
                             android:letterSpacing="0.2"
@@ -140,10 +140,10 @@
                             android:id="@+id/tvServerUrl"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
                             android:background="#020202"
                             android:fontFamily="@font/assistant"
                             android:gravity="center_vertical"
+                            android:letterSpacing="0.05"
                             android:minHeight="38dp"
                             android:padding="6dp"
                             android:text="UPLINK_INACTIVE"

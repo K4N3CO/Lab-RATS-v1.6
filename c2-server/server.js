@@ -156,7 +156,7 @@ function serveLoginPage(req, res, errorMsg = '') {
 </head>
 <body>
     <div class="login-card">
-        <img src="/c2/header_dashboard.png" style="width: 80%; max-width: 320px; height: auto; margin: 0 auto 20px auto; display: block;" alt="LAB-RATS">
+        <img src="/c2/app_logo.png" style="width: 260px; height: 260px; margin: 0 auto 10px auto; display: block; background: transparent !important; border: none !important; box-shadow: none !important;" alt="LAB-RATS">
         <div class="title-font">C2 OPERATOR AUTH</div>
         ${errorMsg ? `<div class="error-msg">${errorMsg}</div>` : ''}
         <form action="/login" method="POST">

@@ -525,8 +525,9 @@ public class OpticsModule extends BaseModule {
         StringBuilder html = new StringBuilder(getHeader(session.getUri()));
         html.append("<style>")
             .append("@media (min-width: 769px) {")
-            .append("  #stream-container { max-width: 100% !important; height: 600px !important; }")
-            .append("  #stream { width: 100% !important; height: 100% !important; object-fit: cover !important; border-radius: 8px; border: 1px solid rgba(0, 242, 255, 0.3); }")
+            .append("  #stream-container { max-width: 680px !important; height: 420px !important; margin: 0 auto !important; }")
+            .append("  #stream { width: 100% !important; height: 100% !important; object-fit: contain !important; border-radius: 8px; border: 1px solid rgba(0, 242, 255, 0.3); }")
+            .append("  .optics-control-box { transform: scale(0.90) !important; transform-origin: top center !important; }")
             .append("}")
             .append("@media (max-width: 768px) {")
             .append("  #stream-container { height: ").append(uiHeight).append("px !important; }")
@@ -582,6 +583,7 @@ public class OpticsModule extends BaseModule {
         html.append("</div>");
         html.append("</div>");
 
+        html.append("<div class=\"optics-control-box\">");
         html.append("<div style=\"margin-bottom: 30px; text-align: center; max-width: 500px; margin-left: auto; margin-right: auto; padding: 0 10px;\">");
         html.append("<div class=\"info-label\" style=\"text-align: center; font-size: 0.7rem;\">UPLINK_QUALITY</div>");
         html.append("<div style=\"position: relative; width: 100%;\">");
@@ -614,6 +616,7 @@ public class OpticsModule extends BaseModule {
         html.append("<button onclick=\"capturePhoto()\" class=\"btn btn-small\" style=\"border-color: var(--neon-cyan); color: var(--neon-cyan); background: rgba(0, 242, 255, 0.05); padding: 12px; margin:0; width:100%; min-width:0;\">&#128247; SNAP</button>");
         html.append("<button id=\"rec-btn\" onclick=\"toggleRecording()\" class=\"btn btn-small\" style=\"grid-column: span 2; border-color: var(--danger); color: var(--danger); background: rgba(255, 49, 49, 0.05); padding: 12px; margin:0; width:100%; min-width:0;\">&#9679; START_COVERT_RECORDING</button>");
         html.append("<a href=\"/camera\" class=\"btn btn-small\" style=\"grid-column: span 2; border-color: #888; color: #888; background: rgba(255, 255, 255, 0.05); padding: 10px; text-decoration: none; text-align: center; margin:0; width:100%; min-width:0;\">&#8592; BACK</a>");
+        html.append("</div>");
         html.append("</div>");
 
         html.append("<div id=\"status\" style=\"text-align: center; margin-top: 20px; color: #888; font-size: 0.9rem;\"></div>");

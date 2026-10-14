@@ -290,7 +290,7 @@ public class FirebaseConfig extends NanoHTTPD {
             "</style></head><body>" +
             "<div class=\"login-centering-wrapper\">" +
             "<div class=\"login-card\">" +
-            "<img src=\"/logo?v=150\" style=\"width: 260px; height: 260px; background: transparent !important; border: none !important; box-shadow: none !important; outline: none !important;\">" +
+            "<img src=\"/logo?v=150\" style=\"width: 260px; height: 260px; background: transparent !important; border: none !important; box-shadow: none !important; outline: none !important; margin: 0 auto 10px auto; display: block;\">" +
             "<div id=\"status-header\" class=\"title-font\">RESTRICTED_ACCESS</div>" +
             "<div style=\"font-size:0.95rem; opacity:0.6; margin-top: 4px; margin-bottom: 18px; letter-spacing:3px; font-family: 'Aldrich', sans-serif;\">v1.6.0</div>" +
                         "<form id=\"login-form\" method=\"POST\" action=\"/login\" onsubmit=\"handleLogin(event)\">" +
