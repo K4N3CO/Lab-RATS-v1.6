@@ -3,10 +3,16 @@
     android:height="48dp"
     android:viewportWidth="48"
     android:viewportHeight="48">
-  <path
-      android:fillColor="#FF0000"
-      android:pathData="M24,4C12.96,4 4,12.96 4,24s8.96,20 20,20 20-8.96 20-20S35.04,4 24,4z"/>
+  <!-- White Squircle Background Canvas -->
   <path
       android:fillColor="#FFFFFF"
-      android:pathData="M20,16v16l12,-8z"/>
+      android:pathData="M36,4H12C7.6,4 4,7.6 4,12v24c0,4.4 3.6,8 8,8h24c4.4,0 8,-3.6 8,-8V12C44,7.6 40.4,4 36,4z"/>
+  <!-- YouTube Red Play Button -->
+  <path
+      android:fillColor="#FF0033"
+      android:pathData="M34,17H14c-2.2,0 -4,1.8 -4,4v6c0,2.2 1.8,4 4,4h20c2.2,0 4,-1.8 4,-4v-6c0,-2.2 -1.8,-4 -4,-4z"/>
+  <!-- White Inner Play Triangle -->
+  <path
+      android:fillColor="#FFFFFF"
+      android:pathData="M21,20v8l7,-4z"/>
 </vector>

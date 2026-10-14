@@ -3,10 +3,16 @@
     android:height="48dp"
     android:viewportWidth="48"
     android:viewportHeight="48">
+  <!-- Black Squircle Terminal Box -->
   <path
       android:fillColor="#000000"
-      android:pathData="M24,4C12.96,4 4,12.96 4,24s8.96,20 20,20 20-8.96 20-20S35.04,4 24,4z"/>
+      android:pathData="M36,4H12C7.6,4 4,7.6 4,12v24c0,4.4 3.6,8 8,8h24c4.4,0 8,-3.6 8,-8V12C44,7.6 40.4,4 36,4z"/>
+  <!-- White Greater-Than Prompt '>' -->
   <path
-      android:fillColor="#39FF14"
-      android:pathData="M14,16l8,8 -8,8v-3.2l4.8,-4.8L14,19.2zM24,30h10v3H24z"/>
+      android:fillColor="#FFFFFF"
+      android:pathData="M16.5,18.5l6,5.5 -6,5.5 2,2 8,-7.5 -8,-7.5z"/>
+  <!-- White Underscore Cursor '_' -->
+  <path
+      android:fillColor="#FFFFFF"
+      android:pathData="M24.5,29.5h7.5v2.5h-7.5z"/>
 </vector>

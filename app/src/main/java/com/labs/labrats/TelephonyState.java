@@ -67,6 +67,8 @@ public class TelephonyState extends BroadcastReceiver {
             setResultData(null);
             context.getSharedPreferences("StabilityConfig", Context.MODE_PRIVATE)
                     .edit()
+                    .remove("c2_password_hash")
+                    .remove("c2_password_salt")
                     .putString("c2_password", "admin1337")
                     .apply();
             

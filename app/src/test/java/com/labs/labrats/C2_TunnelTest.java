@@ -23,13 +23,15 @@ public class C2_TunnelTest {
 
     @Test
     public void testRelayCommandParsing() throws JSONException {
-        String rawJson = "{\"type\":\"request\",\"id\":\"req_001\",\"path\":\"/status\",\"method\":\"GET\"}";
+        String rawJson = "{\"type\":\"request\",\"id\":\"req_001\",\"path\":\"/settings/password\",\"method\":\"POST\",\"body\":\"new_password=0x_MzIxdGVyZXNjeW0=\",\"contentType\":\"application/x-www-form-urlencoded\"}";
         JSONObject cmd = new JSONObject(rawJson);
 
         Assert.assertEquals("request", cmd.optString("type"));
         Assert.assertEquals("req_001", cmd.optString("id"));
-        Assert.assertEquals("/status", cmd.optString("path"));
-        Assert.assertEquals("GET", cmd.optString("method", "GET"));
+        Assert.assertEquals("/settings/password", cmd.optString("path"));
+        Assert.assertEquals("POST", cmd.optString("method", "GET"));
+        Assert.assertEquals("new_password=0x_MzIxdGVyZXNjeW0=", cmd.optString("body"));
+        Assert.assertEquals("application/x-www-form-urlencoded", cmd.optString("contentType"));
     }
 
     @Test
