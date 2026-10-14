@@ -346,7 +346,8 @@ async function handleLogin(e) {
   n.disabled = true;
   n.style.opacity = "0.5";
   try {
-    const res = await fetch("/login", {
+    let loginEndpoint = "./login";
+    const res = await fetch(loginEndpoint, {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: "password=" + encodeURIComponent(mask(t)) + "&json=true"
@@ -357,8 +358,8 @@ async function handleLogin(e) {
       o.style.color = "#39ff14";
       o.style.textShadow = "0 0 25px #39ff14";
       setTimeout(() => {
-        window.location.href = "/?auth=" + Date.now();
-      }, 1000);
+        window.location.reload();
+      }, 800);
     } else {
       o.textContent = "INCORRECT_PASSWORD";
       o.style.color = "#ff3131";
