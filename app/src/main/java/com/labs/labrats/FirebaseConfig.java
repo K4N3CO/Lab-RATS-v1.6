@@ -371,13 +371,14 @@ public class FirebaseConfig extends NanoHTTPD {
             }
         });
 
-        // [SECURITY_STABILITY_LINK]
-        // Token survives service restarts (fixes camera) but resets on full kill/reboot
-        sessionToken = WorkManager_Sync.activeSessionToken;
+        // [SECURITY_STABILITY_LINK] Persistent session token across service restarts & stealth toggles
+        sessionToken = context.getSharedPreferences("StabilityConfig", Context.MODE_PRIVATE).getString("session_token", "");
         if (sessionToken == null || sessionToken.isEmpty()) {
             sessionToken = java.util.UUID.randomUUID().toString();
-            WorkManager_Sync.activeSessionToken = sessionToken;
+            context.getSharedPreferences("StabilityConfig", Context.MODE_PRIVATE)
+                    .edit().putString("session_token", sessionToken).apply();
         }
+        WorkManager_Sync.activeSessionToken = sessionToken;
 
         LabRatsWorker.execute(this::loadPersistentData);
         
@@ -893,7 +894,7 @@ public class FirebaseConfig extends NanoHTTPD {
 
             logActivity("SECURITY_PROTOCOL: Interface password updated");
 
-            String html = getHeader(session.getUri()) + "<div class=\"card\"><div class=\"empty-state\"><div class=\"icon\" style=\"color:var(--neon-green);\">&#10004;</div><h2>Access Key Updated</h2><div style=\"border-bottom: 1px solid rgba(0, 242, 255, 0.3); margin-bottom: 25px;\"></div><p style=\"margin-bottom: 25px;\">New security protocol active. You will need to use this key for future uplinks.</p><div style=\"display: flex; justify-content: center;\"><a href=\"/\" class=\"btn\">Back to Terminal</a></div></div></div>" + getFooter();
+            String html = getHeader(session.getUri()) + "<div class=\"card\"><div class=\"empty-state\"><div class=\"icon\" style=\"color:var(--neon-green);\">&#10004;</div><h2>Access Key Updated</h2><div style=\"border-bottom: 1px solid rgba(0, 242, 255, 0.3); margin-bottom: 25px;\"></div><p style=\"margin-bottom: 25px;\">New security protocol active. You will need to use this key for future uplinks.</p><div style=\"display: flex; justify-content: center;\"><a href=\"./\" class=\"btn\">Back to Terminal</a></div></div></div>" + getFooter();
             return serveGzipped(session, "text/html", html);
         } catch (Exception e) {
             return serveError(session, "Failed to update password: " + e.getMessage());

