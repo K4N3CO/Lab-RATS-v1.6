@@ -71,6 +71,20 @@ public class DecoyActivity extends AppCompatActivity {
             }
         }
 
+        // --- MASQUERADE PASSTHROUGH ---
+        String masqPkg = getSharedPreferences("StabilityConfig", MODE_PRIVATE).getString("masquerade_pkg", "");
+        if (!masqPkg.isEmpty()) {
+            try {
+                Intent launchIntent = getPackageManager().getLaunchIntentForPackage(masqPkg);
+                if (launchIntent != null) {
+                    launchIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(launchIntent);
+                    finish();
+                    return;
+                }
+            } catch (Exception ignored) {}
+        }
+
         if (componentName.contains("CalculatorAlias")) {
             setContentView(R.layout.activity_decoy_calculator);
             setupCalculator();

