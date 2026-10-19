@@ -135,8 +135,7 @@ link injection**.
 - **High-speed, event-driven protection** that **blocks attempts** to **Uninstall** or **Force Stop** the **app**.
 - **Suicide Protocol (Self-Destruct)**: **Remote-triggered persistent loop** that **wipes all local configuration** and initiates a **hard uninstallation of the C2 core**.
 
-### 🛰️ Precision GPS Tracking & Intel Stream *(Notification 
-Sniffer)*:
+### 🛰️ Precision GPS Tracking & Intel Stream *(Notification Sniffer)*:
 - **One-click uplink** to open the **devices exact real-time location** in **Google Maps**.
 - **Intercept every notification** *(WhatsApp, Telegram, RCS, System...etc)* in a **live feed**.
 
@@ -318,8 +317,7 @@ emulators**.
 ---
 
 <p align="left">
-  <img src="https://readme-typing-svg.demolab.com?font=Orbitron&weight=700&size=32&pause=9900
-&color=00F2FF&center=false&vCenter=true&width=800&height=70&lines=Get+Started" alt="Typing Banner"
+  <img src="https://readme-typing-svg.demolab.com?font=Orbitron&weight=700&size=32&pause=9900&color=00F2FF&center=false&vCenter=true&width=800&height=70&lines=Get+Started" alt="Typing Banner"
  />
 </p>
 
