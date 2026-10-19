@@ -9,7 +9,24 @@ import webbrowser
 import threading
 import urllib.parse
 
-PORT = 8080
+import socket
+
+def find_free_port(default_port=8000):
+    for p in [default_port, 8080, 8888, 9090, 3000]:
+        try:
+            with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+                if s.connect_ex(('localhost', p)) != 0:
+                    return p
+        except Exception:
+            pass
+    try:
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+            s.bind(('', 0))
+            return s.getsockname()[1]
+    except Exception:
+        return default_port
+
+PORT = find_free_port(8000)
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_DIR = os.path.dirname(SCRIPT_DIR)
 OUTPUT_DIR = os.path.join(SCRIPT_DIR, "output")
@@ -293,18 +310,30 @@ class BuilderHandler(http.server.SimpleHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(json.dumps(resp_data).encode('utf-8'))
 
-def main():
-    print(f"\\n [+] TACTICAL APK BUILDER GUI LAUNCHED")
-    print(f" [+] Local Web Interface: http://localhost:{PORT}")
-    print(f" [+] Opening default browser...\\n")
+def launch_browser():
+    url = f"http://localhost:{PORT}"
+    try:
+        if sys.platform == "darwin":
+            subprocess.run(["open", url], check=False)
+        elif sys.platform.startswith("linux"):
+            subprocess.run(["xdg-open", url], check=False)
+        else:
+            webbrowser.open(url)
+    except Exception:
+        webbrowser.open(url)
 
-    threading.Timer(1.0, lambda: webbrowser.open(f"http://localhost:{PORT}")).start()
+def main():
+    print(f"\n [+] TACTICAL APK BUILDER GUI LAUNCHED")
+    print(f" [+] Local Web Interface: http://localhost:{PORT}")
+    print(f" [+] Opening default browser...\n")
+
+    threading.Timer(0.8, launch_browser).start()
 
     with socketserver.TCPServer(("", PORT), BuilderHandler) as httpd:
         try:
             httpd.serve_forever()
         except KeyboardInterrupt:
-            print("\\n[!] Builder GUI Terminated.")
+            print("\n[!] Builder GUI Terminated.")
 
 if __name__ == "__main__":
     main()
