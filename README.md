@@ -13,16 +13,27 @@
   <img src="https://img.shields.io/badge/License-MIT-orange?style=for-the-badge&logo=opensourceinitiative&logoColor=white">
 </p>
 
-# Lab-RATS - v1.6
+<p align="left">
+  <img src="https://readme-typing-svg.demolab.com?font=Orbitron&weight=700&size=40&pause=9900&color=00F2FF&center=false&vCenter=true&width=800&height=70&lines=LAB-RATS" alt="Typing Banner"
+ />
+</p>
+
 > Lightweight Android-Based Remote Administration Tool for Security: *(L.A.B. - R.A.T.S)*
 
-**Developed from the ground up by K4N3CO, Lab-RATS is an open-source, lightweight Android Remote Administration framework** packed with powerful **monitoring** and **interaction capabilities**. The system automates the generation of custom, signed `.apk` files for **deployment onto any Android device**, providing full device telemetry via a **sleek, web-based C2 dashboard**. Built to adapt to **strict modern mobile environments**, it delivers a **robust feature suite** that **operates reliably** across both **legacy** and the **newest Android releases**.
+**Developed from the ground up by K4N3CO, Lab-RATS is an open-source, lightweight Android Remote Administration framework** packed with powerful **monitoring** and **interaction capabilities**. The 
+system automates the generation of custom, signed `.apk` files for **deployment onto any Android device**, providing full device telemetry via a **sleek, web-based C2 dashboard**. Built to adapt to **strict modern mobile environments**, it delivers a **robust feature suite** that **operates reliably** across both **legacy** and the **newest Android releases**.
 
 ---
 
-## 🌎 Direct IPv6 Access: *(P2P connection)*
+<p align="left">
+  <img src="https://readme-typing-svg.demolab.com?font=Orbitron&weight=700&size=28&pause=9900&color=00F2FF&center=false&vCenter=true&width=800&height=70&lines=Direct+IPv6+Access" 
+alt="Typing Banner"
+ />
+</p>
 
-**Lab-RATS leverages the unique characteristics of publicly routable IPv6 addresses assigned by modern Wi-Fi and cellular *(5G/LTE)* carriers**. By **binding the control server directly to a device's Global Unicast Address** *(GUA)*, the tool **completely bypasses Carrier-Grade NAT** *(CGNAT)* and **inbound firewall restrictions**. This architecture **enables seamless, Zero-Configuration peer-to-peer** *(P2P)* **remote access from any modern web browser worldwide**—completely eliminating the need for **router manipulation, port forwarding**, or **third-party tunneling services** like **Ngrok** or **Pinggy**.
+
+**Lab-RATS leverages the unique characteristics of publicly routable IPv6 addresses assigned by modern Wi-Fi and cellular *(5G/LTE)* carriers**. By **binding the control server directly to a device's Global Unicast Address** *(GUA)*, the tool **completely bypasses Carrier-Grade NAT** *(CGNAT)* and **inbound firewall restrictions**. This architecture **enables seamless, Zero-Configuration peer-to-peer** *(P2P)* **remote access from any modern web browser worldwide**—completely eliminating the need for **router manipulation, port 
+forwarding**, or **third-party tunneling services** like **Ngrok** or **Pinggy**.
 <details>
   <summary>📸 Click to View IPv6 Exploit Vector</summary>
   <br><p align="center">
@@ -34,10 +45,14 @@
 
 ---
 
-## 🛡️ Core Features & Security
+<p align="left">
+  <img src="https://readme-typing-svg.demolab.com?font=Orbitron&weight=700&size=28&pause=9900&color=00F2FF&center=false&vCenter=true&width=800&height=70&lines=Core+Features+and+Security" alt="Typing Banner"
+ />
+</p>
 
 ### 🔐 Remote C2 Security & Secure Handshake:
-- The **web dashboard** is **protected by a secure login wall** (**Default Password: admin1337**). The password can be **changed directly from the Terminal home page** for **enhanced security**.
+- The **web dashboard** is **protected by a secure login wall** (**Default Password: admin1337**). The password can be **changed directly from the Terminal home page** for 
+**enhanced security**.
 - Implemented a **masked credential handshake**. Passwords are **reversed and Base64 encoded** (`0x_` prefixed) on the client-side before transmission, rendering them **invisible to browser Network/Payload inspectors**.
 
 ### 📦 Automated APK Generation, Identity Control & Density Scaling:
@@ -46,24 +61,31 @@
 - **Resize logos automatically** for **all Android screen densities**.
 
 ### 📱 PC/Mobile Responsive:
-- The **remote web interface** is **fully optimized** for **both PC** and **smartphone browsers**, featuring a **touch-friendly layout, adaptive navigation tabs**, and **scalable UI elements** for monitoring **from any device**.
+- The **remote web interface** is 
+**fully optimized** for **both PC** and **smartphone browsers**, featuring a **touch-friendly layout, adaptive navigation tabs**, and **scalable UI elements** for monitoring **from any device**.
 
 ---
 
-## 🕵️ Covert Operations & Stealth Management
+<p align="left">
+  <img src="https://readme-typing-svg.demolab.com?font=Orbitron&weight=700&size=28&pause=9900&color=00F2FF&center=false&vCenter=true&width=800&height=70&lines=Covert+Operations+and+Stealth+Management" alt="Typing Banner"
+ />
+</p>
 
-### 💉 Payload Delivery Vectors: *(Installing APK onto Target Device)*
+### 💉 Payload Delivery Vectors: 
+*(Installing APK onto Target Device)*
 - The **Weaponization Engine** has been **overhauled to support multiple high-success delivery methods** *(Stealth PDF, Zero-Click MP4, Meeting Invite and Many More)*, **ensuring reliable access** across **all modern mobile environments**.
 
 ### 🛡️ Evasion Engine:
 -  **Undetectable by Samsung Knox**, **McAfee** and **Google Play Protect**.
--  **Deep Stealth HTML Shield**: The C2 interface utilizes **Shadow DOM Cloaking** and **Base64 Payload Wrapping**. Browser "Elements" inspection is **zeroed-out**, and the tactical structure is **ghosted from analysts**.
+-  **Deep Stealth HTML Shield**: The C2 interface utilizes **Shadow DOM Cloaking** and **Base64 Payload Wrapping**. Browser "Elements" inspection is **zeroed-out**, and the tactical structure is **ghosted from 
+analysts**.
 -  **Web Hardening**: Assets *(JS/CSS)* are **minified and obfuscated**; featuring **anti-debugging loops** and **interaction locks** *(Right-Click, F12)* to **prevent unauthorized analysis**.
 - **Dynamic Code Obfuscation**: Build-time **randomization** of **logic flow** and **class names via ProGuard/R8 integration**.
 - **Encrypted Local Telemetry**: Internal **system logs are encrypted at build-time**, rendering them **unreadable to standard mobile forensic tools**.
 
 ### 🎭 Stealth App Decoys:
-**Remotely swap the entire Lab-RATS app identity and icon instantly** using **the "Masquerade Library"** of convincing **Fully Functional Clones**:
+**Remotely swap the entire Lab-RATS app identity and icon instantly** using **the 
+"Masquerade Library"** of convincing **Fully Functional Clones**:
 - 👀 **System Update** *(Default)*: **Used for initial install** it **simulates a system update** and **prompts for permissions during the process**, achieving **highly successful installs**.
 - 🧮 **Calculator**: Performs **actual math** with a **tactical logic engine**.
 - 🌦️ **Weather App**: Displays **real-time localized forecasts** via **Open-Meteo API**.
@@ -74,7 +96,8 @@
 - **Dialer Unlock**: Type `*#1337#` on the **phone's keypad** to **unmask the Lab-RATS server interface back into view**.
 - **Hidden Backdoor**: If the **device is in stealth mode**, **rapidly tap the middle of the decoy screen 10 times** to **unlock the C2 server interface**. *(Reverts to stealth mode again once app is closed)*
 - **Automatically detects** and **repairs damaged service bindings** or **revoked permissions in the background**.
-- **Anti-Removal**: **On by default** in the **Ghost Tab**, it **prevents the user from uninstalling** or **force-stopping the app** via Settings.
+- **Anti-Removal**: **On by default** in the **Ghost Tab**, it **prevents the user from 
+uninstalling** or **force-stopping the app** via Settings.
 
 ### 🔄 Remote Server Restart:
 - **Web UI**: **One-click "RESTART_SERVER" button** on the **Terminal tab** to **refresh background services**.
@@ -82,37 +105,46 @@
 
 ### 👻 Task-List Ghosting & Dynamic OTA Camouflage:
 - The app is **hard-coded** to be **invisible in the Android "Recent Apps" list**.
-- Generates **random version names and codes** that **mimic legitimate system OTA updates**.
+- Generates **random version 
+names and codes** that **mimic legitimate system OTA updates**.
 
 ---
 
-## 🚀 Remote Capabilities
+<p align="left">
+  <img src="https://readme-typing-svg.demolab.com?font=Orbitron&weight=700&size=28&pause=9900&color=00F2FF&center=false&vCenter=true&width=800&height=70&lines=Remote+Capabilities" alt="Typing Banner"
+ />
+</p>
 
 ### 👻 Ghost_Operations:
 - **Ghost Control/Live Feed**: **Cast & Control the live screen remotely** with **NO "Consent Prompt" required**.
-- **Blackout Mode**: A **high-stealth mode** designed to **physically mask the targets device display** while maintaining a **NON-masked live remote feed**. *(Pair with Ghost Control for maximum stealth)*
+- **Blackout Mode**: A 
+**high-stealth mode** designed to **physically mask the targets device display** while maintaining a **NON-masked live remote feed**. *(Pair with Ghost Control for maximum stealth)*
 - **Ghost_Toast**: Remotely deploy **tactical, persistent pop-up overlays** with **fully customizable text** *(color, size, and screen positioning)*. Features **multiple animation styles** *(pop, static, and side-scroll)* alongside a **high-intensity "Burnt_Toast" mode** that **floods the screen with randomized pop-ups** to overwhelm the device.
-- **Remote System Denial Lock**: Deploy a **persistent, full-screen security overlay** to **lock physical interaction** and **render the device inoperable until hard-reset/restarted** or **unlocked remotely from the C2 dashboard**.
+- **Remote System Denial Lock**: Deploy a **persistent, full-screen security overlay** to **lock physical interaction** and 
+**render the device inoperable until hard-reset/restarted** or **unlocked remotely from the C2 dashboard**.
 - **Live Keylogging**: Intercept **keystrokes** and **system text in real-time**. Now features **Sensitive Info Highlighting** *(Passcodes, OTPs, Emails glow Red)* and **Deep Extraction** for **browser login info**.
 
 ### 🧪 Exploit_Factory:
 - **NFC Proximity Vector**: Generate **binary NDEF payloads for physical tags**.
 - **QR Visual Vector**: Dedicated **high-density QR code generator** for independent URL delivery.
-- **Smishing Library**: Pre-configured **tactical phishing templates** with **automated C2 link injection**.
+- **Smishing Library**: Pre-configured **tactical phishing templates** with **automated C2 
+link injection**.
 - **Shadow Overlay**: Remotely **inject functional, pixel-perfect credential-harvesting overlays** to the device.
 
 ### 💀 Anti-Removal Shield *(Optimized)*:
 - **High-speed, event-driven protection** that **blocks attempts** to **Uninstall** or **Force Stop** the **app**.
 - **Suicide Protocol (Self-Destruct)**: **Remote-triggered persistent loop** that **wipes all local configuration** and initiates a **hard uninstallation of the C2 core**.
 
-### 🛰️ Precision GPS Tracking & Intel Stream *(Notification Sniffer)*:
+### 🛰️ Precision GPS Tracking & Intel Stream *(Notification 
+Sniffer)*:
 - **One-click uplink** to open the **devices exact real-time location** in **Google Maps**.
 - **Intercept every notification** *(WhatsApp, Telegram, RCS, System...etc)* in a **live feed**.
 
 ### 📸 Tactical Surveillance Hub *(Ultra-Stability)*:
 - **Covert Recording**: **Stealthily record video without any user-facing activity**.
 - **Snap Photos**: **Covert image capture** integrated into the **live stream**.
-- **Nightmode V2**: Aggressive **electronic brightening** for **low-light environments**. Now features **Hardware Breathe Sync** and **AE Bypass** for **zero-freeze operation** on **modern high-latency sensors**.
+- **Nightmode V2**: Aggressive **electronic brightening** for **low-light environments**. Now features **Hardware Breathe Sync** and **AE Bypass** for **zero-freeze operation** on 
+**modern high-latency sensors**.
 
 ### 🎙️ Acoustics & Interception:
 - **Timed or Live microphone recording** and **automated call recording** for **both incoming and outgoing calls**.
@@ -129,30 +161,39 @@ The **Terminal Tabs Built-in Shell has been overhauled** for **professional work
 - **Hardened I/O**: **Multi-stage retry logic** and **unique execution tracking** for **zero-latency command output**.
 
 ### 📊 Telemetry & Reporting:
-- **C2 Auto-Reporting**: **Discrete** reporting of **Date & Time, Device Make & Model, Connection Type *(WiFi/Cellular)*, IP Address, Port, Active C2 Dashboard Link, Battery %, Stealth Status, Charging Status, and Storage Space** to a centralized **Google Sheet or Render C2**.
+- **C2 Auto-Reporting**: **Discrete** reporting of **Date & Time, Device Make & Model, Connection Type *(WiFi/Cellular)*, IP Address, Port, Active C2 
+Dashboard Link, Battery %, Stealth Status, Charging Status, and Storage Space** to a centralized **Google Sheet or Render C2**.
 
 ---
 
-## 🧠 Native Integration
+<p align="left">
+  <img src="https://readme-typing-svg.demolab.com?font=Orbitron&weight=700&size=28&pause=9900&color=00F2FF&center=false&vCenter=true&width=800&height=70&lines=Native+Integration" alt="Typing Banner"
+ />
+</p>
 
 ### 🛠️ Termux Bridge Integration:
-**Lab-RATS** now features a **high-performance bridge to the Termux environment**. If **Termux is installed on the target device**, the remote terminal can **instantly elevate its capabilities**:
+**Lab-RATS** now features a **high-performance bridge to the Termux environment**. If 
+**Termux is installed on the target device**, the remote terminal can **instantly elevate its capabilities**:
 - **Auto-Routing**: Common commands like `pkg`, `apt`, `pip`, and `python` are **routed through the bridge**.
 - **Unrestricted Tools**: **Install** and **run Python scripts, Nmap scans, or Metasploit** from the **C2 web terminal**.
 - **Persistent Environment**: Full support for **Termux's internal storage** and **standard Linux binaries**.
 > [!NOTE]
-> **Termux Bridge Issues**: "**Termux `allow-external-apps` setting is disabled**" (Most Common).
-<br>**Solution**: **On the Target Device** open **Termux and run**:
-```
+> **Termux Bridge Issues**: "**Termux `allow-external-apps` setting is disabled**" *(Most Common)*.
+<br>**Solution**: **On the Target 
+Device** open **Termux and run**:
+```zsh
 echo "allow-external-apps = true" >> ~/.termux/termux.properties
 termux-reload-settings
 ```
-
 ---
 
-## 📡 Command & Control (C2) Options
+<p align="left">
+  <img src="https://readme-typing-svg.demolab.com?font=Orbitron&weight=700&size=28&pause=9900&color=00F2FF&center=false&vCenter=true&width=800&height=70&lines=Command+and+Control+(C2)+Options" alt="Typing Banner"
+ />
+</p>
 
-**Lab-RATS** supports **two primary methods** for **tracking your device fleet** and **receiving remote data**.
+**Lab-RATS** supports **two 
+primary methods** for **tracking your device fleet** and **receiving remote data**.
 
 ### ☝🏻 Option 1: Google Sheet *(Updated)*
 **Best for basic IP tracking** and **logging**. **No server maintenance required**.
@@ -162,7 +203,8 @@ termux-reload-settings
 
 ```javascript
 function doGet(e) { return handleRequest(e); }
-function doPost(e) { return handleRequest(e); }
+function doPost(e) { return 
+handleRequest(e); }
 
 function handleRequest(e) {
   try {
@@ -195,7 +237,8 @@ function handleRequest(e) {
       data.port || "9191",
       data.link || "Handshake_Pending",
       data.battery || "0%",
-      (data.stealth === true || data.stealth === "true") ? "ACTIVE" : "OFF",
+      (data.stealth === true || 
+data.stealth === "true") ? "ACTIVE" : "OFF",
       data.charging || "Discharging",
       data.storage || "Unknown"
     ];
@@ -217,13 +260,14 @@ function handleRequest(e) {
 ### ✌🏻 NEW! Option 2: Tactical Node.js Backend *(Upgraded v1.6)*
 **Best for professional fleet management** and **Automatic File Exfiltration**.
 
-**Quick Deployment on Render** (https://render.com)
+**Quick Deployment on** <a href="https://render.com" target="_blank">Render.com</a> 
 
-**1. Create a new Web Service on Render** and **connect your Lab-RATS repository**.
+**1. Create a new Web Service on Render** and **connect your 
+Lab-RATS repository**.
 <br>**2. Set the Root Directory** to c2-server.
 <br>**3. Set the Build Command** to `npm install`.
 <br>**4. Set the Start Command** to `npm start`.
-<br>**5. Deploy!** Once live, **copy your Render URL** *(e.g., https://labrats-c2.onrender.com)*, then **Enter that URL into the APK-Builder when prompted** for the **C2 Webhook URL**.
+<br>**5. Deploy!** Once live, **copy your Render URL** *(e.g., `https://labrats-github.onrender.com`)*, then **Enter that URL into the APK-Builder when prompted** for the **C2 Webhook URL**.
 <details>
   <summary>📸 Click to View Render C2 Screenshot</summary>
   <br>
@@ -233,14 +277,19 @@ function handleRequest(e) {
 **Advantages of Option 2**:
 - 🌐 **Dual-Stack IP Binding**: **Full support for both IPv4 and IPv6 connections**, **enabling seamless C2 telemetry** and **reverse WebSocket tunneling** across **cellular carrier NAT64** and **dual-stack Wi-Fi networks**.
 - 📂 **Exfiltration Vault**: **Audio/Video recordings** are automatically uploaded and **stored on your server**.
-- 📡 **Live Fleet List**: A **professional dashboard** to **manage all devices in one place**, with **editable device name** for **easy device recognition** and **NEW "Quick Action" pull-down menu** to deploy some features **without directly connecting**.
+- 📡 **Live Fleet List**: A **professional dashboard** to **manage all devices in one place**, with **editable device name** for **easy device recognition** and **NEW "Quick Action" pull-down menu** to deploy features **without directly 
+connecting**.
 - 🔄 **Dynamic Sync**: **Heartbeat reporting** ensures your **P2P links are always up-to-date**.
 
 ---
 
-## 📋 System Requirements & Prerequisites
+<p align="left">
+  <img src="https://readme-typing-svg.demolab.com?font=Orbitron&weight=700&size=28&pause=9900&color=00F2FF&center=false&vCenter=true&width=800&height=70&lines=System+Requirements+and+Prerequisites" alt="Typing Banner"
+ />
+</p>
 
-To **build, compile**, and **deploy Lab-RATS** or **host the C2 server**, ensure **your environment meets the following requirements**:
+To **Build, Compile**, and **Deploy Lab-RATS** or **Host the C2 server**, ensure **your 
+environment meets the following requirements**:
 
 ### 1. Workstation & Build Requirements: *(For Building APKs)*
 * **Java Development Kit (JDK)**: **JDK 17 or JDK 21** *(JDK 21 recommended)*.
@@ -258,7 +307,8 @@ To **build, compile**, and **deploy Lab-RATS** or **host the C2 server**, ensure
 ### 3. Target Android Device Compatibility:
 * **Minimum OS**: **Android 5.0** *(Lollipop / API 21)* or **higher**.
 * **Target OS**: **Android 14 - 16** *(API 34 - 36)* **fully supported**.
-* **Supported Devices**: **Samsung, Google Pixel, OnePlus, Xiaomi, Motorola, HTC, LG**, and **generic Android devices/emulators**.
+* **Supported Devices**: **Samsung, Google Pixel, OnePlus, Xiaomi, Motorola, HTC, LG**, and **generic Android devices/
+emulators**.
 
 ### 4. Operating System Compatibility:
 * 🐧 **Linux**: **Kali Linux, Ubuntu, Debian, Arch** *(Full support for build scripts & C2 server)*.
@@ -267,10 +317,14 @@ To **build, compile**, and **deploy Lab-RATS** or **host the C2 server**, ensure
 
 ---
 
-## 🛠️ Get Started
+<p align="left">
+  <img src="https://readme-typing-svg.demolab.com?font=Orbitron&weight=700&size=28&pause=9900
+&color=00F2FF&center=false&vCenter=true&width=800&height=70&lines=Get+Started" alt="Typing Banner"
+ />
+</p>
 
 ### 1. Building the APK (on PC)
-1.  **Download the Repository**: `git clone https://github.com/KAN3C0/Lab-RATS-v1.6.git`
+1.  **Download the Repository**: `git clone https://github.com/K4N3CO/Lab-RATS-v1.6.git`
 2.  **Navigate** to: `cd /Lab-RATS-v1.6/apk-builder/`
 3.  **Execute** the **Builder**:
     *   **Mac/Linux**: `chmod +x build.sh && ./build.sh`
@@ -293,7 +347,8 @@ To **build, compile**, and **deploy Lab-RATS** or **host the C2 server**, ensure
 *   **and Many More**: The **Wizard** also supports **ADB Strategic Bridge, Stego Image Tails, PWA Manifests**, and **Office Document macros**.
 
 #### B. Hosting Strategies:
-*   **Anonymous Cloud**: **Option 6** uses **Catbox.moe by default**. It is **anonymous, fast**, and **generates a direct link**. Now includes **fallback upload to Litterbox and tmpfiles** if needed.
+*   **Anonymous Cloud**: **Option 6** uses **Catbox.moe by default**. 
+It is **anonymous, fast**, and **generates a direct link**. Now includes **fallback upload to Litterbox and tmpfiles** if needed.
 *   **P2P Direct**: Host the **APK directly from your PC using a public tunnel**, or from **another infected device** using the `/download/` endpoint.
 
 #### C. Installation & Initialization:
@@ -305,14 +360,17 @@ Once the **Target device** downloads the **APK**:
 4.  **Uplink Confirmation**: Check your **Google Sheet**. Within **5 seconds of initialization**, the **Device Make & Model, Connection Type, IP Address, Port, Active C2 Dashboard Link, Battery %, Stealth Status, Charging Status and Storage Space will appear in the log**.
 
 <details>
-  <summary>📸 Click to View Example Google Sheet Reporting</summary>
+  <summary>📸 Click to View Google Sheet Reporting</summary>
   <br><p align="center">
   <img src="https://github.com/user-attachments/assets/ad174175-eed8-46b4-bd8d-8c72895cf88a" alt="Full Web Page Screenshot" width="80%">
 </details>
 
 ---
 
-## ⭐ Support the Development
+<p align="left">
+  <img src="https://readme-typing-svg.demolab.com?font=Orbitron&weight=700&size=28&pause=9900&color=00F2FF&center=false&vCenter=true&width=800&height=70&lines=Support+the+Development" alt="Typing Banner"
+ />
+</p>
 
 **If** you find **Lab-RATS awesome** and **useful for your security research**, **please Star ⭐ the project**—it **drives further development!!**
 
@@ -322,7 +380,8 @@ Once the **Target device** downloads the **APK**:
 ---
 
 ### Donate:
-<img src="https://img.shields.io/badge/Buy_Me_A_Coffee-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black">
+<img src="https://img.shields.io
+/badge/Buy_Me_A_Coffee-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black">
 
 **https://buymeacoffee.com/k4n3co**
 
@@ -334,7 +393,11 @@ bc1q8d66m0qthnh6nw9hc5wl09m7pfydk46q5w8rxx
 
 ---
 
-## 📸 Video Clips
+<p align="left">
+  <img src="https://readme-typing-svg.demolab.com?font=Orbitron&
+weight=700&size=28&pause=9900&color=00F2FF&center=false&vCenter=true&width=800&height=70&lines=Video+Clips" alt="Typing Banner"
+ />
+</p>
 
 ### APK-Builder Example *(Mac OS)*:
 
@@ -344,7 +407,8 @@ https://github.com/user-attachments/assets/9cb336c8-748d-48ce-9c8f-f0065654be24
 
 ### Lab-RATS Initial Install Sequence:
 
-https://github.com/user-attachments/assets/dbeffae9-8470-4592-a314-1fabc5a9362d
+https://github.com/user-attachments/assets/dbeffae9-8470
+-4592-a314-1fabc5a9362d
 
 ---
 
@@ -360,9 +424,19 @@ https://github.com/user-attachments/assets/2ac424d5-9df6-4732-aa4e-6b486a9809a4
 
 ---
 
-## 📸 Screenshots
+### C2 Dashboard - Covert Camera Hub:
+
+https://github.com/user-attachments/assets/50296f14-6875-403a-8484-299a9628746d
+
+---
+
+<p align="left">
+  <img src="https://readme-typing-svg.demolab.com?font=Orbitron&weight=700&size=28&pause=9900&color=00F2FF&center=false&vCenter=true&width=800&height=70&lines=Screenshots" alt="Typing Banner"
+ />
+</p>
 
 ### 00. Lab-RATS.apk Installed on Android Device:
+
 <details>
   <summary>📸 Click to View App Screenshot</summary>
   <br>
@@ -376,7 +450,8 @@ https://github.com/user-attachments/assets/2ac424d5-9df6-4732-aa4e-6b486a9809a4
 <details>
   <summary>📸 Click to View Web Page Screenshot</summary>
   <br>
-  <img src="https://github.com/user-attachments/assets/920be29b-88bd-4516-82ff-1deb28cce098" alt="Full Web Page Screenshot" width="100%">
+  <img src="https://github.com/user-attachments/assets/920be29b
+-88bd-4516-82ff-1deb28cce098" alt="Full Web Page Screenshot" width="100%">
 </details>
 
 ---
@@ -406,7 +481,8 @@ https://github.com/user-attachments/assets/2ac424d5-9df6-4732-aa4e-6b486a9809a4
 <details>
   <summary>📸 Click to View Web Page Screenshot</summary>
   <br>
-  <img src="https://github.com/user-attachments/assets/cae2c596-8551-4dbf-80a3-6a9b4cfec58d" alt="Full Web Page Screenshot" width="100%">
+  <img src="https://github.com
+/user-attachments/assets/cae2c596-8551-4dbf-80a3-6a9b4cfec58d" alt="Full Web Page Screenshot" width="100%">
 </details>
 
 ---
@@ -464,7 +540,8 @@ https://github.com/user-attachments/assets/2ac424d5-9df6-4732-aa4e-6b486a9809a4
 ### 10. Acoustics/Audio Tab:
 
 <details>
-  <summary>📸 Click to View Web Page Screenshot</summary>
+  <summary>📸 Click to View Web 
+Page Screenshot</summary>
   <br>
   <img src="https://github.com/user-attachments/assets/8b1efce6-1d3b-490c-8d73-9dbde39c2a53" alt="Full Web Page Screenshot" width="100%">
 </details>
@@ -501,15 +578,21 @@ https://github.com/user-attachments/assets/2ac424d5-9df6-4732-aa4e-6b486a9809a4
 
 ---
 
-## ⚠️ Disclaimer
+<p align="left">
+  <img src="https://readme-typing-svg.demolab.com?font=Orbitron&weight=700&size=28&pause=9900&color=00F2FF&center=false&vCenter=true&width=800&height=70&lines=Disclaimer" alt="Typing Banner"
+ />
+</p>
 
 This tool is for **educational and authorized security testing purposes ONLY!**. The **developers & contributors** assume **NO responsibility** for **ANY** **misuse, damage to devices or relationships** caused by this software. **Please use it responsibly**. **Thank you!**
 
 ---
 
-## 📄 License
+<p align="left">
+  <img src="https://readme-typing-svg.demolab.com?font=Orbitron&weight=700&size=28&pause=9900&color=00F2FF&center=false&vCenter=true&width=800&height=70&lines=License" alt="Typing Banner"
+ />
+</p>
 
-**Lab-RATS-v1.6** is **Licensed** to **KAN3C0** under the [MIT License](LICENSE).
+**Lab-RATS-v1.6** is **Licensed** to **K4N3C0** under the [MIT License](LICENSE).
 
 ---
 
@@ -517,4 +600,4 @@ This tool is for **educational and authorized security testing purposes ONLY!**.
 <img src="https://img.shields.io/badge/The one's who MIND don't matter...-The one's who MATTER don't mind-cyan?style=for-the-badge&logo=maserati&logoColor=white">
 <br>
 <p align="center">
-<img src="https://img.shields.io/badge/Developed By-KAN3C0 ©2026-darkred?style=for-the-badge&logo=magisk&logoColor=white">
+<img src="https://img.shields.io/badge/Developed By-K4N3CO ©2026-darkred?style=for-the-badge&logo=magisk&logoColor=white">
