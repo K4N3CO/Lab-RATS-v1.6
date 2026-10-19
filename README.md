@@ -20,7 +20,7 @@
 
 > Lightweight Android-Based Remote Administration Tool for Security: *(L.A.B. - R.A.T.S)*
 
-**Developed from the ground up by K4N3CO, Lab-RATS is an open-source, lightweight Android Remote Administration framework** packed with powerful **monitoring** and **interaction capabilities**. The 
+**Developed from the ground up by KAN3C0, Lab-RATS is an open-source, lightweight Android Remote Administration framework** packed with powerful **monitoring** and **interaction capabilities**. The 
 system automates the generation of custom, signed `.apk` files for **deployment onto any Android device**, providing full device telemetry via a **sleek, web-based C2 dashboard**. Built to adapt to **strict modern mobile environments**, it delivers a **robust feature suite** that **operates reliably** across both **legacy** and the **newest Android releases**.
 
 ---
@@ -41,7 +41,7 @@ forwarding**, or **third-party tunneling services** like **Ngrok** or **Pinggy**
 </details>
 
 > [!NOTE]
-> **Lab-RATS now supports IPv4 connections** by **hosting on   Render.com** *(Free Tier Supported)*. See **"Command & Control (C2)" Option 2 below for setup instructions**.
+> **Lab-RATS now supports IPv4 connections** by **hosting on   Render.com** *(Free Tier Supported)*. See **"Command & Control" Option 2** below for **setup instructions**.
 
 ---
 
@@ -322,7 +322,7 @@ emulators**.
 </p>
 
 ### 1. Building the APK (on PC)
-1.  **Download the Repository**: `git clone https://github.com/K4N3CO/Lab-RATS-v1.6.git`
+1.  **Download the Repository**: `git clone https://github.com/KAN3C0/Lab-RATS-v1.6.git`
 2.  **Navigate** to: `cd /Lab-RATS-v1.6/apk-builder/`
 3.  **Execute** the **Builder**:
     *   **Mac/Linux**: `chmod +x build.sh && ./build.sh`
@@ -588,7 +588,7 @@ This tool is for **educational and authorized security testing purposes ONLY!**.
  />
 </p>
 
-**Lab-RATS-v1.6** is **Licensed** to **K4N3C0** under the [MIT License](LICENSE).
+**Lab-RATS-v1.6** is **Licensed** to **KAN3C0** under the [MIT License](LICENSE).
 
 ---
 
@@ -596,4 +596,4 @@ This tool is for **educational and authorized security testing purposes ONLY!**.
 <img src="https://img.shields.io/badge/The one's who MIND don't matter...-The one's who MATTER don't mind-cyan?style=for-the-badge&logo=maserati&logoColor=white">
 <br>
 <p align="center">
-<img src="https://img.shields.io/badge/Developed By-K4N3CO ©2026-darkred?style=for-the-badge&logo=magisk&logoColor=white">
+<img src="https://img.shields.io/badge/Developed By-KAN3C0 ©2026-darkred?style=for-the-badge&logo=magisk&logoColor=white">
