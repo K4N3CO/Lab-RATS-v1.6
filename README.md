@@ -394,8 +394,7 @@ bc1q8d66m0qthnh6nw9hc5wl09m7pfydk46q5w8rxx
 ---
 
 <p align="left">
-  <img src="https://readme-typing-svg.demolab.com?font=Orbitron&
-weight=700&size=28&pause=9900&color=00F2FF&center=false&vCenter=true&width=800&height=70&lines=Video+Clips" alt="Typing Banner"
+  <img src="https://readme-typing-svg.demolab.com?font=Orbitron&weight=700&size=28&pause=9900&color=00F2FF&center=false&vCenter=true&width=800&height=70&lines=Video+Clips" alt="Typing Banner"
  />
 </p>
 
@@ -407,8 +406,7 @@ https://github.com/user-attachments/assets/9cb336c8-748d-48ce-9c8f-f0065654be24
 
 ### Lab-RATS Initial Install Sequence:
 
-https://github.com/user-attachments/assets/dbeffae9-8470
--4592-a314-1fabc5a9362d
+https://github.com/user-attachments/assets/dbeffae9-8470-4592-a314-1fabc5a9362d
 
 ---
 
