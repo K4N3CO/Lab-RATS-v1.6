@@ -444,8 +444,7 @@ https://github.com/user-attachments/assets/50296f14-6875-403a-8484-299a9628746d
 <details>
   <summary>📸 Click to View Web Page Screenshot</summary>
   <br>
-  <img src="https://github.com/user-attachments/assets/920be29b
--88bd-4516-82ff-1deb28cce098" alt="Full Web Page Screenshot" width="100%">
+  <img src="https://github.com/user-attachments/assets/920be29b-88bd-4516-82ff-1deb28cce098" alt="Full Web Page Screenshot" width="80%">
 </details>
 
 ---
@@ -455,7 +454,7 @@ https://github.com/user-attachments/assets/50296f14-6875-403a-8484-299a9628746d
 <details>
   <summary>📸 Click to View Web Page Screenshot</summary>
   <br>
-  <img src="https://github.com/user-attachments/assets/25021056-538d-4392-bbf1-e66a2c5873af" alt="Full Web Page Screenshot" width="100%">
+  <img src="https://github.com/user-attachments/assets/25021056-538d-4392-bbf1-e66a2c5873af" alt="Full Web Page Screenshot" width="80%">
 </details>
 
 ---
@@ -465,7 +464,7 @@ https://github.com/user-attachments/assets/50296f14-6875-403a-8484-299a9628746d
 <details>
   <summary>📸 Click to View Web Page Screenshot</summary>
   <br>
-  <img src="https://github.com/user-attachments/assets/020eff59-9444-4dcd-b987-6c0fbcb6249e" alt="Full Web Page Screenshot" width="100%">
+  <img src="https://github.com/user-attachments/assets/020eff59-9444-4dcd-b987-6c0fbcb6249e" alt="Full Web Page Screenshot" width="80%">
 </details>
 
 ---
@@ -475,7 +474,7 @@ https://github.com/user-attachments/assets/50296f14-6875-403a-8484-299a9628746d
 <details>
   <summary>📸 Click to View Web Page Screenshot</summary>
   <br>
-  <img src="https://github.com/user-attachments/assets/cae2c596-8551-4dbf-80a3-6a9b4cfec58d" alt="Full Web Page Screenshot" width="100%">
+  <img src="https://github.com/user-attachments/assets/cae2c596-8551-4dbf-80a3-6a9b4cfec58d" alt="Full Web Page Screenshot" width="80%">
 </details>
 
 ---
@@ -485,7 +484,7 @@ https://github.com/user-attachments/assets/50296f14-6875-403a-8484-299a9628746d
 <details>
   <summary>📸 Click to View Web Page Screenshot</summary>
   <br>
-  <img src="https://github.com/user-attachments/assets/9adc2ea3-9705-4f61-9d47-329f4d17b373" alt="Full Web Page Screenshot" width="100%">
+  <img src="https://github.com/user-attachments/assets/9adc2ea3-9705-4f61-9d47-329f4d17b373" alt="Full Web Page Screenshot" width="80%">
 </details>
 
 ---
@@ -495,7 +494,7 @@ https://github.com/user-attachments/assets/50296f14-6875-403a-8484-299a9628746d
 <details>
   <summary>📸 Click to View Web Page Screenshot</summary>
   <br>
-  <img src="https://github.com/user-attachments/assets/55726a19-c071-405c-afef-ab50f119f3e0" alt="Full Web Page Screenshot" width="100%">
+  <img src="https://github.com/user-attachments/assets/55726a19-c071-405c-afef-ab50f119f3e0" alt="Full Web Page Screenshot" width="80%">
 </details>
 
 ---
@@ -505,7 +504,7 @@ https://github.com/user-attachments/assets/50296f14-6875-403a-8484-299a9628746d
 <details>
   <summary>📸 Click to View Web Page Screenshot</summary>
   <br>
-  <img src="https://github.com/user-attachments/assets/35c0ff19-fec5-4734-a103-99f260ea7419" alt="Full Web Page Screenshot" width="100%">
+  <img src="https://github.com/user-attachments/assets/35c0ff19-fec5-4734-a103-99f260ea7419" alt="Full Web Page Screenshot" width="80%">
 </details>
 
 ---
@@ -515,7 +514,7 @@ https://github.com/user-attachments/assets/50296f14-6875-403a-8484-299a9628746d
 <details>
   <summary>📸 Click to View Web Page Screenshot</summary>
   <br>
-  <img src="https://github.com/user-attachments/assets/bafdc486-fc2b-4399-99c9-2e6e444d8a18" alt="Full Web Page Screenshot" width="100%">
+  <img src="https://github.com/user-attachments/assets/bafdc486-fc2b-4399-99c9-2e6e444d8a18" alt="Full Web Page Screenshot" width="80%">
 </details>
 
 ---
@@ -525,7 +524,7 @@ https://github.com/user-attachments/assets/50296f14-6875-403a-8484-299a9628746d
 <details>
   <summary>📸 Click to View Web Page Screenshot</summary>
   <br>
-  <img src="https://github.com/user-attachments/assets/2559606d-6025-416c-99b1-8a78e046d31b" alt="Full Web Page Screenshot" width="100%">
+  <img src="https://github.com/user-attachments/assets/2559606d-6025-416c-99b1-8a78e046d31b" alt="Full Web Page Screenshot" width="80%">
 </details>
 
 ---
@@ -536,7 +535,7 @@ https://github.com/user-attachments/assets/50296f14-6875-403a-8484-299a9628746d
   <summary>📸 Click to View Web 
 Page Screenshot</summary>
   <br>
-  <img src="https://github.com/user-attachments/assets/8b1efce6-1d3b-490c-8d73-9dbde39c2a53" alt="Full Web Page Screenshot" width="100%">
+  <img src="https://github.com/user-attachments/assets/8b1efce6-1d3b-490c-8d73-9dbde39c2a53" alt="Full Web Page Screenshot" width="80%">
 </details>
 
 ---
@@ -546,7 +545,7 @@ Page Screenshot</summary>
 <details>
   <summary>📸 Click to View Web Page Screenshot</summary>
   <br>
-  <img src="https://github.com/user-attachments/assets/53d82189-6cb9-4489-835b-b929624181de" alt="Full Web Page Screenshot" width="100%">
+  <img src="https://github.com/user-attachments/assets/53d82189-6cb9-4489-835b-b929624181de" alt="Full Web Page Screenshot" width="80%">
 </details>
 
 ---
@@ -556,7 +555,7 @@ Page Screenshot</summary>
 <details>
   <summary>📸 Click to View Web Page Screenshot</summary>
   <br>
-  <img src="https://github.com/user-attachments/assets/9c7336a1-9770-4881-bfcc-3de331812789" alt="Full Web Page Screenshot" width="100%">
+  <img src="https://github.com/user-attachments/assets/9c7336a1-9770-4881-bfcc-3de331812789" alt="Full Web Page Screenshot" width="80%">
 </details>
 
 ---
@@ -566,7 +565,7 @@ Page Screenshot</summary>
 <details>
   <summary>📸 Click to View Web Page Screenshot</summary>
   <br>
-  <img src="https://github.com/user-attachments/assets/d918e6bf-7b92-42ad-bf17-c38ef1c32615" alt="Full Web Page Screenshot" width="100%">
+  <img src="https://github.com/user-attachments/assets/d918e6bf-7b92-42ad-bf17-c38ef1c32615" alt="Full Web Page Screenshot" width="80%">
 </details>
 
 ---
@@ -585,7 +584,7 @@ This tool is for **educational and authorized security testing purposes ONLY!**.
  />
 </p>
 
-**Lab-RATS-v1.6** is **Licensed** to **KAN3C0** under the [MIT License](LICENSE).
+**Lab-RATS-v1.6** is **Licensed** to **K4N3CO** under the [MIT License](LICENSE).
 
 ---
 
