@@ -104,13 +104,20 @@ function showInfo(e, t, o) {
   const triggerBtn = e ? (e.currentTarget || e.target) : null;
   let titleColor = "var(--neon-cyan)";
   if (triggerBtn) {
-    const parentH2 = triggerBtn.closest("h2, .card, .info-section");
-    if (parentH2) {
-      const h2El = parentH2.tagName.toLowerCase() === "h2" ? parentH2 : parentH2.querySelector("h2");
-      if (h2El) {
-        const computedColor = window.getComputedStyle(h2El).color;
-        if (computedColor && computedColor !== "rgba(0, 0, 0, 0)") {
-          titleColor = computedColor;
+    const parentLabel = triggerBtn.closest(".info-label");
+    if (parentLabel && parentLabel.style.color) {
+      titleColor = parentLabel.style.color;
+    } else {
+      const parentCard = triggerBtn.closest("h2, .card, .info-item, .info-section");
+      if (parentCard) {
+        const h2El = parentCard.tagName.toLowerCase() === "h2" ? parentCard : parentCard.querySelector("h2, .info-label");
+        if (h2El && h2El.style.color) {
+          titleColor = h2El.style.color;
+        } else if (h2El) {
+          const computedColor = window.getComputedStyle(h2El).color;
+          if (computedColor && computedColor !== "rgba(0, 0, 0, 0)") {
+            titleColor = computedColor;
+          }
         }
       }
     }
