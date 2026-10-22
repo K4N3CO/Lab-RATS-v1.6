@@ -13,6 +13,7 @@ import android.os.Environment;
 import android.os.PowerManager;
 import android.provider.Settings;
 import android.util.Log;
+import android.content.Context;
 import com.google.android.material.button.MaterialButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -745,7 +746,54 @@ public class MainActivity extends AppCompatActivity {
         return "127.0.0.1";
     }
 
-    public static String getLocalIPv6Address() { return getLocalIpAddress(); }
+    public static String getLocalIPv6Address() {
+        try {
+            List<NetworkInterface> interfaces = Collections.list(NetworkInterface.getNetworkInterfaces());
+            for (NetworkInterface intf : interfaces) {
+                if (intf.isLoopback() || !intf.isUp()) continue;
+                List<InetAddress> addrs = Collections.list(intf.getInetAddresses());
+                for (InetAddress addr : addrs) {
+                    if (addr instanceof java.net.Inet6Address && !addr.isLoopbackAddress() && !addr.isLinkLocalAddress()) {
+                        String ip = addr.getHostAddress();
+                        if (ip != null) {
+                            int idx = ip.indexOf('%');
+                            if (idx >= 0) ip = ip.substring(0, idx);
+                            return ip;
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            Log.e("MainActivity", "getLocalIPv6Address error: " + e.getMessage());
+        }
+        return getLocalIpAddress();
+    }
+
+    public static String getBestIpForConnection(Context context) {
+        try {
+            android.net.ConnectivityManager cm = (android.net.ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            if (cm != null) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    android.net.Network activeNetwork = cm.getActiveNetwork();
+                    android.net.NetworkCapabilities caps = cm.getNetworkCapabilities(activeNetwork);
+                    if (caps != null && caps.hasTransport(android.net.NetworkCapabilities.TRANSPORT_WIFI)) {
+                        return getLocalIpAddress();
+                    }
+                } else {
+                    android.net.NetworkInfo activeInfo = cm.getActiveNetworkInfo();
+                    if (activeInfo != null && activeInfo.isConnected() && activeInfo.getType() == android.net.ConnectivityManager.TYPE_WIFI) {
+                        return getLocalIpAddress();
+                    }
+                }
+            }
+        } catch (Exception ignored) {}
+
+        String v6 = getLocalIPv6Address();
+        if (v6 != null && !v6.equals("127.0.0.1") && v6.contains(":")) {
+            return v6;
+        }
+        return getLocalIpAddress();
+    }
 
     private boolean isIPv6(String ip) { return ip != null && ip.contains(":"); }
 

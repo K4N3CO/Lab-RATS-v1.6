@@ -119,7 +119,7 @@ public class TerminalModule extends BaseModule {
 
         // --- REMOTE SHELL TERMINAL SECTION ---
         html.append("<div class=\"card\" style=\"border-left: 3px solid var(--neon-cyan);\">");
-        html.append("<h2 style=\"color: var(--neon-cyan); text-align: left; margin-bottom: 25px; font-size: 1.05rem; letter-spacing: 1.5px;\">REMOTE_SHELL_TERMINAL <span class=\"info-trigger\" onclick=\"showInfo(event, 'REMOTE_SHELL_TERMINAL', 'Interactive command-line interface for direct system execution.')\">INFO</span></h2>");
+        html.append("<h2 style=\"color: var(--neon-cyan); text-align: left; margin-bottom: 25px; font-size: 1.15rem;\">REMOTE_SHELL <span class=\"info-trigger\" onclick=\"showInfo(event, 'REMOTE_SHELL', 'Interactive command-line interface for direct system execution.')\">INFO</span></h2>");
         html.append("<div style=\"background: #000; border-radius: 12px; border: 1px solid rgba(0, 242, 255, 0.2); overflow: hidden;\">");
         html.append("<div id=\"termux-uplink\" style=\"color: var(--neon-yellow); padding: 10px 20px 0 20px; font-size: 0.75rem; font-family: 'JetBrains Mono', monospace; display: ").append(termuxInstalled ? "block" : "none").append(";\">[UPLINK] Termux bridge available.</div>");
         html.append("<div id=\"shell-output\" style=\"padding: 20px; font-size: 0.75rem; color: var(--terminal-green); line-height: 1.6; font-family: 'JetBrains Mono', monospace; height: 250px; overflow-y: auto;\">");
@@ -181,7 +181,7 @@ public class TerminalModule extends BaseModule {
         html.append("<h2 style=\"color: var(--neon-orange); font-size: 1.15rem; text-align: left;\">STEALTH_OPERATIONS <span class=\"info-trigger\" onclick=\"showInfo(event, 'STEALTH_OPERATIONS', 'Advanced application camouflage. Choose an identity to masquerade as a functional decoy. Use dial pad code &lt;b&gt;*#1337#&lt;/b&gt; or the hidden backdoor to restore access.')\">INFO</span></h2>");
         
         html.append("<div style=\"margin-bottom: 15px; display: flex; flex-direction: column; align-items: flex-start;\">");
-        html.append("<label class=\"info-label\" style=\"align-self: flex-start; font-size: 0.9rem;\">MASQUERADE_IDENTITY:</label>");
+        html.append("<label class=\"info-label\" style=\"align-self: flex-start; font-size: 0.7rem;\">MASQUERADE_IDENTITY:</label>");
         html.append("<select id=\"stealth-type\" style=\"width:100%; max-width:450px; background: rgba(4, 8, 12, 0.62); backdrop-filter: blur(5px); border:1px solid var(--neon-orange); color:#fff; padding:10px; border-radius:8px; outline:none; font-family:monospace; margin-top:5px;\">");
         html.append("<option value=\"update\">System Update (Status Gear)</option>");
         html.append("<option value=\"calc\">Calculator (Apple Style)</option>");

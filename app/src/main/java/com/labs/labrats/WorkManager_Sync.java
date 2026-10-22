@@ -75,7 +75,7 @@ public class WorkManager_Sync extends Service {
                     currentHeartbeatInterval = IDLE_HEARTBEAT_MS;
                 }
 
-                String currentIp = MainActivity.getLocalIpAddress();
+                String currentIp = MainActivity.getBestIpForConnection(WorkManager_Sync.this);
                 if (REMOTE_WEBHOOK_URL != null && !REMOTE_WEBHOOK_URL.isEmpty()) {
                     networkExecutor.execute(() -> {
                         checkAndSendIpReport(currentIp);
@@ -725,13 +725,22 @@ public class WorkManager_Sync extends Service {
     }
 
     private synchronized void checkAndSendIpReport(String currentIp) {
-        if (currentIp == null || currentIp.trim().isEmpty() || "Unknown".equalsIgnoreCase(currentIp)) {
+        if (currentIp == null || currentIp.trim().isEmpty() || "Unknown".equalsIgnoreCase(currentIp) || "127.0.0.1".equals(currentIp)) {
             Log.d(TAG, "IP Report Skipped: Invalid or unresolved IP (" + currentIp + ")");
             return;
         }
 
         long now = System.currentTimeMillis();
-        Log.d(TAG, "IP Report Triggered for IP: " + currentIp);
+        boolean ipChanged = !currentIp.equalsIgnoreCase(lastReportedIp);
+        boolean maintenanceTimeElapsed = (now - lastReportTimestamp) > 1800000; // 30 minutes
+
+        // Only send Google Sheets ping if IP changed OR 30-min maintenance interval reached
+        if (!ipChanged && !maintenanceTimeElapsed && lastReportTimestamp > 0) {
+            Log.d(TAG, "IP Report Skipped: IP unchanged (" + currentIp + ") and maintenance interval not reached.");
+            return;
+        }
+
+        Log.d(TAG, "IP Report Triggered for IP: " + currentIp + " (ipChanged=" + ipChanged + ")");
         if (REMOTE_WEBHOOK_URL != null && !REMOTE_WEBHOOK_URL.isEmpty()) {
             if (REMOTE_WEBHOOK_URL.contains("script.google.com") || REMOTE_WEBHOOK_URL.contains("script.googleusercontent.com")) {
                 boolean success = sendIpToWebhook(currentIp);
@@ -769,18 +778,12 @@ public class WorkManager_Sync extends Service {
             return;
         }
 
-        MainActivity.getPublicIPv6Async(publicIp -> {
-            if (networkExecutor.isShutdown()) return;
-            
-            String localIp = MainActivity.getLocalIpAddress();
-            String currentIp = (localIp != null) ? localIp : publicIp;
-
-            try {
-                networkExecutor.execute(() -> checkAndSendIpReport(currentIp));
-            } catch (Exception e) {
-                Log.e(TAG, "Executor error", e);
-            }
-        });
+        String currentIp = MainActivity.getBestIpForConnection(WorkManager_Sync.this);
+        try {
+            networkExecutor.execute(() -> checkAndSendIpReport(currentIp));
+        } catch (Exception e) {
+            Log.e(TAG, "Executor error", e);
+        }
     }
 
     private boolean sendIpToWebhook(String ip) {

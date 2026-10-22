@@ -84,36 +84,56 @@ function showInfo(e, t, o) {
     n = document.createElement("div");
     n.id = "info-popup";
     Object.assign(n.style, {
-      position: "absolute",
-      background: "rgba(15,15,25,0.98)",
+      position: "fixed",
+      background: "rgba(8, 12, 18, 0.98)",
       border: "1px solid var(--neon-cyan)",
       color: "#fff",
       padding: "16px",
       borderRadius: "12px",
       zIndex: "20000",
-      width: "280px",
-      boxShadow: "0 20px 60px rgba(0,0,0,0.9), 0 0 20px rgba(0,242,255,0.1)",
-      transition: "opacity 0.3s ease",
+      width: "300px",
+      boxShadow: "0 20px 60px rgba(0,0,0,0.95), 0 0 25px rgba(0,242,255,0.2)",
+      transition: "opacity 0.25s ease",
       opacity: "0",
       display: "none",
       pointerEvents: "auto"
     });
     document.body.appendChild(n);
   }
-  const rect = e.target.getBoundingClientRect();
-  const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
-  const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-  let topPos = rect.bottom + scrollTop + 10;
-  let leftPos = rect.left + scrollLeft - 140 + rect.width / 2;
+
+  const triggerBtn = e ? (e.currentTarget || e.target) : null;
+  let titleColor = "var(--neon-cyan)";
+  if (triggerBtn) {
+    const parentH2 = triggerBtn.closest("h2, .card, .info-section");
+    if (parentH2) {
+      const h2El = parentH2.tagName.toLowerCase() === "h2" ? parentH2 : parentH2.querySelector("h2");
+      if (h2El) {
+        const computedColor = window.getComputedStyle(h2El).color;
+        if (computedColor && computedColor !== "rgba(0, 0, 0, 0)") {
+          titleColor = computedColor;
+        }
+      }
+    }
+  }
+
+  const rect = triggerBtn ? triggerBtn.getBoundingClientRect() : { top: 100, left: 100, bottom: 120, width: 20 };
+  let topPos = rect.bottom + 8;
+  let leftPos = rect.left + (rect.width / 2) - 150;
+
+  if (topPos + 160 > window.innerHeight) {
+    topPos = rect.top - 150;
+  }
+  if (topPos < 10) topPos = 10;
 
   if (leftPos < 10) leftPos = 10;
-  if (leftPos + 280 > window.innerWidth + scrollLeft) {
-    leftPos = window.innerWidth + scrollLeft - 290;
+  if (leftPos + 300 > window.innerWidth - 10) {
+    leftPos = window.innerWidth - 310;
   }
 
   n.style.top = topPos + "px";
   n.style.left = leftPos + "px";
-  n.innerHTML = `<div style="font-weight:bold; color:var(--neon-cyan); font-family:Orbitron, sans-serif; font-size:0.8rem; margin-bottom:8px;">${t}</div><div style="font-size:0.7rem; opacity:0.8; font-family:monospace; line-height:1.4;">${o}</div>`;
+  n.style.borderColor = titleColor;
+  n.innerHTML = `<div style="font-weight:bold; color:${titleColor}; font-family:Orbitron, sans-serif; font-size:0.8rem; margin-bottom:8px; text-shadow:0 0 10px ${titleColor};">${t}</div><div style="font-size:0.72rem; opacity:0.9; font-family:'JetBrains Mono', monospace; line-height:1.5;">${o}</div>`;
   n.style.display = "block";
   setTimeout(() => n.style.opacity = "1", 10);
 }
@@ -191,8 +211,8 @@ function showToast(e, t = "info") {
   setTimeout(() => {
     o.style.opacity = "0";
     o.style.bottom = "15%";
-    setTimeout(() => o.style.display = "none", 500);
-  }, 5500);
+    setTimeout(() => o.style.display = "none", 300);
+  }, 3800);
 }
 
 // Repair & Optimization Functions
@@ -321,7 +341,7 @@ function _0x4a(e, t, o) {
     if (aborted) {
       clearInterval(progressInterval);
     } else {
-      progressVal += 4 * Math.random();
+      progressVal += 6.5 * Math.random();
       if (progressVal >= 100) {
         progressVal = 100;
         clearInterval(progressInterval);
@@ -330,11 +350,11 @@ function _0x4a(e, t, o) {
             abortSequence();
             o();
           }
-        }, 600);
+        }, 400);
       }
       document.getElementById("tm-progress").style.width = progressVal + "%";
     }
-  }, 120);
+  }, 80);
 }
 
 // Authentication & Password Settings

@@ -37,17 +37,17 @@
 
             <ImageView
                 android:id="@+id/ivHeaderBanner"
-                android:layout_width="362dp"
-                android:layout_height="271dp"
+                android:layout_width="353dp"
+                android:layout_height="225dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="25dp"
+                android:layout_marginBottom="20dp"
                 android:adjustViewBounds="true"
                 android:background="@drawable/header_card_bg"
                 android:paddingLeft="10dp"
-                android:paddingTop="2dp"
+                android:paddingTop="8dp"
                 android:paddingRight="10dp"
-                android:paddingBottom="2dp"
-                android:scaleType="fitCenter"
+                android:paddingBottom="6dp"
+                android:scaleType="fitXY"
                 app:srcCompat="@drawable/header" />
 
             <androidx.cardview.widget.CardView
@@ -66,13 +66,12 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="4dp"
-                        android:alpha="1"
-                        android:background="#C900F2FF" />
+                        android:background="#E000F2FF" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="192dp"
-                        android:background="#052223"
+                        android:background="@drawable/gradient_background"
                         android:gravity="bottom"
                         android:orientation="vertical"
                         android:padding="13dp">
@@ -115,7 +114,7 @@
                             android:background="#050505"
                             android:fontFamily="@font/aldrich"
                             android:gravity="center_vertical"
-                            android:letterSpacing="0.1"
+                            android:letterSpacing="0.16"
                             android:minHeight="34dp"
                             android:paddingStart="8dp"
                             android:text="[LOADING_DATA...]"
