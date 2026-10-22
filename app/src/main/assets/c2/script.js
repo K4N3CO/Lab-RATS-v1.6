@@ -1007,12 +1007,14 @@ async function checkGhostStatus() {
       if (antiRemovalBtn) {
         if (data.antiRemoval) {
           antiRemovalBtn.innerHTML = "ANTI-REMOVAL SHIELD: ON";
-          antiRemovalBtn.style.borderColor = "var(--neon-green)";
-          antiRemovalBtn.style.color = "var(--neon-green)";
+          antiRemovalBtn.style.borderColor = "var(--neon-yellow)";
+          antiRemovalBtn.style.color = "var(--neon-yellow)";
+          antiRemovalBtn.style.background = "rgba(255, 255, 0, 0.15)";
         } else {
           antiRemovalBtn.innerHTML = "ANTI-REMOVAL SHIELD: OFF";
-          antiRemovalBtn.style.borderColor = "var(--danger)";
-          antiRemovalBtn.style.color = "var(--danger)";
+          antiRemovalBtn.style.borderColor = "var(--neon-yellow)";
+          antiRemovalBtn.style.color = "var(--neon-yellow)";
+          antiRemovalBtn.style.background = "rgba(255, 255, 0, 0.03)";
         }
       }
     }
