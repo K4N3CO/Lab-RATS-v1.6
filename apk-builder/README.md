@@ -1,53 +1,17 @@
-```
- ┌───────────────────────────────────────────────────────────────────────┐
- │                                  .-         .                         │
- │                               ....-        :                          │
- │                            -==--+:.+. ..  -..+:-+                     │
- │                            ++---:+.-==+==#:.+---+#                    │
- │                             :=---:+++++=++=**-:-:                     │
- │                               --+++:-=+++++++-=                       │
- │                  .-.         :--+==:++-:-**+-+-                       │
- │                    -.     .==:--+:+++=++++++++#.                      │
- │                    :-    =---=::-++.=:.=.-==+....                     │
- │                   -+   .=-=++===-:.---=::-.-:==...-.==.               │
- │                 .==    =--=:=-=++:+:--::-==--...=+-+=+-:              │
- │               ..==.   ---++=:-++++++++===+++=+..:=-*-+:.              │
- │                :==    -:-.+:-=++-+++++##++=---=++::=+.                │
- │                .-=:  .---=++++-++++#####*++..::--. .                  │
- │                 .--++.--:----=+---=-++#++==.       .                  │
- │                   --------=--:=:-:-====+++-                           │
- │                       .--++++--++:+++==:=+.                           │
- │                        .:+++::::--:..:-+=                             │
- │                       .--=+=-+-+    -:---*---                         │
- │                                                                       │
- │     ██╗      █████╗ ██████╗       ██████╗  █████╗ ████████╗██████╗    │
- │     ██║     ██╔══██╗██╔══██╗      ██╔══██╗██╔══██╗╚══██╔══╝██╔═══╝    │
- │     ██║     ███████║██████╔╝█████╗██████╔╝███████║   ██║   ██████╗    │
- │     ██║     ██╔══██║██╔══██╗╚════╝██╔══██╗██╔══██║   ██║   ╚════█║    │
- │     ███████╗██║  ██║██████╔╝      ██║  ██║██║  ██║   ██║   ██████║    │
- │     ╚══════╝╚═╝  ╚═╝╚═════╝       ╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═════╝    │
- │                                                                       │
- │     ----------> Android APK Builder | v1.6.0 Hardened <----------     │
- │                                                                       │
- │   The one's who MIND don't matter. The one's who MATTER don't mind.   │
- │                         DEVELOPED BY K4N3CO                           │
- │                               © 2026                                  │
- └───────────────────────────────────────────────────────────────────────┘
-  ```
+# 🔥 Lab-RATS APK-Builder Tool
 
+<img width="709" height="762" alt="Screenshot 2026-10-25 at 2 12 25 AM" src="https://github.com/user-attachments/assets/925a35b2-2719-42b2-918f-955b778c6d31" />
+
+---
 
 <img src="https://img.shields.io/badge/JDK-21-gold?style=for-the-badge&logo=openjdk&logoColor=white"> <img src="https://img.shields.io/badge/Gradle-8.10.2-C0181?style=for-the-badge&logo=gradle&logoColor=white">
 <img src="https://img.shields.io/badge/Android-SDK_34-white?style=for-the-badge&logo=android&logoColor=white"> <img src="https://img.shields.io/badge/License-MIT-blue?style=for-the-badge&logo=opensourceinitiative&logoColor=white">
 <img src="https://img.shields.io/badge/Focus-Remote_Access-red?style=for-the-badge&logo=airplayvideo&logoColor=white"> <img src="https://img.shields.io/badge/Security-AES_256-blueviolet?style=for-the-badge&logo=dependencycheck&logoColor=white">
 <img src="https://img.shields.io/badge/Network-Direct_IPv6-darkred?style=for-the-badge&logo=p2p&logoColor=white"> <img src="https://img.shields.io/badge/Mode-Stealth_FUD-orange?style=for-the-badge&logo=ghost&logoColor=white">
 
-# 🔥 Lab-RATS APK Builder
+---
 
-## 👨‍💻 Developer
-
-<b><img src="https://img.shields.io/badge/Developed By-K4N3CO.LABS ©2026-darkred?style=for-the-badge&logo=maserati&logoColor=white">
-</b><br>
-
+## 👨‍💻 Developer: K4N3CO
 - 🔗 GitHub: [github.com/K4N3CO](https://github.com/K4N3CO)
 
 ---
@@ -73,25 +37,31 @@
 
 ### Windows
 
-**PowerShell (Recommended)**
+**PowerShell**
 ```powershell
-cd Lab-RATS-main/apk-builder
+git clone https://github.com/K4N3CO/Lab-RATS-v1.6.git
+cd Lab-RATS-v1.6/apk-builder
 .\build.ps1
 ```
 
 **Command Prompt**
 ```cmd
-cd Lab-RATS-main/apk-builder
+git clone https://github.com/K4N3CO/Lab-RATS-v1.6.git
+cd Lab-RATS-v1.6/apk-builder
 build.bat
 ```
 
 ### Linux / macOS
 ```bash
-cd Lab-RATS-main/apk-builder
+git clone https://github.com/K4N3CO/Lab-RATS-v1.6.git
+cd Lab-RATS-v1.6/apk-builder
 chmod +x build.sh
 ./build.sh
 ```
-### APK-Builder Example (Macbook-Air M2)
+
+---
+
+## APK-Builder Example Video Clip *(Macbook Air M2)*
 
 https://github.com/user-attachments/assets/891459a2-4769-4dd3-8679-f586eca81efc
 
@@ -105,7 +75,7 @@ https://github.com/user-attachments/assets/891459a2-4769-4dd3-8679-f586eca81efc
 | ------------ | ------------ | ------------------------------------ |
 | **Java JDK** | 17 or 21     | Builder auto-installs or shows guide |
 
-### Optional: (for standalone vector generation)
+### Optional: *(for standalone vector generation)*
 
 | Tool            | Platform | Install                        |
 | --------------- | -------- | ------------------------------ |
@@ -116,7 +86,7 @@ https://github.com/user-attachments/assets/891459a2-4769-4dd3-8679-f586eca81efc
 
 ## 🛠️ Build Options
 
-### 1. Start Build (Configure & Build)
+### 1. Start Build *(Configure & Build)*
 Complete guided setup:
 - **Keystore**: Unique signing certificate generation.
 - **Identity**: Select initial masquerade *(Update, Calc, Weather, Settings, or Logo)*.
@@ -147,7 +117,7 @@ Generate standalone tactical vectors without building the main APK. Includes 12 
 
 ## ☁️ Hosting Strategies
 
-**The Infection Wizard** automates payload delivery through three primary methods:
+**The Infection Wizard automates payload delivery through three primary methods**:
 
 - **Anonymous Cloud (Multi-Cloud Fallback)**: Automatically attempts upload to **Catbox.moe**. If blocked or down, automatically falls back to **Litterbox** and **Tmpfiles.org**, or prompts for a manual URL input so deployment is never blocked.
 - **Direct IP (IPv6)**: Generates a direct download link using the device's current IPv6 address and the C2 port. Best for targeted, proximity-based attacks or private network execution.
@@ -158,7 +128,7 @@ Generate standalone tactical vectors without building the main APK. Includes 12 
 ## ☕ Java Installation
 
 ### Automatic Setup
-The builder attempts to detect and install Java automatically on most systems. 
+**The builder attempts to detect and install Java automatically on most systems**. 
 
 | Platform          | Detection Method                      |
 | ----------------- | ------------------------------------- |
@@ -166,9 +136,11 @@ The builder attempts to detect and install Java automatically on most systems.
 | **macOS**         | Homebrew                              |
 | **Linux**         | apt / dnf / pacman                    |
 
-### Manual Installation (Recommended: JDK 17 or 21)
+---
 
-If the builder cannot find Java, please install it manually:
+### ☕ Manual Java Installation *(Mandatory: JDK 17 or 21)*
+
+**If the builder cannot find Java, please install it manually**:
 
 **Windows (PowerShell)**
 ```powershell
@@ -209,7 +181,7 @@ sudo pacman -S jdk17-openjdk
 
 ## 🎭 Masquerade Identities
 
-The app icon and name transform immediately after installation on the target device based on your selection. The base installation uses the `default_app_icon_robot.png`.
+**The app icon and name transform immediately after installation on the target device based on your selection. The base installation uses the `default_app_icon_robot.png`.**
 
 | Option | Masquerade Identity | Icon Style | Target UI |
 | :--- | :--- | :--- | :--- |
@@ -223,7 +195,7 @@ The app icon and name transform immediately after installation on the target dev
 
 ## 💉 Weaponization Vectors
 
-The builder **supports 12 tactical delivery methods** across the Lab and Wizard:
+**The builder supports 12 tactical delivery methods across the Lab and Wizard**:
 
 1. **Zero-Click MP4**: Utilizes media parser heap overflows for background execution.
 2. **Stealth PDF**: Document-based URI trigger for auto-download/install.
@@ -242,7 +214,7 @@ The builder **supports 12 tactical delivery methods** across the Lab and Wizard:
 
 ## 🔐 Persistence Layers (v1.6.0)
 
-The "Hardened" build includes **multi-layer persistence**:
+**The "Hardened" build includes multi-layer persistence**:
 
 1. **Accessibility Watchdog**: Uses high-survival service status to reanimate the core if killed.
 2. **WakeLock Sync**: Maintains CPU activity during network reporting in deep sleep.
@@ -253,7 +225,7 @@ The "Hardened" build includes **multi-layer persistence**:
 
 ## 📊 Google Sheet Integration
 
-To **exfiltrate data to Google Sheets**, follow these setup steps:
+**To exfiltrate data to Google Sheets, follow these setup steps**:
 
 1. **Create Sheet**: Go to [sheets.google.com](https://sheets.google.com) and create a new blank sheet.
 2. **Add Script**: Go to `Extensions` -> `Apps Script` and paste the `webhook.gs` code (found in the main project folder).
@@ -266,7 +238,7 @@ To **exfiltrate data to Google Sheets**, follow these setup steps:
 
 Built **payloads are saved to**:
 ```
-/Lab-RATS-main/apk-builder/output/
+/Lab-RATS-v1.6/apk-builder/output/
 ```
 
 ### Naming Format:
@@ -301,8 +273,8 @@ Built **payloads are saved to**:
 ---
 
 <p align="center">
-  <b><img src="https://img.shields.io/badge/Developed By-K4N3CO.LABS ©2026-darkred?style=for-the-badge&logo=maserati&logoColor=white">
+  <b><img src="https://img.shields.io/badge/Developed By-K4N3CO ©2026-darkred?style=for-the-badge&logo=magisk&logoColor=white">
 </b><br>
 
 <p align="center"> 
-<b><img src="https://img.shields.io/badge/The one's who MIND don't matter-The one's who MATTER don't mind-cyan?style=for-the-badge&logo=counterstrike&logoColor=white">
+<b><img src="https://img.shields.io/badge/The ones who MIND don't matter-The ones who MATTER don't mind-cyan?style=for-the-badge&logo=maserati &logoColor=white">
