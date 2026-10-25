@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Sky Blue background base -->
+    <path
+        android:fillColor="#1E88E5"
+        android:pathData="M54,10 C29.7,10 10,29.7 10,54 C10,78.3 29.7,98 54,98 C78.3,98 98,78.3 98,54 C98,29.7 78.3,10 54,10 Z"/>
+
+    <!-- Sun -->
+    <path
+        android:fillColor="#FFC107"
+        android:pathData="M54,28 C61.7,28 68,34.3 68,42 C68,49.7 61.7,56 54,56 C46.3,56 40,49.7 40,42 C40,34.3 46.3,28 54,28 Z"/>
+
+    <!-- Sun Rays -->
+    <path
+        android:fillColor="#FFC107"
+        android:pathData="M54,20 V24 M54,60 V64 M32,42 H36 M72,42 H76"
+        android:strokeColor="#FFC107"
+        android:strokeWidth="3"
+        android:strokeLineCap="round"/>
+
+    <!-- Cloud -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M42,76 C36.5,76 32,71.5 32,66 C32,61.2 35.4,57.2 40,56.3 C41.2,50.5 46.3,46 52.5,46 C58.2,46 63,49.8 64.5,55.1 C65.3,54.9 66.1,54.8 67,54.8 C72.5,54.8 77,59.3 77,64.8 C77,70.3 72.5,74.8 67,74.8 L42,76 Z"/>
+</vector>

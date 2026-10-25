@@ -37,10 +37,10 @@
 
             <ImageView
                 android:id="@+id/ivHeaderBanner"
-                android:layout_width="353dp"
-                android:layout_height="225dp"
+                android:layout_width="352dp"
+                android:layout_height="240dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="15dp"
                 android:adjustViewBounds="true"
                 android:background="@drawable/header_card_bg"
                 android:paddingLeft="10dp"
@@ -70,7 +70,7 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="192dp"
+                        android:layout_height="184dp"
                         android:background="@drawable/gradient_background"
                         android:gravity="bottom"
                         android:orientation="vertical"

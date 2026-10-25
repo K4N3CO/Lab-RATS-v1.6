@@ -1,3 +1,6 @@
+@rem Ensure conflicting deprecated AGP environment variables are cleared
+set ANDROID_PREFS_ROOT=
+
 @rem
 @rem Copyright 2015 the original author or authors.
 @rem

@@ -13,5 +13,24 @@ dependencyResolutionManagement {
     }
 }
 
+// Fix AGP AndroidLocationsException when both ANDROID_PREFS_ROOT and ANDROID_USER_HOME env vars are set
+if (System.getenv("ANDROID_PREFS_ROOT") != null && System.getenv("ANDROID_USER_HOME") != null) {
+    try {
+        def env = System.getenv()
+        def cl = env.getClass()
+        def field = cl.getDeclaredField("m")
+        field.setAccessible(true)
+        def map = (Map) field.get(env)
+        map.remove("ANDROID_PREFS_ROOT")
+    } catch (Exception e) {
+        try {
+            Class pe = Class.forName("java.lang.ProcessEnvironment")
+            def field = pe.getDeclaredField("theCaseInsensitiveEnvironment")
+            field.setAccessible(true)
+            ((Map) field.get(null)).remove("ANDROID_PREFS_ROOT")
+        } catch (Exception ex) {}
+    }
+}
+
 rootProject.name = "Lab-RATS"
 include ':app'

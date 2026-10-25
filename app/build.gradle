@@ -69,13 +69,17 @@ android {
             // and to allow the app to pass environment checks during local testing.
             debuggable false
             minifyEnabled false
-            signingConfig signingConfigs.release
+            if (keystorePropertiesFile.exists() && signingConfigs.release.storeFile != null) {
+                signingConfig signingConfigs.release
+            }
         }
         release {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
+            if (keystorePropertiesFile.exists() && signingConfigs.release.storeFile != null) {
+                signingConfig signingConfigs.release
+            }
         }
     }
 
@@ -158,20 +162,3 @@ project.afterEvaluate {
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

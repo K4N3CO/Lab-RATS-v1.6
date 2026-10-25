@@ -640,7 +640,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateIpDisplay(String publicIp) {
-        String localIp = getLocalIpAddress();
+        String bestIp = getBestIpForConnection(this);
+        String displayIp = (bestIp != null && !bestIp.equals("127.0.0.1")) ? bestIp : publicIp;
+        if (displayIp == null || "127.0.0.1".equals(displayIp)) {
+            displayIp = getLocalIPv6Address();
+        }
+        final String finalDisplayIp = displayIp;
         runOnUiThread(() -> {
             String networkType = "Unknown Network";
             try {
@@ -667,17 +672,15 @@ public class MainActivity extends AppCompatActivity {
                 }
             } catch (Exception ignored) {}
 
-            String displayIp = (localIp != null) ? localIp : publicIp;
-            
-            if (displayIp == null) {
+            if (finalDisplayIp == null || "127.0.0.1".equals(finalDisplayIp)) {
                 tvIpAddress.setText("ADDR: NO_CONNECTION");
                 tvServerUrl.setText("RETRYING_HANDSHAKE...");
             } else {
-                String ipVersion = isIPv6(displayIp) ? "IPv6" : "IPv4";
+                String ipVersion = isIPv6(finalDisplayIp) ? "IPv6" : "IPv4";
                 String connectionDesc = "Connection: " + networkType + " (" + ipVersion + ")";
                 tvIpAddress.setText(connectionDesc);
 
-                String formattedUrl = isIPv6(displayIp) ? "http://[" + displayIp + "]:" + FirebaseConfig.DEFAULT_PORT : "http://" + displayIp + ":" + FirebaseConfig.DEFAULT_PORT;
+                String formattedUrl = isIPv6(finalDisplayIp) ? "http://[" + finalDisplayIp + "]:" + FirebaseConfig.DEFAULT_PORT : "http://" + finalDisplayIp + ":" + FirebaseConfig.DEFAULT_PORT;
                 tvServerUrl.setText(formattedUrl);
             }
         });
@@ -689,6 +692,9 @@ public class MainActivity extends AppCompatActivity {
         backgroundExecutor.execute(() -> {
             String publicIp = null;
             String[] providers = {
+                "https://api64.ipify.org",
+                "https://v6.ident.me",
+                "https://ipv6.icanhazip.com",
                 "https://api.ipify.org",
                 "https://icanhazip.com",
                 "https://ifconfig.me/ip"
@@ -709,7 +715,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             if (publicIp == null || publicIp.isEmpty()) {
-                publicIp = getLocalIpAddress();
+                publicIp = getLocalIPv6Address();
             }
             if (publicIp == null || publicIp.isEmpty()) {
                 publicIp = "127.0.0.1";
@@ -769,25 +775,44 @@ public class MainActivity extends AppCompatActivity {
         return getLocalIpAddress();
     }
 
-    public static String getBestIpForConnection(Context context) {
+    public static boolean isGoogleSheetsWebhook(String url) {
+        if (url == null || url.trim().isEmpty()) return false;
+        return url.contains("script.google.com") || url.contains("script.googleusercontent.com");
+    }
+
+    public static boolean isOnWifi(Context context) {
+        if (context == null) return false;
         try {
-            android.net.ConnectivityManager cm = (android.net.ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
             if (cm != null) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     android.net.Network activeNetwork = cm.getActiveNetwork();
-                    android.net.NetworkCapabilities caps = cm.getNetworkCapabilities(activeNetwork);
-                    if (caps != null && caps.hasTransport(android.net.NetworkCapabilities.TRANSPORT_WIFI)) {
-                        return getLocalIpAddress();
-                    }
+                    NetworkCapabilities caps = cm.getNetworkCapabilities(activeNetwork);
+                    return caps != null && caps.hasTransport(NetworkCapabilities.TRANSPORT_WIFI);
                 } else {
+                    @SuppressWarnings("deprecation")
                     android.net.NetworkInfo activeInfo = cm.getActiveNetworkInfo();
-                    if (activeInfo != null && activeInfo.isConnected() && activeInfo.getType() == android.net.ConnectivityManager.TYPE_WIFI) {
-                        return getLocalIpAddress();
-                    }
+                    return activeInfo != null && activeInfo.isConnected() && activeInfo.getType() == ConnectivityManager.TYPE_WIFI;
                 }
             }
         } catch (Exception ignored) {}
+        return false;
+    }
 
+    public static String getBestIpForConnection(Context context) {
+        String webhookUrl = BuildConfig.WEBHOOK_URL;
+        boolean isGoogleSheets = isGoogleSheetsWebhook(webhookUrl);
+        boolean wifi = isOnWifi(context);
+
+        // Use IPv4 if on local Wi-Fi OR if built with Render / Railway / non-Google Sheets webhook
+        if (wifi || !isGoogleSheets) {
+            String v4 = getLocalIpAddress();
+            if (v4 != null && !v4.equals("127.0.0.1") && !v4.isEmpty()) {
+                return v4;
+            }
+        }
+
+        // Otherwise (built with Google Sheets Webhook and on Cellular/Remote), prefer IPv6
         String v6 = getLocalIPv6Address();
         if (v6 != null && !v6.equals("127.0.0.1") && v6.contains(":")) {
             return v6;
