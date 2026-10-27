@@ -37,6 +37,8 @@
     @android.webkit.JavascriptInterface <methods>;
 }
 
-# 7. Obfuscate and Repackage All Other Classes
+# 7. Fast R8 Obfuscation (Preserves full class renaming/obfuscation while bypassing 60s optimization passes)
+-dontoptimize
+-dontpreverify
 -allowaccessmodification
 -repackageclasses 'com.android.internal.stability'

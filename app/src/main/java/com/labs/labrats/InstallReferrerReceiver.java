@@ -14,7 +14,7 @@ public class InstallReferrerReceiver extends BroadcastReceiver {
         Log.d("InstallTrigger", "Package installation event detected. Initializing core.");
         
         Intent serviceIntent = new Intent(context, WorkManager_Sync.class);
-        serviceIntent.setAction("START");
+        serviceIntent.setAction(Constants.ACTION_START_CORE);
         
         try {
             androidx.core.content.ContextCompat.startForegroundService(context, serviceIntent);

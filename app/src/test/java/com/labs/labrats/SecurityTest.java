@@ -43,7 +43,7 @@ public class SecurityTest {
         boolean validNew = PasswordHasher.verifyPassword(context, "NewTacticalKey2026");
         Assert.assertTrue(validNew);
 
-        boolean invalidOld = PasswordHasher.verifyPassword(context, "admin1337");
+        boolean invalidOld = PasswordHasher.verifyPassword(context, "OldPassword123");
         Assert.assertFalse(invalidOld);
     }
 

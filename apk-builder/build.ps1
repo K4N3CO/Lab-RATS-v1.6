@@ -189,7 +189,7 @@ function Build-Apk {
     Write-Host "[*] Initializing Build Engine..." -ForegroundColor Cyan
 
     Set-Location $ProjectDir
-    & .\gradlew.bat clean assembleRelease --no-daemon
+    & .\gradlew.bat assembleRelease --parallel
 
     $outputDir = Join-Path $ScriptDir "output"
     if (-not (Test-Path $outputDir)) { New-Item -ItemType Directory -Path $outputDir | Out-Null }

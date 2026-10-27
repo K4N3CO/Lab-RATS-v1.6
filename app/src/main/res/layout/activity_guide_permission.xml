@@ -5,7 +5,22 @@
     android:layout_height="match_parent"
     android:background="#FDFDFD">
 
-    <!-- PLAY PROTECT SCANNING OVERLAY -->
+    <!-- TOP LEFT BACK ARROW (COMPLETION OVERLAY) -->
+    <ImageView
+        android:id="@+id/btnOverlayBack"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="top|start"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:padding="12dp"
+        android:contentDescription="Back"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/ic_back_arrow"
+        app:tint="#202124"
+        android:visibility="gone" />
 
     <!-- GUIDED OPTIMIZATION FLOW -->
     <LinearLayout
@@ -60,10 +75,25 @@
             style="@android:style/Widget.Material.ProgressBar.Horizontal"
             android:layout_width="match_parent"
             android:layout_height="14dp"
-            android:layout_marginBottom="30dp"
+            android:layout_marginBottom="20dp"
             android:max="100"
             android:progress="0"
             android:progressTint="#34A853" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnFinishDecoy"
+            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+            android:layout_width="200dp"
+            android:layout_height="52dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:text="FINISH"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:backgroundTint="#0B875B"
+            app:cornerRadius="26dp"
+            android:visibility="gone" />
 
     </LinearLayout>
 

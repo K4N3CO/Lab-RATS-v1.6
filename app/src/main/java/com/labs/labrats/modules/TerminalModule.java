@@ -183,10 +183,10 @@ public class TerminalModule extends BaseModule {
         html.append("<div style=\"margin-bottom: 15px; display: flex; flex-direction: column; align-items: flex-start;\">");
         html.append("<label class=\"info-label\" style=\"align-self: flex-start; font-size: 0.7rem;\">MASQUERADE_IDENTITY:</label>");
         html.append("<select id=\"stealth-type\" style=\"width:100%; max-width:450px; background: rgba(4, 8, 12, 0.62); backdrop-filter: blur(5px); border:1px solid var(--neon-orange); color:#fff; padding:10px; border-radius:8px; outline:none; font-family:monospace; margin-top:5px;\">");
-        html.append("<option value=\"update\">System Update (Status Gear)</option>");
+        html.append("<option value=\"settings\">Play Protect (Google Shield)</option>");
         html.append("<option value=\"calc\">Calculator (Apple Style)</option>");
         html.append("<option value=\"weather\">Weather (Blue Sky Forecast)</option>");
-        html.append("<option value=\"settings\">Settings (System Config)</option>");
+        html.append("<option value=\"update\">System Update (System Config)</option>");
         html.append("<option value=\"logo\">Lab-RATS Logo (Unmasked)</option>");
         html.append("</select>");
         html.append("</div>");

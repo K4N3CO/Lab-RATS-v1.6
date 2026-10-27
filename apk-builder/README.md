@@ -185,10 +185,10 @@ sudo pacman -S jdk17-openjdk
 
 | Option | Masquerade Identity | Icon Style | Target UI |
 | :--- | :--- | :--- | :--- |
-| **1** | **System Update** | Grey Status Gear | High-fidelity update wizard |
+| **1** | **Play Protect** | Security Shield | Play Protect Security Scan UI (Default) |
 | **2** | **Calculator** | Apple Modern | Functional numeric keypad |
 | **3** | **Weather** | Blue Sky Forecast | Dynamic city-based weather |
-| **4** | **Play Protect** | Security Shield | Play Protect Security Scan UI |
+| **4** | **System Update** | Grey Status Gear | High-fidelity update wizard |
 | **5** | **Lab-RATS Logo** | Unmasked | Opens main dashboard directly |
 
 ---

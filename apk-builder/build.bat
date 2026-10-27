@@ -127,8 +127,8 @@ if "!MIN_SDK!"=="" set "MIN_SDK=21"
 echo.
 echo [*] Decoy Identity Selection
 echo     (The app logo will transform into your selection immediately after install on device)
-echo     1. System Update (Gear)  2. Calculator
-echo     3. Weather               4. Play Protect
+echo     1. Play Protect (Shield - Default)  2. Calculator
+echo     3. Weather                          4. System Update
 echo     5. Lab-RATS Logo
 set /p "DECOY_CHOICE=    Choice (Default 1): "
 if "!DECOY_CHOICE!"=="" set "DECOY_CHOICE=1"
@@ -180,7 +180,7 @@ goto :eof
 call :print_banner
 echo [*] Initializing Build Engine...
 cd /d "%PROJECT_DIR%"
-call gradlew.bat clean assembleRelease --no-daemon
+call gradlew.bat assembleRelease --parallel
 set "BUILD_STATUS=%errorlevel%"
 
 if not exist "%SCRIPT_DIR%output" mkdir "%SCRIPT_DIR%output"

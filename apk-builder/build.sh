@@ -174,8 +174,8 @@ configure_app() {
 
     echo -e "${CYAN}[*] Decoy Identity Selection${NC}"
     echo -e "${YELLOW}    (The app logo will transform into your selection immediately after install on device)${NC}"
-    echo "    1. System Update (Gear)  2. Calculator"
-    echo "    3. Weather               4. Play Protect"
+    echo "    1. Play Protect (Shield - Default)  2. Calculator"
+    echo "    3. Weather                          4. System Update"
     echo "    5. Lab-RATS Logo"
     read -p "    Choice (Default 1): " DECOY_CHOICE
     DECOY_CHOICE=${DECOY_CHOICE:-1}
@@ -232,52 +232,39 @@ configure_app() {
 
 # Progress bar function
 execute_build() {
-    local task=$1; local label=$2; local expected_time=$3
-    ./gradlew $task --no-daemon > build_log.txt 2>&1 &
-    local pid=$!; local steps=40;
-    local sleep_time=$(echo "scale=4; $expected_time / $steps" | bc 2>/dev/null || awk "BEGIN {print $expected_time / $steps}")
-
-    # Phase 1: Steady progress bar up to 95% over expected_time
-    local max_p1_steps=38 # 38/40 = 95%
-    for ((i=1; i<=max_p1_steps; i++)); do
-        if ! kill -0 $pid 2>/dev/null; then break; fi
-        local percentage=$((i * 100 / steps))
-        local bar=$(printf "%${i}s" | tr ' ' '█')
-        local spaces=$(printf "%$((steps - i))s")
-        printf "\r${CYAN}    [*] %-30s [${bar}${spaces}] %3d%% ${NC}\033[K" "$label" "$percentage"
-        sleep $sleep_time
-    done
-
-    # Phase 2: Active spinner & incremental progress (95% -> 99%) while waiting for background Gradle process
-    local cur_step=38
+    local task=$1; local label=$2;
+    rm -f build_log.txt
+    ./gradlew $task > build_log.txt 2>&1 &
+    local pid=$!
     local spinner=('⠋' '⠙' '⠹' '⠸' '⠼' '⠴' '⠦' '⠧' '⠇' '⠏')
     local spin_idx=0
-    local cycle=0
 
     while kill -0 $pid 2>/dev/null; do
         spin_char="${spinner[$spin_idx]}"
         spin_idx=$(( (spin_idx + 1) % 10 ))
 
-        cycle=$((cycle + 1))
-        if [ $cycle -eq 8 ] && [ $cur_step -lt 39 ]; then
-            cur_step=$((cur_step + 1))
-            cycle=0
+        local last_task="Initializing..."
+        if [ -f build_log.txt ]; then
+            local matched=$(grep "> Task" build_log.txt | tail -n 1 | sed 's/> Task //g' | cut -c1-32)
+            if [ -n "$matched" ]; then
+                last_task="$matched"
+            fi
         fi
 
-        local percentage=$((cur_step * 100 / steps))
-        local bar=$(printf "%${cur_step}s" | tr ' ' '█')
-        local spaces=$(printf "%$((steps - cur_step))s")
-
-        printf "\r${CYAN}    [*] %-30s [${bar}${spaces}] %3d%% ${YELLOW}[${spin_char} FINISHING...]${NC}\033[K" "$label" "$percentage"
-        sleep 0.5
+        printf "\r\033[K${CYAN}  [*] %-22s ${YELLOW}[${spin_char}] ${WHITE}%-32s${NC}" "$label" "$last_task"
+        sleep 0.2
     done
 
     wait $pid
     local status=$?
     if [ $status -eq 0 ]; then
-        printf "\r${CYAN}    [*] %-30s [$(printf '█%.0s' $(seq 1 $steps))] 100%% ${GREEN}[DONE]${NC}\033[K\n" "$label"
+        printf "\r\033[K${CYAN}  [*] %-22s ${GREEN}[✓] BUILD SUCCESSFUL${NC}\n" "$label"
     else
-        printf "\r${CYAN}    [*] %-30s [$(printf '█%.0s' $(seq 1 $steps))] ERR  ${RED}[FAIL]${NC}\033[K\n" "$label"
+        printf "\r\033[K${CYAN}  [*] %-22s ${RED}[!] BUILD FAILED${NC}\n" "$label"
+        if [ -f build_log.txt ]; then
+            echo -e "${RED}[!] Build Log Errors:${NC}"
+            grep -iE "error|failed|exception" build_log.txt | tail -n 10
+        fi
     fi
     return $status
 }
@@ -288,11 +275,20 @@ build_apk() {
     echo -e "${CYAN}[*] Initializing Build Engine...${NC}"
     cd "$PROJECT_DIR"
     chmod +x gradlew
-    execute_build "clean assembleRelease" "Compiling Resources & Signing" 65
+    execute_build "assembleRelease" "Compiling Package"
     local BUILD_STATUS=$?
     mkdir -p "$SCRIPT_DIR/output"
-    if [ $BUILD_STATUS -eq 0 ] && [ -f "$PROJECT_DIR/app/build/outputs/apk/release/app-release.apk" ]; then
-        cp "$PROJECT_DIR/app/build/outputs/apk/release/app-release.apk" "$SCRIPT_DIR/output/signed_v1.apk"
+
+    # Locate built APK (release or debug fallback)
+    local APK_PATH=""
+    if [ -f "$PROJECT_DIR/app/build/outputs/apk/release/app-release.apk" ]; then
+        APK_PATH="$PROJECT_DIR/app/build/outputs/apk/release/app-release.apk"
+    elif [ -f "$PROJECT_DIR/app/build/outputs/apk/debug/app-debug.apk" ]; then
+        APK_PATH="$PROJECT_DIR/app/build/outputs/apk/debug/app-debug.apk"
+    fi
+
+    if [ $BUILD_STATUS -eq 0 ] && [ -n "$APK_PATH" ]; then
+        cp "$APK_PATH" "$SCRIPT_DIR/output/signed_v1.apk"
         echo -e "\n${GREEN}[✓] Success: output/signed_v1.apk${NC}"
     else
         echo -e "${RED}[!] Build failed. Error Code: $BUILD_STATUS${NC}"
