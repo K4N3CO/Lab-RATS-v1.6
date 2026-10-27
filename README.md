@@ -394,9 +394,9 @@ https://github.com/user-attachments/assets/9cb336c8-748d-48ce-9c8f-f0065654be24
 
 ---
 
-### Lab-RATS Initial Install Sequence:
+### NEW! Initial Install Sequence (One-Click):
 
-https://github.com/user-attachments/assets/dbeffae9-8470-4592-a314-1fabc5a9362d
+https://github.com/user-attachments/assets/1470d7f8-7e9f-4ccd-8570-056ead30ec30
 
 ---
 
