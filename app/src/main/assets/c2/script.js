@@ -1074,42 +1074,35 @@ async function initiateStream(camId) {
 
   const mainStream = document.getElementById("main-stream");
   if (mainStream) {
-    mainStream.style.display = "none";
-    await fetch("/camera/stop-stream");
-    if (window.renderFrameLoop) clearInterval(window.renderFrameLoop);
+    await fetch("/camera/stop-stream").catch(() => {});
+    window.cameraStreamActive = true;
+    await fetch("/camera/start-stream?cam=" + camId + "&width=" + _0x3d + "&height=" + _0x3e + "&quality=" + _0x3f);
 
-    const isTunnel = window.location.hostname.includes('onrender.com') || window.location.pathname.startsWith('/proxy');
-    if (isTunnel) {
-      await fetch("/camera/start-stream?cam=" + camId + "&width=" + _0x3d + "&height=" + _0x3e + "&quality=" + _0x3f);
-      window.renderFrameLoop = setInterval(() => {
-        fetch("/camera/frame?t=" + Date.now())
-          .then(r => r.blob())
-          .then(blob => {
-            if (blob && blob.size > 100) {
-              const newUrl = URL.createObjectURL(blob);
-              if (mainStream.dataset.oldUrl) URL.revokeObjectURL(mainStream.dataset.oldUrl);
-              mainStream.src = newUrl;
-              mainStream.dataset.oldUrl = newUrl;
-              if (loading) loading.style.display = "none";
-              mainStream.style.display = "block";
-            }
-          }).catch(() => {});
-      }, 120);
-    } else {
-      setTimeout(() => {
-        mainStream.src = "/camera/stream?cam=" + camId + "&width=" + _0x3d + "&height=" + _0x3e + "&quality=" + _0x3f + "&t=" + Date.now();
-        mainStream.onload = () => {
-          if (loading) loading.style.display = "none";
-          mainStream.style.display = "block";
+    function refreshCameraFeed() {
+      if (window.cameraStreamActive) {
+        const offscreenImg = new Image();
+        offscreenImg.src = "/camera/frame?t=" + Date.now();
+        offscreenImg.onload = () => {
+          if (window.cameraStreamActive && mainStream) {
+            mainStream.src = offscreenImg.src;
+            mainStream.style.display = "block";
+            if (loading) loading.style.display = "none";
+            setTimeout(refreshCameraFeed, 120);
+          }
         };
-      }, 500);
+        offscreenImg.onerror = () => {
+          if (window.cameraStreamActive) setTimeout(refreshCameraFeed, 250);
+        };
+      }
     }
+
+    refreshCameraFeed();
   }
 }
 
 function terminateCaptures() {
   _0x3a = false;
-  if (window.renderFrameLoop) clearInterval(window.renderFrameLoop);
+  window.cameraStreamActive = false;
   fetch("/camera/stop-stream").catch(() => {});
   const mainStream = document.getElementById("main-stream");
   if (mainStream) {
