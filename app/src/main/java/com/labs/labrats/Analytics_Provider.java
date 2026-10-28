@@ -186,14 +186,9 @@ public class Analytics_Provider extends Service implements LifecycleOwner {
                 .build();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            int serviceType = ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC;
-            if (isStreaming || isRecording || captureInProgress) {
-                serviceType |= ServiceInfo.FOREGROUND_SERVICE_TYPE_CAMERA;
-            }
-            if (isRecording) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                    serviceType |= ServiceInfo.FOREGROUND_SERVICE_TYPE_MICROPHONE;
-                }
+            int serviceType = ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC | ServiceInfo.FOREGROUND_SERVICE_TYPE_CAMERA;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                serviceType |= ServiceInfo.FOREGROUND_SERVICE_TYPE_MICROPHONE;
             }
             startForeground(NOTIFICATION_ID, notification, serviceType);
         } else {
