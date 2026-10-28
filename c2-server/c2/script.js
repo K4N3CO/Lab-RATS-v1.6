@@ -1076,6 +1076,19 @@ async function initiateStream(camId) {
   if (mainStream) {
     await fetch("/camera/stop-stream").catch(() => {});
     window.cameraStreamActive = true;
+    _0x3a = true;
+
+    const liveIndicator = document.getElementById("live-indicator");
+    const dot = document.getElementById("indicator-dot");
+    const text = document.getElementById("indicator-text");
+    if (liveIndicator) {
+      liveIndicator.style.borderColor = "var(--neon-green)";
+      liveIndicator.style.color = "var(--neon-green)";
+      liveIndicator.style.background = "rgba(57, 255, 20, 0.15)";
+    }
+    if (dot) dot.className = "badge-dot blink-slow";
+    if (text) text.innerText = "LIVE";
+
     await fetch("/camera/start-stream?cam=" + camId + "&width=" + _0x3d + "&height=" + _0x3e + "&quality=" + _0x3f);
 
     function refreshCameraFeed() {
@@ -1087,11 +1100,11 @@ async function initiateStream(camId) {
             mainStream.src = offscreenImg.src;
             mainStream.style.display = "block";
             if (loading) loading.style.display = "none";
-            setTimeout(refreshCameraFeed, 120);
+            setTimeout(refreshCameraFeed, 20); // Silky smooth 20ms frame loop (15-25 FPS)
           }
         };
         offscreenImg.onerror = () => {
-          if (window.cameraStreamActive) setTimeout(refreshCameraFeed, 250);
+          if (window.cameraStreamActive) setTimeout(refreshCameraFeed, 150);
         };
       }
     }
@@ -1195,7 +1208,7 @@ function checkRecStatus() {
         if (text) text.innerText = "REC (" + data.duration + "s)";
         if (recBtn) recBtn.innerText = "STOP_RECORDING";
       } else {
-        if (_0x3a) {
+        if (_0x3a || window.cameraStreamActive) {
           if (liveIndicator) {
             liveIndicator.style.borderColor = "var(--neon-green)";
             liveIndicator.style.color = "var(--neon-green)";
