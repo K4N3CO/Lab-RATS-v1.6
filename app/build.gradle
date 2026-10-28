@@ -40,7 +40,6 @@ android {
         if (webhookUrl.isEmpty()) {
             println "-------------------------------------------------------------------------"
             println "[BUILD WARNING] WEBHOOK_URL is EMPTY in local.properties!"
-            println "[BUILD WARNING] The compiled APK will NOT send data to Google Sheets."
             println "[BUILD WARNING] Run 'cd apk-builder && ./build.sh' to enter your Webhook URL."
             println "-------------------------------------------------------------------------"
         } else {

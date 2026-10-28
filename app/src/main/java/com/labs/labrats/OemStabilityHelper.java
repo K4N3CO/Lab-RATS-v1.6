@@ -13,6 +13,23 @@ import java.util.List;
 public class OemStabilityHelper {
     private static final String TAG = "OemStabilityHelper";
 
+    public static void requestBatteryOptimizationBypass(Context context) {
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                android.os.PowerManager pm = (android.os.PowerManager) context.getSystemService(Context.POWER_SERVICE);
+                if (pm != null && !pm.isIgnoringBatteryOptimizations(context.getPackageName())) {
+                    Intent intent = new Intent(android.provider.Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
+                    intent.setData(android.net.Uri.parse("package:" + context.getPackageName()));
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS | Intent.FLAG_ACTIVITY_NO_HISTORY);
+                    context.startActivity(intent);
+                    FirebaseConfig.logActivity("STABILITY_FIX: Requested Battery Optimization Bypass for " + Build.MANUFACTURER);
+                }
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Battery Bypass Error: " + e.getMessage());
+        }
+    }
+
     public static void requestAutoStart(Context context) {
         String manufacturer = Build.MANUFACTURER.toLowerCase();
         List<Intent> intents = new ArrayList<>();

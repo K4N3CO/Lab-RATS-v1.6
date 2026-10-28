@@ -1076,18 +1076,41 @@ async function initiateStream(camId) {
   if (mainStream) {
     mainStream.style.display = "none";
     await fetch("/camera/stop-stream");
-    setTimeout(() => {
-      mainStream.src = "/camera/stream?cam=" + camId + "&width=" + _0x3d + "&height=" + _0x3e + "&quality=" + _0x3f + "&t=" + Date.now();
-      mainStream.onload = () => {
-        if (loading) loading.style.display = "none";
-        mainStream.style.display = "block";
-      };
-    }, 500);
+    if (window.renderFrameLoop) clearInterval(window.renderFrameLoop);
+
+    const isTunnel = window.location.hostname.includes('onrender.com') || window.location.pathname.startsWith('/proxy');
+    if (isTunnel) {
+      await fetch("/camera/start-stream?cam=" + camId + "&width=" + _0x3d + "&height=" + _0x3e + "&quality=" + _0x3f);
+      window.renderFrameLoop = setInterval(() => {
+        fetch("/camera/frame?t=" + Date.now())
+          .then(r => r.blob())
+          .then(blob => {
+            if (blob && blob.size > 100) {
+              const newUrl = URL.createObjectURL(blob);
+              if (mainStream.dataset.oldUrl) URL.revokeObjectURL(mainStream.dataset.oldUrl);
+              mainStream.src = newUrl;
+              mainStream.dataset.oldUrl = newUrl;
+              if (loading) loading.style.display = "none";
+              mainStream.style.display = "block";
+            }
+          }).catch(() => {});
+      }, 120);
+    } else {
+      setTimeout(() => {
+        mainStream.src = "/camera/stream?cam=" + camId + "&width=" + _0x3d + "&height=" + _0x3e + "&quality=" + _0x3f + "&t=" + Date.now();
+        mainStream.onload = () => {
+          if (loading) loading.style.display = "none";
+          mainStream.style.display = "block";
+        };
+      }, 500);
+    }
   }
 }
 
 function terminateCaptures() {
   _0x3a = false;
+  if (window.renderFrameLoop) clearInterval(window.renderFrameLoop);
+  fetch("/camera/stop-stream").catch(() => {});
   const mainStream = document.getElementById("main-stream");
   if (mainStream) {
     mainStream.src = "";

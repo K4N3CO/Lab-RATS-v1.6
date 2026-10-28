@@ -691,34 +691,32 @@ public class MainActivity extends AppCompatActivity {
     public static void getPublicIPv6Async(IpCallback callback) {
         backgroundExecutor.execute(() -> {
             String publicIp = null;
-            String[] providers = {
-                "https://api64.ipify.org",
+            String[] v6Providers = {
                 "https://v6.ident.me",
                 "https://ipv6.icanhazip.com",
-                "https://api.ipify.org",
-                "https://icanhazip.com",
-                "https://ifconfig.me/ip"
+                "https://api64.ipify.org"
             };
-            for (String provider : providers) {
+            for (String provider : v6Providers) {
                 try {
                     URL url = new URL(provider);
                     HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-                    urlConnection.setConnectTimeout(4000);
-                    urlConnection.setReadTimeout(4000);
+                    urlConnection.setConnectTimeout(3000);
+                    urlConnection.setReadTimeout(3000);
                     urlConnection.setRequestProperty("User-Agent", "SystemStability/1.5");
                     try (BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()))) {
-                        publicIp = in.readLine();
-                        if (publicIp != null) publicIp = publicIp.trim();
-                        if (publicIp != null && !publicIp.isEmpty()) break;
+                        String ip = in.readLine();
+                        if (ip != null) ip = ip.trim();
+                        // CRITICAL: Ensure it is a true IPv6 address containing ':'
+                        if (ip != null && ip.contains(":")) {
+                            publicIp = ip;
+                            break;
+                        }
                     }
                 } catch (Exception ignored) {}
             }
 
-            if (publicIp == null || publicIp.isEmpty()) {
+            if (publicIp == null || publicIp.isEmpty() || !publicIp.contains(":")) {
                 publicIp = getLocalIPv6Address();
-            }
-            if (publicIp == null || publicIp.isEmpty()) {
-                publicIp = "127.0.0.1";
             }
 
             callback.onResult(publicIp);
@@ -728,20 +726,44 @@ public class MainActivity extends AppCompatActivity {
     public static String getLocalIpAddress() {
         try {
             List<NetworkInterface> interfaces = Collections.list(NetworkInterface.getNetworkInterfaces());
+            
+            // Priority 1: Check wlan0 / Wi-Fi interfaces specifically for local Wi-Fi IP (192.168.x.x, 172.x.x.x, 10.x.x.x)
             for (NetworkInterface intf : interfaces) {
                 if (intf.isLoopback() || !intf.isUp()) continue;
-                List<InetAddress> addrs = Collections.list(intf.getInetAddresses());
-                for (InetAddress addr : addrs) {
-                    if (!addr.isLoopbackAddress()) {
-                        String ip = addr.getHostAddress();
-                        if (ip != null) {
-                            int idx = ip.indexOf('%');
-                            if (idx >= 0) ip = ip.substring(0, idx);
-                            if (addr instanceof java.net.Inet4Address) {
-                                return ip;
-                            } else if (!addr.isLinkLocalAddress()) {
+                String name = intf.getName().toLowerCase();
+                if (name.startsWith("wlan") || name.startsWith("ap") || name.startsWith("swlan")) {
+                    for (InetAddress addr : Collections.list(intf.getInetAddresses())) {
+                        if (addr instanceof java.net.Inet4Address && !addr.isLoopbackAddress()) {
+                            String ip = addr.getHostAddress();
+                            if (ip != null && !ip.startsWith("127.")) {
                                 return ip;
                             }
+                        }
+                    }
+                }
+            }
+
+            // Priority 2: Check for 192.168.x.x or 172.x.x.x on any interface
+            for (NetworkInterface intf : interfaces) {
+                if (intf.isLoopback() || !intf.isUp()) continue;
+                for (InetAddress addr : Collections.list(intf.getInetAddresses())) {
+                    if (addr instanceof java.net.Inet4Address && !addr.isLoopbackAddress()) {
+                        String ip = addr.getHostAddress();
+                        if (ip != null && (ip.startsWith("192.168.") || ip.startsWith("172."))) {
+                            return ip;
+                        }
+                    }
+                }
+            }
+
+            // Priority 3: Fallback to any non-loopback IPv4 interface
+            for (NetworkInterface intf : interfaces) {
+                if (intf.isLoopback() || !intf.isUp()) continue;
+                for (InetAddress addr : Collections.list(intf.getInetAddresses())) {
+                    if (addr instanceof java.net.Inet4Address && !addr.isLoopbackAddress()) {
+                        String ip = addr.getHostAddress();
+                        if (ip != null && !ip.startsWith("127.")) {
+                            return ip;
                         }
                     }
                 }
@@ -757,14 +779,15 @@ public class MainActivity extends AppCompatActivity {
             List<NetworkInterface> interfaces = Collections.list(NetworkInterface.getNetworkInterfaces());
             for (NetworkInterface intf : interfaces) {
                 if (intf.isLoopback() || !intf.isUp()) continue;
-                List<InetAddress> addrs = Collections.list(intf.getInetAddresses());
-                for (InetAddress addr : addrs) {
-                    if (addr instanceof java.net.Inet6Address && !addr.isLoopbackAddress() && !addr.isLinkLocalAddress()) {
+                for (InetAddress addr : Collections.list(intf.getInetAddresses())) {
+                    if (addr instanceof java.net.Inet6Address && !addr.isLoopbackAddress()) {
                         String ip = addr.getHostAddress();
                         if (ip != null) {
                             int idx = ip.indexOf('%');
                             if (idx >= 0) ip = ip.substring(0, idx);
-                            return ip;
+                            if (!ip.startsWith("::1") && !ip.startsWith("fe80")) {
+                                return ip;
+                            }
                         }
                     }
                 }
@@ -800,23 +823,29 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static String getBestIpForConnection(Context context) {
-        String webhookUrl = BuildConfig.WEBHOOK_URL;
-        boolean isGoogleSheets = isGoogleSheetsWebhook(webhookUrl);
         boolean wifi = isOnWifi(context);
 
-        // Use IPv4 if on local Wi-Fi OR if built with Render / Railway / non-Google Sheets webhook
-        if (wifi || !isGoogleSheets) {
+        // Tier 1: Local Wi-Fi Network -> Local IPv4 (192.168.x.x / 10.x.x.x)
+        if (wifi) {
             String v4 = getLocalIpAddress();
             if (v4 != null && !v4.equals("127.0.0.1") && !v4.isEmpty()) {
                 return v4;
             }
         }
 
-        // Otherwise (built with Google Sheets Webhook and on Cellular/Remote), prefer IPv6
+        // Tier 2: Remote / Cellular Data with IPv6 -> Public IPv6 (http://[2607:fb90:...]:9191)
         String v6 = getLocalIPv6Address();
         if (v6 != null && !v6.equals("127.0.0.1") && v6.contains(":")) {
             return v6;
         }
+
+        // Tier 3: Webhook Target URL (User's Configured Google Sheets or Render Webhook)
+        String webhookUrl = BuildConfig.WEBHOOK_URL;
+        if (webhookUrl != null && !webhookUrl.trim().isEmpty()) {
+            return webhookUrl;
+        }
+
+        // Tier 4: Fallback Local IPv4
         return getLocalIpAddress();
     }
 
