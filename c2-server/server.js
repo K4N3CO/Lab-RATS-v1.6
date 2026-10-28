@@ -165,6 +165,9 @@ function serveLoginPage(req, res, errorMsg = '') {
             <button type="submit">AUTHENTICATE</button>
         </form>
     </div>
+    <div class="card" style="text-align: center; color: var(--neon-cyan); font-size: 0.7rem; margin-top: 30px; font-family: 'Orbitron', sans-serif; letter-spacing: 1px; line-height: 1.5; padding: 18px 20px; max-width: 450px; width: 100%;">
+        &copy;K4N3CO.LABS 2026 &nbsp;//&nbsp; "The one's who MIND don't matter... The one's who MATTER don't mind..." &nbsp;//&nbsp; Push the Limits
+    </div>
 </body>
 </html>`;
     res.send(html);
@@ -515,7 +518,7 @@ app.get('/', (req, res) => {
 <body>
     <div class="container">
         <div class="header" style="text-align:center; padding:20px 0; margin-bottom:20px;">
-            <img src="/c2/header_dashboard.png" style="width: 75%; max-width: 820px; height: auto; margin: 0 auto; display: block; object-fit: contain;" alt="LAB-RATS Header">
+            <img src="/c2/header_dashboard.png" style="width: 67.5%; max-width: 738px; height: auto; margin: 0 auto; display: block; object-fit: contain;" alt="LAB-RATS Header">
             <div style="font-size: 0.6rem; color: var(--neon-cyan); letter-spacing: 3px; text-transform: uppercase; margin-top: 15px; text-align: center;">SYSTEM STATUS: <span style="color:#39ff14;">ONLINE</span> &nbsp;//&nbsp; ACTIVE TARGETS: <span style="color:#00f2ff; font-weight:bold;">${onlineCount} / ${deviceList.length}</span> &nbsp;//&nbsp; TIMEZONE: <span style="color:#ffff00;">Ottawa (America/Toronto)</span></div>
         </div>
 
@@ -571,6 +574,11 @@ app.get('/', (req, res) => {
             <div style="text-align: center; margin-top: 20px;">
                 <button class="btn" onclick="location.reload()" style="padding: 10px 30px; font-size: 0.75rem; display: inline-block; margin: 0 auto;">REFRESH VAULT</button>
             </div>
+        </div>
+
+        <!-- FOOTER CARD -->
+        <div class="card" style="text-align: center; color: var(--neon-cyan); font-size: 0.7rem; margin-top: 50px; margin-bottom: 25px; font-family: 'Orbitron', sans-serif; letter-spacing: 1px; line-height: 1.5; padding: 18px 20px;">
+            &copy;K4N3CO.LABS 2026 &nbsp;//&nbsp; "The one's who MIND don't matter... The one's who MATTER don't mind..." &nbsp;//&nbsp; Push the Limits
         </div>
     </div>
     <script>
