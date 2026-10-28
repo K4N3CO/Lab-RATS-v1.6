@@ -429,15 +429,27 @@ public class OpticsModule extends BaseModule {
             if (Analytics_Provider.isCurrentlyStreaming()) {
                 imageData = Analytics_Provider.getNextFrame(1500);
             } else {
+                Intent intent = new Intent(context, Analytics_Provider.class);
+                androidx.core.content.ContextCompat.startForegroundService(context, intent);
+                
                 Analytics_Provider service = Analytics_Provider.getInstance();
+                for (int i = 0; i < 10 && service == null; i++) {
+                    Thread.sleep(200);
+                    service = Analytics_Provider.getInstance();
+                }
+
                 if (service != null) {
                     service.capturePhotoBackground(cameraId);
-                    imageData = Analytics_Provider.waitForPhoto(12000);
+                    imageData = Analytics_Provider.waitForPhoto(8000);
                     errorMsg = Analytics_Provider.getLastCaptureError();
                 } else {
-                    CameraHelper cameraHelper = new CameraHelper(context);
-                    imageData = cameraHelper.capturePhoto(cameraId);
-                    errorMsg = cameraHelper.getLastError();
+                    try {
+                        CameraHelper cameraHelper = new CameraHelper(context);
+                        imageData = cameraHelper.capturePhoto(cameraId);
+                        errorMsg = cameraHelper.getLastError();
+                    } catch (Exception e) {
+                        errorMsg = "Hardware busy: " + e.getMessage();
+                    }
                 }
             }
 
