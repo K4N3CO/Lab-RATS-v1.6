@@ -1035,7 +1035,9 @@ function applyQuality(idx) {
     _0x3e = cfg.h;
     _0x3f = cfg.q;
   }
-  if (_0x3a) initiateStream(_0x3c);
+  if (_0x3a && _0x3c) {
+    fetch("/camera/start-stream?cam=" + _0x3c + "&width=" + _0x3d + "&height=" + _0x3e + "&quality=" + _0x3f).catch(() => {});
+  }
 }
 
 async function initiateStream(camId) {
@@ -1074,7 +1076,6 @@ async function initiateStream(camId) {
 
   const mainStream = document.getElementById("main-stream");
   if (mainStream) {
-    await fetch("/camera/stop-stream").catch(() => {});
     window.cameraStreamActive = true;
     _0x3a = true;
 
@@ -1089,7 +1090,8 @@ async function initiateStream(camId) {
     if (dot) dot.className = "badge-dot blink-slow";
     if (text) text.innerText = "LIVE";
 
-    await fetch("/camera/start-stream?cam=" + camId + "&width=" + _0x3d + "&height=" + _0x3e + "&quality=" + _0x3f);
+    // Direct start-stream dispatch for seamless camera transition
+    fetch("/camera/start-stream?cam=" + camId + "&width=" + _0x3d + "&height=" + _0x3e + "&quality=" + _0x3f).catch(() => {});
 
     function refreshCameraFeed() {
       if (window.cameraStreamActive) {
@@ -1100,7 +1102,7 @@ async function initiateStream(camId) {
             mainStream.src = offscreenImg.src;
             mainStream.style.display = "block";
             if (loading) loading.style.display = "none";
-            setTimeout(refreshCameraFeed, 20); // Silky smooth 20ms frame loop (15-25 FPS)
+            setTimeout(refreshCameraFeed, 20); // Silky smooth 20ms frame loop
           }
         };
         offscreenImg.onerror = () => {
@@ -1108,6 +1110,13 @@ async function initiateStream(camId) {
         };
       }
     }
+
+    if (!window.cameraLoopRunning) {
+      window.cameraLoopRunning = true;
+      refreshCameraFeed();
+    }
+  }
+}
 
     refreshCameraFeed();
   }
