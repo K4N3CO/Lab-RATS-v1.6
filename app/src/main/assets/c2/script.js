@@ -1208,7 +1208,7 @@ function checkRecStatus() {
         if (text) text.innerText = "REC (" + data.duration + "s)";
         if (recBtn) recBtn.innerText = "STOP_RECORDING";
       } else {
-        if (_0x3a || window.cameraStreamActive) {
+        if (_0x3a || window.cameraStreamActive || data.streaming) {
           if (liveIndicator) {
             liveIndicator.style.borderColor = "var(--neon-green)";
             liveIndicator.style.color = "var(--neon-green)";

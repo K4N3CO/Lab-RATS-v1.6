@@ -89,12 +89,6 @@ public class TerminalModule extends BaseModule {
         html.append("<div class=\"info-label\" style=\"font-size: 0.7rem;\">VIRTUAL_ADDRESS</div>");
         html.append("<div style=\"font-size: 1.2rem; font-weight: bold; color: var(--neon-cyan); word-break: break-all; margin-top: 10px;\">").append(ipDisplay).append("</div>");
         html.append("</div>");
-
-        // NAT Traversal Info
-        html.append("<div style=\"padding: 20px; background: rgba(255, 255, 0, 0.03); border: 1px solid var(--neon-yellow); border-radius: 15px; grid-column: 1 / -1; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.3);\">");
-        html.append("<div class=\"info-label\" style=\"color: var(--neon-yellow); font-size: 0.7rem;\">CONNECTIVITY_PROTOCOL</div>");
-        html.append("<div style=\"font-size: 0.75rem; color: #aaa; margin-top: 8px; max-width: 800px; margin-left: auto; margin-right: auto;\">System prioritizes <b>Global IPv6</b> for remote access. Local IPs (192.168...) only work if you are on the <b>same WiFi</b>; otherwise, the device must use Cellular data for a public uplink.</div>");
-        html.append("</div>");
         
         html.append("</div>");
         html.append("</div>");

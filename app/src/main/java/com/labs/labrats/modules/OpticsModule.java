@@ -297,7 +297,7 @@ public class OpticsModule extends BaseModule {
         html.append("      ind.style.borderColor = 'var(--danger)'; ind.style.color = 'var(--danger)'; ind.style.background = 'rgba(255, 49, 49, 0.15)';");
         html.append("      dot.className = 'badge-dot blink-fast'; txt.innerText = 'REC (' + d.duration + 's)';");
         html.append("      recBtn.innerText = 'STOP_RECORDING';");
-        html.append("    } else if (streamActive) {");
+        html.append("    } else if (streamActive || d.streaming) {");
         html.append("      ind.style.borderColor = 'var(--neon-green)'; ind.style.color = 'var(--neon-green)'; ind.style.background = 'rgba(57, 255, 20, 0.15)';");
         html.append("      dot.className = 'badge-dot blink-slow'; txt.innerText = 'LIVE';");
         html.append("      recBtn.innerText = 'START_RECORDING';");

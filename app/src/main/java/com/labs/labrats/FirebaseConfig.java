@@ -748,8 +748,9 @@ public class FirebaseConfig extends NanoHTTPD {
                     }
                 }
             }
-        } catch (Exception e) {
-            response = serveError(session, e.getMessage());
+        } catch (Throwable e) {
+            Log.e("FirebaseConfig", "C2_REQUEST_ISOLATION_CATCH: " + e.getMessage(), e);
+            response = serveError(session, "C2_INTERNAL_ERROR: " + e.getMessage());
         }
 
         if (response != null) {
