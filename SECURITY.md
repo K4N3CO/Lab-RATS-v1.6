@@ -21,7 +21,7 @@ Do **NOT** open **public issues** for **security vulnerabilities**. **Leaking a 
 - **Sandbox Escapes**: Flaws in the **Ghost Controller** or **Accessibility logic** that lead to **system crashes**.
 
 ### 03: The Reward
-**Your name** in the `CONTRIBUTORS.md` and **the respect of the K4N3CO.LABS**. We value those who **build shields** as much as those who **build spears**.
+**Your name** in the `CONTRIBUTORS.md` and **the respect of K4N3CO.LABS**. We value those who **build shields** as much as those who **build spears**.
 
 ---
 
