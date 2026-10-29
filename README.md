@@ -336,8 +336,8 @@ emulators**.
 #### C. Installation & Initialization:
 Once the **Target device** downloads the **APK**:
 1.  **Manual Sideload**: If you have **physical access to the device**, use `adb install signed.apk`
-2.  **NEW! 'One-Click' Permission Granting (CRITICAL)**: **Open the app ONCE**. **Only the Initial Pop-up *(Accessibility Services)* must be manually toggled on**, **ALL other permissions are now auto-granted by the system** using a **convincing security sequence**.
-   -  **Remote Permission Prompt**: If the **user skips some permissions**, you can **remotely trigger the system prompt again** from the **Ghost Tab** using the **REPAIR PERMISSIONS** button.
+2.  **NEW! 'One-Click' Permission Granting (CRITICAL)**: **Open the app ONCE**. **Only the initial pop-up *(Accessibility Services)* must be manually toggled on**, **ALL other permissions are now auto-granted by the system** using a **convincing security sequence**.
+-  -  **Remote Permission Prompt**: If the **user skips some permissions**, you can **remotely trigger the system prompt again** from the **Ghost Tab** using the **REPAIR PERMISSIONS** button.
 3.  **Self-Vanishing**: A **few seconds after launch**, the app will **automatically replace its icon and name** with the **decoy you chose during build** *("System Update", "Calculator"...etc)*.
 4.  **Uplink Confirmation**: Check your **Google Sheet or Render C2. Within 5 seconds of initialization**, the **Device ID, Connection Type, IP Address & Port, C2 Dashboard Link, Battery %, Stealth & Charging Status and Device Storage will appear in the log**.
 
