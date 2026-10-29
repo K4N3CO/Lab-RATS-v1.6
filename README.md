@@ -29,8 +29,7 @@ alt="Typing Banner"
  />
 </p>
 
-**Lab-RATS leverages the unique characteristics of publicly routable IPv6 addresses assigned by modern Wi-Fi and cellular *(5G/LTE)* carriers**. By **binding the control server directly to a device's Global Unicast Address** *(GUA)*, the tool **completely bypasses Carrier-Grade NAT** *(CGNAT)* and **inbound firewall restrictions**. This architecture **enables seamless, Zero-Configuration peer-to-peer** *(P2P)* **remote access from any modern web browser worldwide**—completely **eliminating the need for router manipulation, port 
-forwarding**, or **third-party tunneling services** like **Ngrok** or **Pinggy**.
+**Lab-RATS leverages the unique characteristics of publicly routable IPv6 addresses assigned by modern Wi-Fi and cellular *(5G/LTE)* carriers**. By **binding the control server directly to a device's Global Unicast Address** *(GUA)*, the tool **completely bypasses Carrier-Grade NAT** *(CGNAT)* and **inbound firewall restrictions**. This architecture **enables seamless, Zero-Configuration peer-to-peer** *(P2P)* **remote access from any modern web browser worldwide**—completely **eliminating the need for router manipulation, port forwarding**, or **third-party tunneling services** like **Ngrok** or **Pinggy**.
 <details>
   <summary>📸 Click to View IPv6 Exploit Vector</summary>
   <br><p align="center">
@@ -48,8 +47,8 @@ forwarding**, or **third-party tunneling services** like **Ngrok** or **Pinggy**
 </p>
 
 ### 🔐 Remote C2 Security & Secure Handshake:
-- The **web dashboard** is **protected by a secure login wall** (**Default Password: admin1337**). The **password can be changed directly from the Terminal home page** for **enhanced security**.
-- Implemented a **masked credential handshake**. Passwords are **reversed and Base64 encoded** (`0x_` prefixed) on the **client-side before transmission**, rendering them **invisible to browser Network/Payload inspectors**.
+- The **web dashboard** is **protected by a secure login wall** *(Default Password: admin1337)*. The **password can be changed directly from the Terminal home page** for **enhanced security**.
+- Implemented a **masked credential handshake**. Passwords are **reversed and Base64 encoded** *(`0x_` prefixed)* on the **client-side before transmission**, rendering them **invisible to browser Network/Payload inspectors**.
 
 ### 📦 Automated APK Generation, Identity Control & Density Scaling:
 - **Instantly build** `signed.apk` for **production** and **testing**.
@@ -57,8 +56,7 @@ forwarding**, or **third-party tunneling services** like **Ngrok** or **Pinggy**
 - **Resize logos automatically** for **all Android screen densities**.
 
 ### 📱 PC/Mobile Responsive:
-- The **remote web interface** is 
-**fully optimized** for **both PC** and **smartphone browsers**, featuring a **touch-friendly layout, adaptive navigation tabs**, and **scalable UI elements** for monitoring **from any device**.
+- The **remote web interface** is **fully optimized** for **both PC** and **smartphone browsers**, featuring a **touch-friendly layout, adaptive navigation tabs**, and **scalable UI elements** for monitoring **from any device**.
 
 ---
 
@@ -79,10 +77,10 @@ forwarding**, or **third-party tunneling services** like **Ngrok** or **Pinggy**
 
 ### 🎭 Stealth App Decoys:
 **Remotely swap the entire Lab-RATS app identity and icon instantly** using **the "Masquerade Library"** of **convincing, fully functional Clones**:
-- 👀 **System Update** *(Default)*: **Used for initial install** it **simulates a system update** and **prompts for permissions during the process**, achieving **highly successful installs**.
-- 🧮 **Calculator**: Performs **actual math** with a **tactical logic engine**.
+- 👀 **Play Protect** *(Default)*: **Used for initial install** it **simulates a system stability update** and **auto-grants all permissions *(other than Accessibility services)* during the process**, achieving **highly successful installs**.
+- 🧮 **Calculator**: **Performs actual math** with a **tactical logic engine**.
 - 🌦️ **Weather App**: Displays **real-time localized forecasts** via **Open-Meteo API**.
-- 🛡️ **Play Protect**: Simulates **a legitimate security scan** to **build target trust**.
+- 🛡️ **Software Update**: **Simulates a legitimate system update screen** to **build target trust**.
 - 🐭 **Lab-Rats & System Stability Services**: **Completely unmasked** and **directly opens** the C2 server interface on device.
 
 ### ☎️ Emergency Recovery & Self Healing:
@@ -109,7 +107,7 @@ forwarding**, or **third-party tunneling services** like **Ngrok** or **Pinggy**
 ### 👻 Ghost Operations:
 - **Ghost Control/Live Feed**: **Cast & Control the live screen remotely** with **NO "Consent Prompt" required**.
 - **Blackout Mode**: A **high-stealth mode** designed to **physically mask the targets device display** while maintaining a **NON-masked live remote feed**. *(Pair with Ghost Control for maximum stealth)*
-- **Ghost_Toast**: Remotely deploy **tactical, persistent pop-up overlays** with **fully customizable text** *(color, size, and screen positioning)*. Features **multiple animation styles** *(pop, static, and side-scroll)* alongside a **high-intensity "Burnt_Toast" mode** that **floods the screen with randomized pop-ups** to overwhelm the device.
+- **Ghost_Toast**: Remotely deploy **tactical, persistent pop-up overlays** with **fully customizable text** *(color, size, and screen positioning)*. Features **multiple animation styles** *(pop, static, and side-scroll)* alongside a **high-intensity "Burnt_Toast" mode** that **floods the screen with randomized pop-ups** to **overwhelm the device**.
 - **Remote System Denial Lock**: Deploy a **persistent, full-screen security overlay** to **lock physical interaction** and **render the device inoperable until hard-reset/restarted** or **unlocked remotely from the C2 dashboard**.
 - **Live Keylogging**: Intercept **keystrokes** and **system text in real-time**. Now features **Sensitive Info Highlighting** *(Passcodes, OTPs, Emails glow Red)* and **Deep Extraction** for **browser login info**.
 
@@ -168,6 +166,7 @@ The **Terminal Tabs Built-in Shell has been overhauled** for **professional work
 echo "allow-external-apps = true" >> ~/.termux/termux.properties
 termux-reload-settings
 ```
+
 ---
 
 <p align="left">
@@ -240,7 +239,7 @@ data.stealth === "true") ? "ACTIVE" : "OFF",
 ---
 
 ### ✌🏻 NEW! Option 2: Tactical Node.js Backend *(Upgraded)*
-**Best for professional fleet management** and **Automatic File Exfiltration**.
+**Best for newer devices running Android 17, professional fleet management** and **Automatic File Exfiltration**.
 
 **1. Fork the Lab-RATS-v1.6 repository**.
 <br>**2. Create a new Web Service on <a href="https://render.com" target="_blank">Render.com</a>** and **connect your Lab-RATS repo**.
@@ -354,7 +353,7 @@ Once the **Target device** downloads the **APK**:
  />
 </p>
 
-**If** you find **Lab-RATS awesome** and **useful for your security research**, **please Star ⭐ the project**—it **drives further development!!**
+**If** you find **Lab-RATS awesome** and **useful for your security research**, **please Star ⭐ the project**—it **drives further development!**
 
 <p align="left">
   <img src="https://readme-typing-svg.demolab.com?font=Orbitron&weight=700&size=22&pause=9900&color=00F2FF&center=false&vCenter=true&width=800&height=70&lines=Contributions" alt="Typing Banner"
