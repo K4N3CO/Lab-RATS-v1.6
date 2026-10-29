@@ -175,7 +175,7 @@ termux-reload-settings
  />
 </p>
 
-**Lab-RATS** now supports **TWO primary methods** to **track your device fleet**, and **remotely connect/receive data**
+**Lab-RATS** now supports **TWO primary methods** to **track your device fleet**, and **remotely connect/receive data**.
 
 ### ☝🏻 Option 1: Google Sheet *(Updated)*
 **Best for basic IP tracking** and **logging**. **No server maintenance required**.
@@ -241,7 +241,7 @@ data.stealth === "true") ? "ACTIVE" : "OFF",
 
 ### ✌🏻 NEW! Option 2: Tactical Node.js Backend *(Upgraded)*
 **Best for professional fleet management** and **Automatic File Exfiltration**.
-**Quick Deployment on** <a href="https://render.com" target="_blank">Render.com</a> 
+**Quick Deployment on** <a href="https://render.com" target="_blank">Render.com</a>.
 
 **1. Fork the Lab-RATS-v1.6 repository**.
 <br>**2. Create a new Web Service on Render** and **connect your Lab-RATS repo**.
