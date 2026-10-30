@@ -588,20 +588,25 @@ app.get('/', (req, res) => {
     </div>
     <script>
     function showToast(e, t = "info") {
-      let a = document.getElementById("toast-container");
-      if (!a) {
-        a = document.createElement("div");
-        a.id = "toast-container";
-        a.style.cssText = "position: fixed; bottom: 20px; right: 20px; z-index: 999999; display: flex; flex-direction: column; gap: 10px;";
-        document.body.appendChild(a);
+      let o = document.getElementById("c2-toast");
+      if (!o) {
+        o = document.createElement("div");
+        o.id = "c2-toast";
+        o.style.cssText = "position: fixed; bottom: 15%; left: 50%; transform: translateX(-50%); background: rgba(15,15,25,0.98); border: 1px solid var(--neon-cyan); color: #fff; padding: 16px 32px; border-radius: 12px; z-index: 10000; font-size: 0.9rem; text-align: center; min-width: 320px; box-shadow: 0 20px 60px rgba(0,0,0,0.9), 0 0 20px rgba(0,242,255,0.1); transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); opacity: 0; display: none; font-family: Orbitron, sans-serif; letter-spacing: 1px;";
+        document.body.appendChild(o);
       }
-      const o = document.createElement("div");
-      const bg = (t === "error") ? "rgba(255,49,49,0.9)" : "rgba(0,242,255,0.9)";
-      const shadow = (t === "error") ? "rgba(255,49,49,0.5)" : "rgba(0,242,255,0.5)";
-      o.style.cssText = "background: " + bg + "; color: #000; padding: 12px 20px; border-radius: 8px; font-family: 'Orbitron', sans-serif; font-size: 0.75rem; font-weight: bold; box-shadow: 0 0 20px " + shadow + "; backdrop-filter: blur(5px); transition: opacity 0.3s;";
-      o.innerText = e;
-      a.appendChild(o);
-      setTimeout(function() { o.style.opacity = "0"; setTimeout(function() { o.remove(); }, 300); }, 3000);
+      o.style.borderColor = (t === "error") ? "var(--danger)" : "var(--neon-cyan)";
+      o.innerHTML = e;
+      o.style.display = "block";
+      setTimeout(() => {
+        o.style.opacity = "1";
+        o.style.bottom = "20%";
+      }, 10);
+      setTimeout(() => {
+        o.style.opacity = "0";
+        o.style.bottom = "15%";
+        setTimeout(() => o.style.display = "none", 300);
+      }, 3800);
     }
 
     function renameDevice(deviceId, currentAlias) {
