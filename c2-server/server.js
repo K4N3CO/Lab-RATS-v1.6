@@ -587,6 +587,23 @@ app.get('/', (req, res) => {
         </div>
     </div>
     <script>
+    function showToast(e, t = "info") {
+      let a = document.getElementById("toast-container");
+      if (!a) {
+        a = document.createElement("div");
+        a.id = "toast-container";
+        a.style.cssText = "position: fixed; bottom: 20px; right: 20px; z-index: 999999; display: flex; flex-direction: column; gap: 10px;";
+        document.body.appendChild(a);
+      }
+      const o = document.createElement("div");
+      const bg = (t === "error") ? "rgba(255,49,49,0.9)" : "rgba(0,242,255,0.9)";
+      const shadow = (t === "error") ? "rgba(255,49,49,0.5)" : "rgba(0,242,255,0.5)";
+      o.style.cssText = "background: " + bg + "; color: #000; padding: 12px 20px; border-radius: 8px; font-family: 'Orbitron', sans-serif; font-size: 0.75rem; font-weight: bold; box-shadow: 0 0 20px " + shadow + "; backdrop-filter: blur(5px); transition: opacity 0.3s;";
+      o.innerText = e;
+      a.appendChild(o);
+      setTimeout(function() { o.style.opacity = "0"; setTimeout(function() { o.remove(); }, 300); }, 3000);
+    }
+
     function renameDevice(deviceId, currentAlias) {
         const newName = prompt('Enter custom name/alias for target device:', currentAlias || '');
         if (newName !== null) {
@@ -598,12 +615,13 @@ app.get('/', (req, res) => {
             .then(r => r.json())
             .then(data => {
                 if (data.success) {
-                    location.reload();
+                    showToast("DEVICE_RENAMED");
+                    setTimeout(() => location.reload(), 800);
                 } else {
-                    alert('Failed to update name: ' + (data.error || 'Unknown error'));
+                    showToast('Failed to update name: ' + (data.error || 'Unknown error'), "error");
                 }
             })
-            .catch(err => alert('Network error updating device name.'));
+            .catch(err => showToast('Network error updating device name.', "error"));
         }
     }
 
@@ -633,16 +651,17 @@ app.get('/', (req, res) => {
             label = 'Quick Photo (Rear)';
         }
 
-        const fullUrl = \`/proxy\${path}\${path.includes('?') ? '&' : '?'}deviceId=\${encodeURIComponent(deviceId)}\`;
+        const fullUrl = '/proxy' + path + (path.includes('?') ? '&' : '?') + 'deviceId=' + encodeURIComponent(deviceId);
         fetch(fullUrl)
             .then(r => {
                 if (r.ok) {
-                    alert(\`[⚡ TACTICAL DISPATCH SUCCESS]\\nCommand "\${label}" dispatched to target.\`);
+                    showToast('[DISPATCH_SUCCESS] Command "' + label + '" executed.');
+                    setTimeout(() => location.reload(), 800);
                 } else {
-                    alert(\`[!] Dispatch status \${r.status}\`);
+                    showToast('Dispatch failed (Status ' + r.status + ')', 'error');
                 }
             })
-            .catch(err => alert('Network error dispatching quick command.'));
+            .catch(err => showToast('Network error dispatching command.', 'error'));
     }
 
     function deleteExfil(id) {
@@ -655,12 +674,13 @@ app.get('/', (req, res) => {
             .then(r => r.json())
             .then(data => {
                 if (data.success) {
-                    location.reload();
+                    showToast("PAYLOAD_DELETED");
+                    setTimeout(() => location.reload(), 800);
                 } else {
-                    alert('Failed to delete file: ' + (data.error || 'Unknown error'));
+                    showToast('Failed to delete file: ' + (data.error || 'Unknown error'), "error");
                 }
             })
-            .catch(err => alert('Network error deleting file.'));
+            .catch(err => showToast('Network error deleting file.', "error"));
         }
     }
     </script>
