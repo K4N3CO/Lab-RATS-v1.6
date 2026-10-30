@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: lab-rats-c2
+    env: node
+    rootDir: c2-server
+    buildCommand: npm install
+    startCommand: node server.js
+    plan: free
+    autoDeploy: true
