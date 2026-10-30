@@ -445,8 +445,8 @@ app.get('/', (req, res) => {
             }
 
             const isAnyActive = d.blackout || d.locked || d.flashlight || d.recording;
-            const activeLight = isAnyActive ?
-                '<span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:var(--neon-green); box-shadow:0 0 8px var(--neon-green); margin-left:6px; vertical-align:middle;" title="Action Active / Running"></span>' :
+            const dropdownGreenLight = isAnyActive ?
+                '<span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:var(--neon-green); box-shadow:0 0 10px var(--neon-green), 0 0 20px var(--neon-green);" title="Action Active / Running"></span>' :
                 '';
 
             return `
@@ -454,7 +454,7 @@ app.get('/', (req, res) => {
                 <td style="font-family: monospace; color: var(--neon-cyan); white-space: nowrap; vertical-align: middle;">
                     <div style="display: inline-flex; align-items: center; gap: 5px; vertical-align: middle;">
                         <span onclick="renameDevice('${d.deviceId}', '${(d.alias || '').replace(/'/g, "\\'")}')" style="cursor:pointer; font-size:0.6rem; opacity:0.75; transition:opacity 0.2s; line-height:1; user-select:none;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.75" title="Rename Target">✏️</span>
-                        <span>${displayName}</span><span style="color:#666; font-size:0.68rem;">${subName}</span>${activeLight}
+                        <span>${displayName}</span><span style="color:#666; font-size:0.68rem;">${subName}</span>
                     </div>
                 </td>
                 <td style="vertical-align: middle;">${d.model || 'SM-F731W'}</td>
@@ -465,7 +465,7 @@ app.get('/', (req, res) => {
                 <td style="vertical-align: middle;">${d.stealth ? '<span style="color:var(--neon-orange)">STEALTH</span>' : '<span style="color:var(--neon-green)">NORMAL</span>'}</td>
                 <td style="font-size: 0.72rem; color: #aaa; vertical-align: middle;">${formatTime(d.lastSeen)}</td>
                 <td style="vertical-align: middle; white-space: nowrap;">
-                    <div style="display: inline-flex; align-items: center; gap: 6px;">
+                    <div style="display: inline-flex; align-items: center; gap: 8px;">
                         <a href="/proxy/?deviceId=${encodeURIComponent(d.deviceId)}" style="background: var(--neon-cyan); color: #000; padding: 5px 10px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 0.65rem; display: inline-block;">CONNECT</a>
                         <select onchange="dispatchQuickCommand('${d.deviceId}', this.value); this.selectedIndex=0;" style="background: rgba(0,242,255,0.08) !important; color: var(--neon-cyan) !important; border: 1px solid var(--neon-cyan) !important; font-size: 0.65rem !important; padding: 4px 6px !important; border-radius: 6px !important; cursor: pointer; outline: none; width: auto !important; height: auto !important;">
                             <option value="" disabled selected>⚡ ACTIONS</option>
@@ -476,6 +476,7 @@ app.get('/', (req, res) => {
                             <option value="volume">🔊 Max Vol + Vibrate</option>
                             <option value="photo">📷 Quick Photo (Rear)</option>
                         </select>
+                        ${dropdownGreenLight}
                     </div>
                 </td>
             </tr>
