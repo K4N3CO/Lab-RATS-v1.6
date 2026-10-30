@@ -1,5 +1,5 @@
 <p align="center">
-<img width="1417" height="444" alt="Screenshot 2026-10-25 at 2 06 52 AM" src="https://github.com/user-attachments/assets/56976a4e-cc9a-423b-93f6-7f053a711b5a" />
+<img width="1517" height="420" alt="Screenshot 2026-10-25 at 2 06 52 AM" src="https://github.com/user-attachments/assets/56976a4e-cc9a-423b-93f6-7f053a711b5a" />
 
 <p align="center">
   <img src="https://img.shields.io/badge/JDK-21-gold?style=for-the-badge&logo=openjdk&logoColor=white">
@@ -576,6 +576,10 @@ https://github.com/user-attachments/assets/50296f14-6875-403a-8484-299a9628746d
 **Lab-RATS-v1.6** is **Licensed** to **K4N3CO** under the [MIT License](LICENSE).
 
 ---
+
+<div align="center">
+  <video src="https://github.com/user-attachments/assets/2892c9d5-724a-4809-bf3f-1ccd585de0e7" width="50%" controls></video>
+</div>
 
 <p align="center">
 <img src="https://img.shields.io/badge/The one's who MIND don't matter...-The one's who MATTER don't mind-cyan?style=for-the-badge&logo=maserati&logoColor=white">
