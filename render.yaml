@@ -4,6 +4,6 @@ services:
     env: node
     rootDir: c2-server
     buildCommand: npm install
-    startCommand: node server.js
+    startCommand: npm start
     plan: free
     autoDeploy: true
