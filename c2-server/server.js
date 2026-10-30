@@ -618,10 +618,12 @@ app.get('/', (req, res) => {
         document.body.appendChild(a);
       }
       const o = document.createElement("div");
-      o.style.cssText = `background: ${t === "error" ? "rgba(255,49,49,0.9)" : "rgba(0,242,255,0.9)"}; color: #000; padding: 12px 20px; border-radius: 8px; font-family: 'Orbitron', sans-serif; font-size: 0.75rem; font-weight: bold; box-shadow: 0 0 20px ${t === "error" ? "rgba(255,49,49,0.5)" : "rgba(0,242,255,0.5)"}; backdrop-filter: blur(5px); transition: opacity 0.3s;`;
+      const bg = (t === "error") ? "rgba(255,49,49,0.9)" : "rgba(0,242,255,0.9)";
+      const shadow = (t === "error") ? "rgba(255,49,49,0.5)" : "rgba(0,242,255,0.5)";
+      o.style.cssText = "background: " + bg + "; color: #000; padding: 12px 20px; border-radius: 8px; font-family: 'Orbitron', sans-serif; font-size: 0.75rem; font-weight: bold; box-shadow: 0 0 20px " + shadow + "; backdrop-filter: blur(5px); transition: opacity 0.3s;";
       o.innerText = e;
       a.appendChild(o);
-      setTimeout(() => { o.style.opacity = "0"; setTimeout(() => o.remove(), 300); }, 3000);
+      setTimeout(function() { o.style.opacity = "0"; setTimeout(function() { o.remove(); }, 300); }, 3000);
     }
 
     function renameDevice(deviceId, currentAlias) {
