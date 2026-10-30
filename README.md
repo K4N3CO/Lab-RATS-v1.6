@@ -252,7 +252,7 @@ data.stealth === "true") ? "ACTIVE" : "OFF",
   <br>
   <img src="https://github.com/user-attachments/assets/1d97c7de-2c64-45ff-8653-9c3c0ac2c772" alt="Full Web Page Screenshot" width="80%">
 </details>
-  
+
 **Advantages of Option 2**:
 - 🌐 **Dual-Stack IP Binding**: **Full support for both IPv4 and IPv6 connections**, **enabling seamless C2 telemetry** and **reverse WebSocket tunneling** across **cellular carrier NAT64** and **dual-stack Wi-Fi networks worldwide**.
 - 📂 **Exfiltration Vault**: **Audio/Video recordings** are automatically uploaded and **stored on your server**.
@@ -270,9 +270,9 @@ To **Build, Compile**, and **Deploy Lab-RATS** or **Host the C2 server**, ensure
 
 ### 1. Workstation & Build Requirements: *(For Building APKs)*
 * **Java Development Kit (JDK)**: **JDK 17 or JDK 21** *(JDK 21 recommended)*.
-  * Ensure `JAVA_HOME` is set in your environment paths.
+    * Ensure `JAVA_HOME` is set in your environment paths.
 * **Android SDK**: **Android SDK 34** *(API Level 34)* or **higher**.
-  * **Build-Tools**: Version `34.0.0` or higher *(includes `aapt2`, `zipalign`, and `apksigner`)*.
+    * **Build-Tools**: Version `34.0.0` or higher *(includes `aapt2`, `zipalign`, and `apksigner`)*.
 * **Python 3.x**: Required for **Option 7: Smali Surgery & APK Binder** *(`binder.py`)*.
 * **Gradle**: Handled automatically via the included `./gradlew` *(Gradle 8.10+)*.
 
@@ -285,7 +285,7 @@ To **Build, Compile**, and **Deploy Lab-RATS** or **Host the C2 server**, ensure
 * **Minimum OS**: **Android 5.0** *(Lollipop/API 21)* or **higher**.
 * **Target OS**: **Android 14 - 17** *(API 34 - 37)* **fully supported**.
 * **Supported Devices**: **Samsung, Google Pixel, OnePlus, Xiaomi, Motorola, HTC, LG**, and **generic Android devices/
-emulators**.
+  emulators**.
 
 ### 4. Operating System Compatibility:
 * 🐧 **Linux**: **Kali Linux, Ubuntu, Debian, Arch** *(Full support for build scripts & C2 server)*.
