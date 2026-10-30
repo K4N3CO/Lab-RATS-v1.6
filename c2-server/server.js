@@ -465,6 +465,10 @@ app.get('/', (req, res) => {
                 'background: rgba(255,255,0,0.2); color: var(--neon-yellow); border-color: var(--neon-yellow); box-shadow: 0 0 10px var(--neon-yellow);' :
                 'background: rgba(0,242,255,0.05); color: var(--neon-cyan); border-color: rgba(0,242,255,0.3);';
 
+            const stealthStyle = d.stealth ?
+                'background: rgba(255,157,0,0.2); color: var(--neon-orange); border-color: var(--neon-orange); box-shadow: 0 0 10px var(--neon-orange);' :
+                'background: rgba(0,242,255,0.05); color: var(--neon-cyan); border-color: rgba(0,242,255,0.3);';
+
             const micStyle = d.recording ?
                 'background: rgba(255,49,49,0.2); color: var(--danger); border-color: var(--danger); box-shadow: 0 0 10px var(--danger); animation: pulse 1s infinite;' :
                 'background: rgba(0,242,255,0.05); color: var(--neon-cyan); border-color: rgba(0,242,255,0.3);';
