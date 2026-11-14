@@ -39,18 +39,29 @@ alt="Typing Banner"
 
 ## 🌐 How Direct IPv6 Mode Works in Lab-RATS
 
-### 1. What is Direct IPv6 Mode?
+<details>
+<summary><b>1. What is Direct IPv6 Mode?</b></summary>
+
 In Direct IPv6 Mode, **the target Android device itself acts as the C2 web server**. An embedded HTTP server (`NanoHTTPD`) runs inside the background Android service and listens directly on port `9191`.
 
-### 2. The IPv6 Advantage: Eliminating CGNAT & Port Forwarding
+</details>
+
+<details>
+<summary><b>2. The IPv6 Advantage: Eliminating CGNAT & Port Forwarding</b></summary>
+
 * **The Traditional IPv4 Problem:** On standard IPv4 mobile networks (3G/4G/5G), cellular carriers place devices behind **Carrier-Grade NAT (CGNAT)**. This shares a single public IP address among thousands of mobile devices, making incoming connections impossible without port forwarding, reverse proxies, or tools like Ngrok.
 * **The IPv6 Solution:** IPv6 assigns a unique **Global Unicast Address (GUA)** directly to the phone on 5G/LTE and Wi-Fi networks. Because every IPv6 address is globally unique and addressable across the internet, the C2 operator can connect directly to the target phone using its IPv6 address in any web browser (`http://[2001:db8::1]:9191`).
 
-### 3. Zero-Configuration Peer-to-Peer (P2P) Control
+</details>
+
+<details>
+<summary><b>3. Zero-Configuration Peer-to-Peer (P2P) Control</b></summary>
+
 * **No Cloud Relay Required:** Traffic flows directly between the operator's browser and the target device without passing through an intermediate cloud server.
 * **No Router Access Needed:** Eliminates the need to access the target's Wi-Fi router or configure firewall rules.
 * **Low Latency:** Eliminating middleman servers results in instant command execution and live screen streaming.
 
+</details>
 <details>
   <summary><b>📸 View IPv6 Exploit Vector</summary></b>
   <br><p align="center">
