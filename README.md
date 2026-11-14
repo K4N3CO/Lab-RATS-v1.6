@@ -688,7 +688,7 @@ https://github.com/user-attachments/assets/ccaae63f-493b-44b3-a662-f9d1d2792523
 
 ### Remote C2 Dashboard - Covert Camera Hub:
 
-https://github.com/user-attachments/assets/cff1facc-8657-4707-a1dc-5208640e9c2a
+https://github.com/user-attachments/assets/5d98cc43-d65b-4f63-a587-97453736b2ba
 
 ---
 
