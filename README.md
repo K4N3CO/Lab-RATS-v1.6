@@ -459,7 +459,7 @@ data.stealth === "true") ? "ACTIVE" : "OFF",
 <details>
   <summary><b>📸 View Render C2 Screenshot</summary></b>
   <br>
-  <img src="https://github.com/user-attachments/assets/308a906f-c331-406b-8718-23b2d113a04a" alt="Full Web Page Screenshot" width="80%">
+  <img width="867" height="500" alt="Screenshot 2026-11-14 at 3 00 47 PM" src="https://github.com/user-attachments/assets/02cd24bc-ed70-421a-98ab-b8769b9dce52" />
 </details>
 
 ---
